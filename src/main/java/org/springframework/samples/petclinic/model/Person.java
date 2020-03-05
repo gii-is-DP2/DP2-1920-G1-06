@@ -15,8 +15,10 @@
  */
 package org.springframework.samples.petclinic.model;
 
+
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 
 /**
@@ -34,6 +36,68 @@ public class Person extends BaseEntity {
 	@Column(name = "last_name")
 	@NotEmpty
 	protected String lastName;
+	
+	@Column(name = "dni")
+	@NotEmpty
+	protected String dni;
+	
+	@Column(name = "birthDate")
+	@NotEmpty
+	protected String birthDate;
+	
+	@Column(name = "gender")
+	@NotEmpty
+	protected Gender gender;
+	
+	@Column(name = "email")
+	@NotEmpty
+	protected String email;
+	
+	@Column(name = "telephone")
+	@NotEmpty
+	@Digits(fraction = 0, integer = 10)
+	private String telephone;
+	
+	
+	public String getDni() {
+		return dni;
+	}
+
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
+
+	public String getBirthDate() {
+		return birthDate;
+	}
+
+	public void setBirthDate(String birthDate) {
+		this.birthDate = birthDate;
+	}
+
+	public Gender getGender() {
+		return gender;
+	}
+
+	public void setGender(Gender gender) {
+		this.gender = gender;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getTelephone() {
+		return telephone;
+	}
+
+	public void setTelephone(String telephone) {
+		this.telephone = telephone;
+	}
 
 	public String getFirstName() {
 		return this.firstName;
