@@ -15,7 +15,7 @@ public class Xowner extends Person{
 	
 	
 	
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "xowners")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "xowner")
 	private Set<Property> propertys;
 	
 	//

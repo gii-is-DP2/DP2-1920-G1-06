@@ -18,8 +18,11 @@ package org.springframework.samples.petclinic.model;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+import javax.persistence.Transient;
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Range;
 
 /**
  * Simple JavaBean domain object representing an person.
@@ -47,7 +50,8 @@ public class Person extends BaseEntity {
 	
 	@Column(name = "gender")
 	@NotEmpty
-	protected Gender gender;
+	@Range(max = 1, min = 0)
+	protected Integer gender;
 	
 	@Column(name = "email")
 	@NotEmpty
@@ -57,6 +61,21 @@ public class Person extends BaseEntity {
 	@NotEmpty
 	@Digits(fraction = 0, integer = 10)
 	private String telephone;
+	
+	@Transient
+	public String getGenderToString() {
+		String result = "";
+		if(this.gender == 0) {
+			result = "MALE";
+		}else if (this.gender == 1) {
+			result = "FEMALE";
+		} 
+		return result;
+	}
+	
+	
+	
+	
 	
 	
 	public String getDni() {
@@ -75,11 +94,11 @@ public class Person extends BaseEntity {
 		this.birthDate = birthDate;
 	}
 
-	public Gender getGender() {
+	public Integer getGender() {
 		return gender;
 	}
 
-	public void setGender(Gender gender) {
+	public void setGender(Integer gender) {
 		this.gender = gender;
 	}
 

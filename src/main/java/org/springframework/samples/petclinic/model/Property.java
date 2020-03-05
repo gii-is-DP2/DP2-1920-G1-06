@@ -15,10 +15,12 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.validator.constraints.Range;
+
 
 
 @Entity
-@Table(name = "propertys")
+@Table(name = "properties")
 public class Property extends BaseEntity{
 
 		@Column(name = "address")
@@ -31,7 +33,8 @@ public class Property extends BaseEntity{
 		
 		@Column(name = "propertyType")
 		@NotEmpty
-		private PropertyType propertyType;
+		@Range(max = 1, min = 0)
+		private Integer propertyType;
 		
 		@Column(name = "description")
 		@NotEmpty
@@ -39,12 +42,24 @@ public class Property extends BaseEntity{
 		
 		@Column(name = "totalRooms")
 		@NotEmpty
+		@Range(min = 1)
 		private Integer totalRooms;
 		
 		@Column(name = "surface")
 		@NotEmpty
+		@Range(min = 30)
 		private Integer surface;
 		
+		@Transient
+		public String getPropertyTypeToString() {
+			String result = "";
+			if(this.propertyType == 0) {
+				result = "HOUSE";
+			}else if (this.propertyType == 1) {
+				result = "FLAT";
+			} 
+			return result;
+		}
 		
 		//HAY QUE HACERLA !!!!!!!!!!
 		@Transient
@@ -56,13 +71,13 @@ public class Property extends BaseEntity{
 		@JoinColumn(name = "xowner_id")
 		private Xowner xowner;
 		
-		@OneToMany(cascade = CascadeType.ALL, mappedBy = "property")
-		private Set<Room> rooms;
-		
+//		@OneToMany(cascade = CascadeType.ALL, mappedBy = "property")
+//		private Set<Room> rooms;
+//		
 		//
-		@OneToMany(cascade = CascadeType.ALL, mappedBy = "property")
-		private Set<Visit> visits;
-		
+//		@OneToMany(cascade = CascadeType.ALL, mappedBy = "property")
+//		private Set<Visit> visits;
+//		
 		
 		
 		
@@ -87,12 +102,12 @@ public class Property extends BaseEntity{
 		}
 
 
-		public PropertyType getPropertyType() {
+		public Integer getPropertyType() {
 			return propertyType;
 		}
 
 
-		public void setPropertyType(PropertyType propertyType) {
+		public void setPropertyType(Integer propertyType) {
 			this.propertyType = propertyType;
 		}
 
