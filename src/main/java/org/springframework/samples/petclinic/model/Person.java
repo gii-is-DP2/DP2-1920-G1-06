@@ -15,7 +15,6 @@
  */
 package org.springframework.samples.petclinic.model;
 
-
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
@@ -32,6 +31,8 @@ import org.hibernate.validator.constraints.Range;
 @MappedSuperclass
 public class Person extends BaseEntity {
 
+	// Atributos -------------------------------------------------------
+
 	@Column(name = "first_name")
 	@NotEmpty
 	protected String firstName;
@@ -39,45 +40,42 @@ public class Person extends BaseEntity {
 	@Column(name = "last_name")
 	@NotEmpty
 	protected String lastName;
-	
+
 	@Column(name = "dni")
 	@NotEmpty
 	protected String dni;
-	
+
 	@Column(name = "birthDate")
 	@NotEmpty
 	protected String birthDate;
-	
+
 	@Column(name = "gender")
 	@NotEmpty
 	@Range(max = 1, min = 0)
 	protected Integer gender;
-	
+
 	@Column(name = "email")
 	@NotEmpty
 	protected String email;
-	
+
 	@Column(name = "telephone")
 	@NotEmpty
 	@Digits(fraction = 0, integer = 10)
 	private String telephone;
-	
+
 	@Transient
 	public String getGenderToString() {
 		String result = "";
-		if(this.gender == 0) {
+		if (this.gender == 0) {
 			result = "MALE";
-		}else if (this.gender == 1) {
+		} else if (this.gender == 1) {
 			result = "FEMALE";
-		} 
+		}
 		return result;
 	}
-	
-	
-	
-	
-	
-	
+
+	// Getters y Setters -----------------------------------------------
+
 	public String getDni() {
 		return dni;
 	}
