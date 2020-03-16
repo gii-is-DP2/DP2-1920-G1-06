@@ -24,4 +24,6 @@ public class PropertyService {
 	public Collection<Property> findAll() throws DataAccessException {
 		return propertyRepository.findAll();
 	}
+
+
 }

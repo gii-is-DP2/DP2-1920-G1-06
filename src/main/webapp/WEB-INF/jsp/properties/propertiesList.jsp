@@ -5,38 +5,34 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="properties">
+<petclinic:layout pageName="owners">
     <h2>Properties</h2>
 
     <table id="propertiesTable" class="table table-striped">
         <thead>
         <tr>
+
             <th style="width: 200px;">Address</th>
             <th>City</th>
-            <th style="width: 200px">Description</th>
 
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${selections}" var="property">
+        <c:forEach items="${properties.propertyList}" var="property">
             <tr>
-             <!--   <td>
-                    <spring:url value="/properties/find" var="propertiesUrl">
+               <!--  <td>
+                    <spring:url value="/properties" var="propertyUrl">
                         <spring:param name="propertyId" value="${property.id}"/>
                     </spring:url>
-                    <a href="${fn:escapeXml(ownerUrl)}"><c:out value="${owner.firstName} ${owner.lastName}"/></a>
-                </td> --> 
+                    <a href="${fn:escapeXml(propertyUrl)}"><c:out value="${property.address} ${property.city}"/></a>
+                </td> -->
                 <td>
                     <c:out value="${property.address}"/>
                 </td>
                 <td>
                     <c:out value="${property.city}"/>
                 </td>
-                <td>
-                    <c:out value="${property.description}"/>
-                </td>
-                
-      
+    
 <!--
                 <td> 
                     <c:out value="${owner.user.username}"/> 
