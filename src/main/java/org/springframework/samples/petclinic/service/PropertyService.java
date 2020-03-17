@@ -25,5 +25,10 @@ public class PropertyService {
 		return propertyRepository.findAll();
 	}
 
+	public Property findPropertyById(int propertyId) {
+		
+		return propertyRepository.findPropertyById(propertyId);
+	}
+
 
 }

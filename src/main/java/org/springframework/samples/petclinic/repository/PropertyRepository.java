@@ -10,4 +10,6 @@ public interface PropertyRepository {
 
 	Collection<Property> findAll() throws DataAccessException;
 
+	Property findPropertyById(int propertyId);
+
 }

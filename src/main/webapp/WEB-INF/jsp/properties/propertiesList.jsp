@@ -14,7 +14,7 @@
 
             <th style="width: 200px;">Address</th>
             <th>City</th>
-
+            <th>Show</th>
         </tr>
         </thead>
         <tbody>
@@ -32,7 +32,12 @@
                 <td>
                     <c:out value="${property.city}"/>
                 </td>
-    
+				<td>
+                    <spring:url value="/properties/{propertyId}/edit" var="propertyUrl">
+                   		<spring:param name="propertyId" value="${property.id}"/>
+                    </spring:url>
+                    <a href="${fn:escapeXml(propertyUrl)}">Edit Pet</a>
+                </td>
 <!--
                 <td> 
                     <c:out value="${owner.user.username}"/> 
