@@ -29,6 +29,12 @@ public class PropertyService {
 		
 		return propertyRepository.findPropertyById(propertyId);
 	}
-
+	
+	@Transactional
+	public void saveProperty(Property property) throws DataAccessException {
+		propertyRepository.save(property);		
+	}
+	
+	
 
 }

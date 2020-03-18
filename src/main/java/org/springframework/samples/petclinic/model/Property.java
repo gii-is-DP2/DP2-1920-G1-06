@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
@@ -30,7 +29,6 @@ public class Property extends BaseEntity {
 	private String city;
 
 	@Column(name = "propertyType")
-	@NotEmpty
 	@Range(max = 1, min = 0)
 	private Integer propertyType;
 
@@ -39,12 +37,10 @@ public class Property extends BaseEntity {
 	private String description;
 
 	@Column(name = "totalRooms")
-	@NotEmpty
 	@Range(min = 1)
 	private Integer totalRooms;
 
 	@Column(name = "surface")
-	@NotEmpty
 	@Range(min = 30)
 	private Integer surface;
 

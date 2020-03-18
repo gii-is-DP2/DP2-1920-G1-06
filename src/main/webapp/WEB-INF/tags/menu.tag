@@ -31,7 +31,7 @@
 				<petclinic:menuItem active="${name eq 'properties'}" url="/properties"
 					title="find properties">
 					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-					<span>Find properties</span>
+					<span>My properties</span>
 				</petclinic:menuItem>
 				
 				<petclinic:menuItem active="${name eq 'owners'}" url="/owners/find"
