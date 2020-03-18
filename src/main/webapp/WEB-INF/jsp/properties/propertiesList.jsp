@@ -33,10 +33,10 @@
                     <c:out value="${property.city}"/>
                 </td>
 				<td>
-                    <spring:url value="/properties/{propertyId}/edit" var="propertyUrl">
+                    <spring:url value="/properties/{propertyId}/show" var="propertyUrl">
                    		<spring:param name="propertyId" value="${property.id}"/>
                     </spring:url>
-                    <a href="${fn:escapeXml(propertyUrl)}">Edit Pet</a>
+                    <a href="${fn:escapeXml(propertyUrl)}">Property</a>
                 </td>
 <!--
                 <td> 
@@ -51,4 +51,9 @@
         </c:forEach>
         </tbody>
     </table>
+    <spring:url value="properties/new" var="addUrl">
+        <%-- <spring:param name="ownerId" value="${owner.id}"/> --%>
+    </spring:url>
+    <a href="${fn:escapeXml(addUrl)}" class="btn btn-default">Add New Property</a>
+    
 </petclinic:layout>

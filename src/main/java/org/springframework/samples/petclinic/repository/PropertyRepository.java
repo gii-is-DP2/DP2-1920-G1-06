@@ -10,6 +10,9 @@ public interface PropertyRepository {
 
 	Collection<Property> findAll() throws DataAccessException;
 
-	Property findPropertyById(int propertyId);
+	Property findPropertyById(int propertyId) throws DataAccessException;
+
+	void save(Property property) throws DataAccessException;
+	
 
 }
