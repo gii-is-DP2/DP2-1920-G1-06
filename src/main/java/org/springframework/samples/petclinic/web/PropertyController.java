@@ -82,13 +82,22 @@ public class PropertyController {
 	}
 	
 	@PostMapping(value = "/properties/{propertyId}/edit")
-	public String processUpdateForm(@Valid Property property, BindingResult result) {
+	public String processUpdateForm(@PathVariable("propertyId") int propertyId,@Valid Property property, BindingResult result) {
 		if (result.hasErrors()) {
 			return VIEWS_PROPERTIES_CREATE_OR_UPDATE_FORM;
 		}
 		else {
+			Property propertyD = this.propertyService.findPropertyById(propertyId);
 			
-			this.propertyService.saveProperty(property);
+			String value = property.getAddress();
+			System.out.println(propertyD.getAddress());
+			propertyD.setAddress(value);			
+			System.out.println(propertyD.getAddress());
+			
+			
+			
+			this.propertyService.saveProperty(propertyD);
+			
 			
 			return "redirect:/properties/" + property.getId() +"/show";
 		}
