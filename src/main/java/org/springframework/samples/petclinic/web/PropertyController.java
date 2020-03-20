@@ -89,17 +89,25 @@ public class PropertyController {
 		else {
 			Property propertyD = this.propertyService.findPropertyById(propertyId);
 			
-			String value = property.getAddress();
-			System.out.println(propertyD.getAddress());
-			propertyD.setAddress(value);			
-			System.out.println(propertyD.getAddress());
+			String address = property.getAddress();
+			String city = property.getCity();
+			String description = property.getDescription();
+			Integer propertyType = property.getPropertyType();
+			Integer surface = property.getSurface();
+			Integer totalRooms = property.getTotalRooms();
 			
+			propertyD.setAddress(address);
+			propertyD.setCity(city);		
+			propertyD.setDescription(description);			
+			propertyD.setPropertyType(propertyType);
+			propertyD.setSurface(surface);
+			propertyD.setTotalRooms(totalRooms);				
 			
 			
 			this.propertyService.saveProperty(propertyD);
 			
 			
-			return "redirect:/properties/" + property.getId() +"/show";
+			return "redirect:/properties/" + propertyId +"/show";
 		}
 	}
 	
