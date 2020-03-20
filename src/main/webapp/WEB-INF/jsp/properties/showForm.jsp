@@ -34,7 +34,7 @@
 			<td><c:out value="${property.address}" /></td>
 			<td><c:out value="${property.city}" /></td>
 			<td><c:out value="${property.description}" /></td>
-			<td><c:out value="${property.propertyType}" /></td>
+			<td><c:out value="${property.propertyTypeToString}" /></td>
 			<td><c:out value="${property.surface}" /></td>
 			<td><c:out value="${property.totalRooms}" /></td>
 		</tr>
