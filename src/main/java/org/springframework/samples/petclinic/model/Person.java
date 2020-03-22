@@ -73,6 +73,8 @@ public class Person extends BaseEntity {
 		}
 		return result;
 	}
+	
+	
 
 	// Getters y Setters -----------------------------------------------
 
