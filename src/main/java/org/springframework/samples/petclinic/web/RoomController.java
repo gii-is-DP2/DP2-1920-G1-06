@@ -1,11 +1,13 @@
 
 package org.springframework.samples.petclinic.web;
 
+import java.util.Collection;
 import java.util.Map;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Property;
 import org.springframework.samples.petclinic.model.Room;
 import org.springframework.samples.petclinic.service.PropertyService;
 import org.springframework.samples.petclinic.service.RoomService;
@@ -15,23 +17,24 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class RoomController {
 
-	private static final String	VIEWS_ROOMS_CREATE_OR_UPDATE_FORM	= "rooms/createOrUpdateRoomForm";
+	private static final String VIEWS_ROOMS_CREATE_OR_UPDATE_FORM = "rooms/createOrUpdateRoomForm";
 
-	private PropertyService		propertyService;
+	private PropertyService propertyService;
 
-	private final RoomService	roomService;
-
+	private final RoomService roomService;
 
 	@Autowired
 	public RoomController(final RoomService roomService) {
 		this.roomService = roomService;
 	}
 
-	//CREACION DE HABITACION ------------------------------------------------------------------------
+	// CREACION DE HABITACION
+	// ------------------------------------------------------------------------
 
 	@GetMapping(value = "/rooms/new")
 	public String initCreationForm(final Map<String, Object> model) {
@@ -50,7 +53,8 @@ public class RoomController {
 		}
 	}
 
-	//MODIFICACION DE HABITACION -----------------------------------------------------------------------
+	// MODIFICACION DE HABITACION
+	// -----------------------------------------------------------------------
 
 	@GetMapping(value = "/rooms/{roomId}/edit")
 	public String initUpdateRoomForm(@PathVariable("roomId") final int roomId, final Model model) {
@@ -60,14 +64,56 @@ public class RoomController {
 	}
 
 	@PostMapping(value = "/rooms/{roomId}/edit")
-	public String processUpdateRoomForm(@Valid final Room room, final BindingResult result, @PathVariable("roomId") final int roomId) {
+	public String processUpdateRoomForm(@Valid final Room room, final BindingResult result,
+			@PathVariable("roomId") final int roomId) {
+
 		if (result.hasErrors()) {
 			return RoomController.VIEWS_ROOMS_CREATE_OR_UPDATE_FORM;
 		} else {
-			room.setId(roomId);
-			this.roomService.saveRoom(room);
+
+			Room roomD = this.roomService.findRoomById(roomId);
+
+			String	roomNumber = room.getRoomNumber();
+			Integer	surface = room.getSurface();
+			Double	price = room.getPrice();
+			Integer	extWindow = room.getExtWindow();
+			Integer	tamCloset = room.getTamCloset();
+
+			roomD.setRoomNumber(roomNumber);
+			roomD.setSurface(surface);
+			roomD.setPrice(price);
+			roomD.setExtWindow(extWindow);
+			roomD.setTamCloset(tamCloset);
+
+			this.roomService.saveRoom(roomD);
 			return "redirect:/rooms/{roomId}";
 		}
+	}
+
+	// LISTADO DE
+	// HABITACIONES--------------------------------------------------------------------------
+
+	@GetMapping(value = "/rooms")
+	public String processFindForm(Property property, BindingResult result, Map<String, Object> model) {
+
+//		Collection<Room> results = this.roomService.findRoomByPropertyId(property.getId());
+
+		Integer i = 1;
+		Collection<Room> results = this.roomService.findRoomByPropertyId(i);
+
+		model.put("selections", results);
+		return "rooms/roomsList";
+
+	}
+
+	// CONSULTA DE
+	// HABITACION---------------------------------------------------------------------------
+
+	@GetMapping("/rooms/{roomId}")
+	public ModelAndView showRoom(@PathVariable("roomId") int roomId) {
+		ModelAndView mav = new ModelAndView("rooms/roomDetails");
+		mav.addObject(this.roomService.findRoomById(roomId));
+		return mav;
 	}
 
 }

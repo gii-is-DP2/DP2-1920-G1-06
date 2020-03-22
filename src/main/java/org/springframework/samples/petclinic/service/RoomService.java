@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.service;
 
+import java.util.Collection;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,11 @@ private RoomRepository roomRepository;
 	public Room findRoomById(int roomId) {
 		
 		return roomRepository.findRoomById(roomId);
+	}
+
+	public Collection<Room> findRoomByPropertyId(Integer id) {
+		
+		return roomRepository.findRoomByPropertyId(id);
 	}	
 	
 }
