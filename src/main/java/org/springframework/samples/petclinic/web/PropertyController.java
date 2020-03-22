@@ -39,14 +39,6 @@ public class PropertyController {
 		this.propertyService = propertyService;
 	}
 	
-	@ModelAttribute("propertyTypes")
-    public Collection<String> propertyTypes() {
-		List<String> lista = new ArrayList<String>();
-		lista.add("House");
-		lista.add("Flat");
-        return lista ;
-    }
-	
 	@GetMapping(value = {"/properties"})
 	public String showPropertyList(Map<String, Object> model) {
 		Properties properties = new Properties();
@@ -81,11 +73,9 @@ public class PropertyController {
 			return VIEWS_PROPERTIES_CREATE_OR_UPDATE_FORM;
 		}
 		else {
-			if(propertyType == "House") {
-				property.setPropertyType(0);
-			}else {
-				property.setPropertyType(1);
-			}
+			
+				property.setPropertyType(new Integer(propertyType));
+		
 			//creating owner, user and authorities
 			this.propertyService.saveProperty(property);
 			

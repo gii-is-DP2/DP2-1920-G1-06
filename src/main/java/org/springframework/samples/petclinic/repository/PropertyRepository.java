@@ -15,6 +15,4 @@ public interface PropertyRepository {
 	void save(Property property) throws DataAccessException;
 	
 	void delete(Property property) throws DataAccessException;
-
-	//void put(Property propert) throws DataAccessException;
 }
