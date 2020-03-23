@@ -59,6 +59,6 @@ public interface OwnerRepository {
 	 */
 	void save(Owner owner) throws DataAccessException;
 
-	Properties findOwnerProperties(int id) throws DataAccessException;
+//	Properties findOwnerProperties(int id) throws DataAccessException;
 
 }

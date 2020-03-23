@@ -4,6 +4,9 @@ package org.springframework.samples.petclinic.service;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.util.Collection;
+
+import javax.validation.Validator;
+
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -12,9 +15,11 @@ import org.springframework.samples.petclinic.model.Properties;
 import org.springframework.samples.petclinic.model.Property;
 import org.springframework.samples.petclinic.util.EntityUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.samples.petclinic.service.PropertyService;
 
-import org.springframework.context.ApplicationContext
+import org.springframework.context.ApplicationContext;
+
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
 public class PropertyServiceTests {
@@ -29,35 +34,59 @@ public class PropertyServiceTests {
 	
 	@Test
 	void shouldFindAPropertyWithCorrectId() {
-		Property property = this.propertyService.findPropertyById(1);
+		Property property = this.propertyService.findPropertyById(TEST_PROPERTY_ID);
 		
 		assertThat(property.getAddress()).isEqualTo("Base Militar de Rotas");
 		assertThat(property.getTotalRooms()).isEqualTo(4);
 	}
 	
 	@Test
-	void shouldDeleteAProperty() {
-		Properties propertiesBeforeDelete = (Properties) this.propertyService.findAll();
-		Integer sizeOfPropertiesBeforeDelete = propertiesBeforeDelete.getPropertyList().size();
+	void shouldSaveAProperty() {
+		Collection<Property> propertiesBeforeAdd = this.propertyService.findAll();
+		Integer sizeOfPropertiesBeforeAdd = propertiesBeforeAdd.size();
 		
+		Property property = new Property();
+		property.setAddress("121321321");
+		property.setCity("Sevilla");		
+		property.setDescription("Piso cercano a la facultad de medicina");			
+		property.setPropertyType(0);
+		property.setSurface(90);
+		property.setTotalRooms(3);
 		
+		this.propertyService.saveProperty(property);
 		
-		Properties propertiesAfterDelete = (Properties) this.propertyService.findAll();
-		Integer sizeOfPropertiesAfterDelete = propertiesAfterDelete.getPropertyList().size();
+		Collection<Property> propertiesAfterAdd =  this.propertyService.findAll();
+		Integer sizeOfPropertiesAfterAdd = propertiesAfterAdd.size();
 		
-		assertThat(sizeOfPropertiesAfterDelete).isEqualTo(sizeOfPropertiesBeforeDelete-1);
+		assertThat(sizeOfPropertiesAfterAdd).isEqualTo(sizeOfPropertiesBeforeAdd+1);
 	}
 	
 	@Test
 	void shouldFindAllProperties() {
 		Collection<Property> properties = this.propertyService.findAll();
 
-		Property property1 = EntityUtils.getById(properties, Property.class, 1);
+		Property property1 = EntityUtils.getById(properties, Property.class, TEST_PROPERTY_ID);
 		assertThat(property1.getAddress()).isEqualTo("Base Militar de Rotas");
-		Property property3 = EntityUtils.getById(properties, Property.class, 3);
+		Property property3 = EntityUtils.getById(properties, Property.class, TEST_PROPERTY_ID+2);
 		assertThat(property3.getAddress()).isEqualTo("Base Militar de Jotas");
+		
 	}
 	
+	@Test
+	void shouldDeleteAProperty() {
+		Collection<Property> propertiesBeforeDelete = this.propertyService.findAll();
+		Integer sizeOfPropertiesBeforeDelete = propertiesBeforeDelete.size();
+		
+		Property property = this.propertyService.findPropertyById(TEST_PROPERTY_ID);
+		this.propertyService.deleteProperty(property);
+		
+		Collection<Property> propertiesAfterDelete =  this.propertyService.findAll();
+		Integer sizeOfPropertiesAfterDelete = propertiesAfterDelete.size();
+		
+		assertThat(sizeOfPropertiesAfterDelete).isEqualTo(sizeOfPropertiesBeforeDelete-1);
+		
+		//Añadimos un elemento para no afectar a las demas pruebas
+	}
 //	@Test
 //	@Transactional
 //	public void shouldInsertPropertyIntoDatabaseAndGenerateId() {
@@ -80,11 +109,11 @@ public class PropertyServiceTests {
 //		
 //		//assertThat(owner1.getProperties().size()).isEqualTo(found + 1);
 //
-////            try {
-////                this.propertyService.saveProperty(property);
-////            } catch (DuplicatedPetNameException ex) {
-////                Logger.getLogger(PropertyServiceTests.class.getName()).log(Level.SEVERE, null, ex);
-////            }
+//            try {
+//                this.propertyService.saveProperty(property);
+//            } catch (DuplicatedPetNameException ex) {
+//                Logger.getLogger(PropertyServiceTests.class.getName()).log(Level.SEVERE, null, ex);
+//            }
 //		//this.ownerService.saveOwner(owner1);
 //
 //		//owner1 = this.ownerService.findOwnerById(1);

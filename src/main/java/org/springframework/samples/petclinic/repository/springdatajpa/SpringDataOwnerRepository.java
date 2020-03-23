@@ -30,7 +30,7 @@ import org.springframework.samples.petclinic.repository.OwnerRepository;
  */
 public interface SpringDataOwnerRepository extends OwnerRepository, Repository<Owner, Integer> {
 
-	@Override
-	@Query("SELECT p FROM Property p WHERE p.owner_id =:id")
-	public Properties findOwnerProperties(@Param("id") int id);
+//	@Override
+//	@Query("SELECT p FROM Property p WHERE p.owner_id =:id")
+//	public Properties findOwnerProperties(@Param("id") int id);
 }
