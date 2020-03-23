@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class RoomService {
 
-private RoomRepository roomRepository;	
+	private RoomRepository roomRepository;	
 	
 	@Autowired
 	public RoomService(RoomRepository roomRepository) {
