@@ -12,6 +12,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 
 @Entity
@@ -22,6 +23,7 @@ public class Property extends BaseEntity {
 
 	@Column(name = "address")
 	@NotEmpty
+	@Length(min = 5, max = 100)
 	private String address;
 
 	@Column(name = "city")
