@@ -45,7 +45,7 @@
 	</spring:url>
 	<a href="${fn:escapeXml(propertyUrl)}" class="btn btn-default">Edit Property</a>
 	
-	<a href="/properties" class="btn btn-default">Go Back</a>
+	<a  href="/properties" class="btn btn-default">Go Back</a>
 	
 
 	<%-- </jsp:body> --%>

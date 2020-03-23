@@ -15,8 +15,11 @@
  */
 package org.springframework.samples.petclinic.repository.springdatajpa;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.Owner;
+import org.springframework.samples.petclinic.model.Properties;
 import org.springframework.samples.petclinic.repository.OwnerRepository;
 
 /**
@@ -27,5 +30,7 @@ import org.springframework.samples.petclinic.repository.OwnerRepository;
  */
 public interface SpringDataOwnerRepository extends OwnerRepository, Repository<Owner, Integer> {
 
-
+	@Override
+	@Query("SELECT p FROM Property p WHERE p.owner_id =:id")
+	public Properties findOwnerProperties(@Param("id") int id);
 }
