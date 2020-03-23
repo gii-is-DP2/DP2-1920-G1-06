@@ -22,9 +22,7 @@ public class Student extends Person{
 	@JoinColumn(name = "username", referencedColumnName = "username")
 	private User user;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "lastname", referencedColumnName = "last_name")
-	private Person person;
+	
 
 	public Set<Rental> getRental() {
 		return rental;
@@ -42,13 +40,7 @@ public class Student extends Person{
 		this.user = user;
 	}
 
-	public Person getPerson() {
-		return person;
-	}
 
-	public void setPerson(Person person) {
-		this.person = person;
-	}
 
 
 }

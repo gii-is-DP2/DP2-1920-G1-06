@@ -10,11 +10,11 @@ import org.springframework.samples.petclinic.repository.PersonRepository;
 
 public interface SpringDataPersonRepository extends PersonRepository, Repository<Person, Integer> {
 
-	@Override
-	@Query("SELECT person FROM Person person  WHERE person.lastName LIKE :lastName%")
-	public Collection<Person> findByLastName(@Param("lastName") String lastName);
-
-	@Override
-	@Query("SELECT person FROM Person person WHERE person.id =:id")
-	public Person findById(@Param("id") int id);
+//	@Override
+//	@Query("SELECT person FROM Person person  WHERE person.lastName LIKE :lastName%")
+//	public Collection<Person> findByLastName(@Param("lastName") String lastName);
+//
+//	@Override
+//	@Query("SELECT person FROM Person person WHERE person.id =:id")
+//	public Person findById(@Param("id") int id);
 }

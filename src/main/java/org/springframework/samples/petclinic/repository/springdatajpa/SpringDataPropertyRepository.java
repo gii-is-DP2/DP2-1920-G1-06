@@ -8,7 +8,7 @@ import org.springframework.samples.petclinic.repository.PropertyRepository;
 
 public interface SpringDataPropertyRepository extends PropertyRepository, Repository<Property, Integer> {
 
-	@Override
-	@Query("SELECT p FROM Property p WHERE p.id =:id")
-	public Property findPropertyById(@Param("id") int id);
+//	@Override
+//	@Query("SELECT p FROM Property p WHERE p.id =:id")
+//	public Property findPropertyById(@Param("id") int id);
 }

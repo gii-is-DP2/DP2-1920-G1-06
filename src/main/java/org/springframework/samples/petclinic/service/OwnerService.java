@@ -21,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.repository.OwnerRepository;
-import org.springframework.samples.petclinic.repository.PersonRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,8 +32,6 @@ public class OwnerService {
 
 	private OwnerRepository ownerRepository;	
 	
-	@Autowired
-	private PersonRepository personRepository;
 	
 	@Autowired
 	private UserService userService;
@@ -61,8 +58,8 @@ public class OwnerService {
 	public void saveOwner(Owner owner) throws DataAccessException {
 		
 		
-		//creating person
-		personRepository.save(owner.getPerson());
+	
+		
 		//creating owner
 		ownerRepository.save(owner);		
 		//creating user

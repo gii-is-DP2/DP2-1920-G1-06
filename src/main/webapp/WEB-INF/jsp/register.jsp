@@ -14,12 +14,10 @@
 		<div class="form-group">
            	 <div class="col-sm-offset-2 col-sm-10">
                 	
-                   		 
-                      <button class="btn btn-default" type="submit" value="o">Owner</button>
-                    		
-                      <button class="btn btn-default" type="submit" value="s">Student</button>
-                   			 
-                	
+                   		<a href="/owners/new" class="btn btn-default">Owner</a> 
+                   		
+                   		<a href="/students/new" class="btn btn-default">Student</a> 
+                   		
             </div>
         </div>
    	</form:form>

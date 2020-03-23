@@ -6,7 +6,6 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Student;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.StudentService;
@@ -59,10 +58,10 @@ public class StudentController {
 			}
 		}
 
-		@GetMapping(value = "/owners/find")
+		@GetMapping(value = "/students/find")
 		public String initFindForm(Map<String, Object> model) {
-			model.put("owner", new Owner());
-			return "owners/findOwners";
+			model.put("students", new Student());
+			return "students/findStudents";
 		}
 
 		@GetMapping(value = "/students")
@@ -83,7 +82,7 @@ public class StudentController {
 			else if (results.size() == 1) {
 				// 1 owner found
 				student = results.iterator().next();
-				return "redirect:/owners/" + student.getId();
+				return "redirect:/students/" + student.getId();
 			}
 			else {
 				// multiple owners found
@@ -100,7 +99,7 @@ public class StudentController {
 		}
 
 		@PostMapping(value = "/students/{studentId}/edit")
-		public String processUpdateOwnerForm(@Valid Student student, BindingResult result,
+		public String processUpdateStudentForm(@Valid Student student, BindingResult result,
 				@PathVariable("studentId") int studentId) {
 			if (result.hasErrors()) {
 				return VIEWS_STUDENT_CREATE_OR_UPDATE_FORM;
@@ -119,7 +118,7 @@ public class StudentController {
 		 */
 		@GetMapping("/students/{studentId}")
 		public ModelAndView showStudent(@PathVariable("studentId") int studentId) {
-			ModelAndView mav = new ModelAndView("owners/ownerDetails");
+			ModelAndView mav = new ModelAndView("students/studentDetails");
 			mav.addObject(this.studentService.findStudentById(studentId));
 			return mav;
 		}
