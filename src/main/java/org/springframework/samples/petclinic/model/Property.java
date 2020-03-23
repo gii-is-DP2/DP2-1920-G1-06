@@ -22,7 +22,6 @@ public class Property extends BaseEntity {
 	// Atributos --------------------------------------------------------
 
 	@Column(name = "address")
-	@NotEmpty
 	@Length(min = 5, max = 100)
 	private String address;
 
@@ -39,11 +38,11 @@ public class Property extends BaseEntity {
 	private String description;
 
 	@Column(name = "totalRooms")
-	@Range(min = 1)
+	@Range(min = 1, max = 100)
 	private Integer totalRooms;
 
 	@Column(name = "surface")
-	@Range(min = 30)
+	@Range(min = 30, max = 1000)
 	private Integer surface;
 
 	@Transient
