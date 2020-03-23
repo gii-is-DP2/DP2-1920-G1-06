@@ -8,11 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 
 @Entity
@@ -22,7 +22,7 @@ public class Property extends BaseEntity {
 	// Atributos --------------------------------------------------------
 
 	@Column(name = "address")
-	@NotEmpty
+	@Length(min = 5, max = 100)
 	private String address;
 
 	@Column(name = "city")
@@ -30,7 +30,6 @@ public class Property extends BaseEntity {
 	private String city;
 
 	@Column(name = "propertyType")
-	@NotEmpty
 	@Range(max = 1, min = 0)
 	private Integer propertyType;
 
@@ -39,13 +38,11 @@ public class Property extends BaseEntity {
 	private String description;
 
 	@Column(name = "totalRooms")
-	@NotEmpty
-	@Range(min = 1)
+	@Range(min = 1, max = 100)
 	private Integer totalRooms;
 
 	@Column(name = "surface")
-	@NotEmpty
-	@Range(min = 30)
+	@Range(min = 30, max = 1000)
 	private Integer surface;
 
 	@Transient

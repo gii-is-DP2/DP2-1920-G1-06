@@ -29,6 +29,21 @@ public class PropertyService {
 		
 		return propertyRepository.findPropertyById(propertyId);
 	}
-
+	
+	@Transactional
+	public void saveProperty(Property property) throws DataAccessException {
+		propertyRepository.save(property);		
+	}
+	
+//	@Transactional
+//	public void removeProperty(Property property) throws DataAccessException {
+//		propertyRepository.remove(property);		
+//	}
+	
+	@Transactional
+	public void deleteProperty(Property property) throws DataAccessException {
+		propertyRepository.delete(property);		
+	}
+	
 
 }
