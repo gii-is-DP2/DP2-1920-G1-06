@@ -84,8 +84,7 @@ public class PropertyServiceTests {
 		Integer sizeOfPropertiesAfterDelete = propertiesAfterDelete.size();
 		
 		assertThat(sizeOfPropertiesAfterDelete).isEqualTo(sizeOfPropertiesBeforeDelete-1);
-		
-		//Añadimos un elemento para no afectar a las demas pruebas
+
 	}
 //	@Test
 //	@Transactional
