@@ -21,8 +21,12 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Owner;
+import org.springframework.samples.petclinic.model.Properties;
+import org.springframework.samples.petclinic.model.Student;
+import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.OwnerService;
+import org.springframework.samples.petclinic.service.StudentService;
 import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -41,26 +45,39 @@ public class UserController {
 	private static final String VIEWS_OWNER_CREATE_FORM = "users/createOwnerForm";
 	private static final String VIEWS_STUDENT_CREATE_FORM = "users/createStudentForm";
 
+	
+	private final UserService userService;
 	private final OwnerService ownerService;
+	private final StudentService studentService;
 
 	@Autowired
-	public UserController(OwnerService ownerService) {
+	public UserController(OwnerService ownerService, StudentService studentService, UserService userService) {
 		this.ownerService = ownerService;
+		this.studentService =studentService;
+		this.userService=userService;
 	}
 
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
+	
+	@GetMapping(value ="/users/new")
+	public String getUserType(Map<String, Object> model) {
+		
+	    return "users/register";
+		
+	}
 
-	@GetMapping(value = "/users/new")
-	public String initCreationForm(Map<String, Object> model) {
+
+	@GetMapping(value = "/users/new/owner")
+	public String initOwnerCreationForm(Map<String, Object> model) {
 		Owner owner = new Owner();
 		model.put("owner", owner);
 		return VIEWS_OWNER_CREATE_FORM;
 	}
 
-	@PostMapping(value = "/users/new")
+	@PostMapping(value = "/users/new/owner")
 	public String processCreationForm(@Valid Owner owner, BindingResult result) {
 		if (result.hasErrors()) {
 			return VIEWS_OWNER_CREATE_FORM;
@@ -68,6 +85,27 @@ public class UserController {
 		else {
 			//creating owner, user, and authority
 			this.ownerService.saveOwner(owner);
+		return "redirect:/";
+		}
+	}
+	
+	@GetMapping(value = "/users/new/student")
+	public String initStudentCreationForm(Map<String, Object> model) {
+		Student student = new Student();
+		model.put("student", student);
+		return VIEWS_STUDENT_CREATE_FORM;
+	}
+
+	@PostMapping(value = "/users/new/student")
+	public String processCreationForm(@Valid Student student, BindingResult result) {
+		if (result.hasErrors()) {
+			return VIEWS_STUDENT_CREATE_FORM;
+		}
+		else {
+			//creating owner, user, and authority
+			this.studentService.saveStudent(student);
+			
+		
 			return "redirect:/";
 		}
 	}

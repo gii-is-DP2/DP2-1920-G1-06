@@ -14,9 +14,9 @@
 		<div class="form-group">
            	 <div class="col-sm-offset-2 col-sm-10">
                 	
-                   		<a href="/owners/new" class="btn btn-default">Owner</a> 
+                   		<a href="/users/new/owner" class="btn btn-default">Owner</a> 
                    		
-                   		<a href="/students/new" class="btn btn-default">Student</a> 
+                   		<a href="/users/new/student" class="btn btn-default">Student</a> 
                    		
             </div>
         </div>

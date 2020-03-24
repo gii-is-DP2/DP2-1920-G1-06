@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Student;
 import org.springframework.samples.petclinic.repository.StudentRepository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@Service
 public class StudentService {
 	
 	private StudentRepository studentRepository;	
@@ -38,7 +40,7 @@ public class StudentService {
 		//creating owner
 		studentRepository.save(student);		
 		//creating user
-		userService.saveUser(student.getUser());
+		userService.saveUser(student.getUser(),student.getId());
 		//creating authorities
 		authoritiesService.saveAuthorities(student.getUser().getUsername(), "student");
 	}		

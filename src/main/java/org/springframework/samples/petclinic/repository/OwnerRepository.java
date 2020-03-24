@@ -43,6 +43,8 @@ public interface OwnerRepository {
 	 */
 	Collection<Owner> findByLastName(String lastName) throws DataAccessException;
 
+	
+	Collection<Owner> findAll() throws DataAccessException;
 	/**
 	 * Retrieve an <code>Owner</code> from the data store by id.
 	 * @param id the id to search for
