@@ -17,3 +17,8 @@ INSERT INTO properties(address,city,description,property_type,surface,total_room
 INSERT INTO properties(address,city,description,property_type,surface,total_rooms,owner_id) VALUES ('Base Militar de Botas', 'Cadiz','Con muchos futbolistas', 1, 120,24,2);
 INSERT INTO properties(address,city,description,property_type,surface,total_rooms,owner_id) VALUES ('Base Militar de Sotas', 'Cadiz','Con muchos jugadores de cuatrola', 0, 210,10,2);
 
+INSERT INTO rooms(ext_window,tam_closet,price,room_number,surface,property_id) VALUES (2, 2, 10.0, '1', 10, 1);
+INSERT INTO rooms(ext_window,tam_closet,price,room_number,surface,property_id) VALUES (1, 2, 11.0, '2', 10, 1);
+INSERT INTO rooms(ext_window,tam_closet,price,room_number,surface,property_id) VALUES (0, 2, 12.0, '3', 10, 1);
+INSERT INTO rooms(ext_window,tam_closet,price,room_number,surface,property_id) VALUES (0, 2, 13.0, '4', 10, 1);
+INSERT INTO rooms(ext_window,tam_closet,price,room_number,surface,property_id) VALUES (1, 2, 10.0, '1', 8, 2);

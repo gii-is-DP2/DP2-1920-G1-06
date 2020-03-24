@@ -15,12 +15,13 @@
  */
 package org.springframework.samples.petclinic.repository.springdatajpa;
 
-import java.util.Collection;
 
+import java.util.Collection;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.Owner;
+import org.springframework.samples.petclinic.model.Properties;
 import org.springframework.samples.petclinic.repository.OwnerRepository;
 
 /**
@@ -30,6 +31,7 @@ import org.springframework.samples.petclinic.repository.OwnerRepository;
  * @since 15.1.2013
  */
 public interface SpringDataOwnerRepository extends OwnerRepository, Repository<Owner, Integer> {
+
 
 	@Override
 	@Query("SELECT owner FROM Owner owner  WHERE owner.lastName LIKE :lastName%")
@@ -43,5 +45,6 @@ public interface SpringDataOwnerRepository extends OwnerRepository, Repository<O
 	@Override
 	@Query("SELECT owner FROM Owner owner  WHERE owner.id =:id")
 	public Owner findById(@Param("id") int id);
+
 
 }
