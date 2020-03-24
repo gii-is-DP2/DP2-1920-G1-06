@@ -6,6 +6,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.Data;
+
+@Data
 @Entity
 @Table(name = "rooms")
 public class Room extends BaseEntity{
@@ -31,7 +34,7 @@ public class Room extends BaseEntity{
 
 	@ManyToOne
 	@JoinColumn(name = "property_id")
-	private Property property;
+	public Property property;
 
 
 	//Setters
