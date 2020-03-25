@@ -25,7 +25,7 @@ import org.springframework.samples.petclinic.model.Student;
 import org.springframework.samples.petclinic.model.User;
 
 import org.springframework.samples.petclinic.model.Properties;
-
+import org.springframework.samples.petclinic.model.Property;
 import org.springframework.samples.petclinic.repository.OwnerRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -61,6 +61,10 @@ public class OwnerService {
 		return ownerRepository.findByLastName(lastName);
 	}
 
+	@Transactional(readOnly = true)
+	public Collection<Property> findMyProperties(int idOwner) throws DataAccessException {
+		return ownerRepository.findMyProperties(idOwner);
+	}
 
 	@Transactional
 	public void saveOwner(Owner owner) throws DataAccessException {
@@ -68,7 +72,6 @@ public class OwnerService {
 		Integer id;
 		
 		id = ownerRepository.findAll().size()+1;
-		System.out.println("EL ID TENDRÍA QUE SER:" + id);
 		
 		owner.setId(id);
 		//creating owner

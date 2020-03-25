@@ -6,12 +6,18 @@ import java.util.List;
 import java.util.Map;
 
 import javax.naming.Binding;
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Properties;
 import org.springframework.samples.petclinic.model.Property;
+import org.springframework.samples.petclinic.model.User;
+import org.springframework.samples.petclinic.service.OwnerService;
 import org.springframework.samples.petclinic.service.PropertyService;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
@@ -31,23 +37,29 @@ public class PropertyController {
 
 	private final PropertyService propertyService;
 	
-	
+	private final OwnerService ownerService;
 
 	
 	@Autowired
-	public PropertyController(PropertyService propertyService) {
+	public PropertyController(PropertyService propertyService,OwnerService ownerService) {
 		this.propertyService = propertyService;
+		this.ownerService = ownerService;
 	}
 	
 	@GetMapping(value = {"/properties"})
 	public String showPropertyList(Map<String, Object> model) {
-		Properties properties = new Properties();
 		
-		properties.getPropertyList().addAll(this.propertyService.findAll());
+		Properties properties = new Properties();
+		properties.getPropertyList().addAll(this.ownerService.findMyProperties(1));
+		
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		System.out.println(username);
 		
 		model.put("properties", properties); 
 		return "properties/propertiesList";
 	}
+	
+	
 	@GetMapping(value = "/properties/{propertyId}/show")
 	public String initShowForm(@PathVariable("propertyId") int propertyId, ModelMap model) {
 		Property property = this.propertyService.findPropertyById(propertyId);
@@ -73,9 +85,14 @@ public class PropertyController {
 			return VIEWS_PROPERTIES_CREATE_OR_UPDATE_FORM;
 		}
 		else {
+			 //TODO
+			property.setPropertyType(new Integer(propertyType));
 			
-				property.setPropertyType(new Integer(propertyType));
-		
+			
+			Owner owner = this.ownerService.findOwnerById(1);
+			property.setOwner(owner);
+			
+			
 			//creating owner, user and authorities
 			this.propertyService.saveProperty(property);
 			
