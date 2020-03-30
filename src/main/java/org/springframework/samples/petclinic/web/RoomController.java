@@ -22,11 +22,12 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class RoomController {
 
-	private static final String VIEWS_ROOMS_CREATE_OR_UPDATE_FORM = "rooms/createOrUpdateRoomForm";
+	private static final String	VIEWS_ROOMS_CREATE_OR_UPDATE_FORM	= "rooms/createOrUpdateRoomForm";
 
-	private PropertyService propertyService;
+	private PropertyService		propertyService;
 
-	private final RoomService roomService;
+	private final RoomService	roomService;
+
 
 	@Autowired
 	public RoomController(final RoomService roomService) {
@@ -49,7 +50,8 @@ public class RoomController {
 			return RoomController.VIEWS_ROOMS_CREATE_OR_UPDATE_FORM;
 		} else {
 			this.roomService.saveRoom(room);
-			return "redirect:/rooms/" + room.property.getId();
+			return "redirect:/rooms/";
+			//				+ room.property.getId();
 		}
 	}
 
@@ -64,8 +66,7 @@ public class RoomController {
 	}
 
 	@PostMapping(value = "/rooms/{roomId}/edit")
-	public String processUpdateRoomForm(@Valid final Room room, final BindingResult result,
-			@PathVariable("roomId") final int roomId) {
+	public String processUpdateRoomForm(@Valid final Room room, final BindingResult result, @PathVariable("roomId") final int roomId) {
 
 		if (result.hasErrors()) {
 			return RoomController.VIEWS_ROOMS_CREATE_OR_UPDATE_FORM;
@@ -73,11 +74,11 @@ public class RoomController {
 
 			Room roomD = this.roomService.findRoomById(roomId);
 
-			String	roomNumber = room.getRoomNumber();
-			Integer	surface = room.getSurface();
-			Double	price = room.getPrice();
-			Integer	extWindow = room.getExtWindow();
-			Integer	tamCloset = room.getTamCloset();
+			String roomNumber = room.getRoomNumber();
+			Integer surface = room.getSurface();
+			Double price = room.getPrice();
+			Integer extWindow = room.getExtWindow();
+			Integer tamCloset = room.getTamCloset();
 
 			roomD.setRoomNumber(roomNumber);
 			roomD.setSurface(surface);
@@ -94,9 +95,9 @@ public class RoomController {
 	// HABITACIONES--------------------------------------------------------------------------
 
 	@GetMapping(value = "/rooms")
-	public String processFindForm(Property property, BindingResult result, Map<String, Object> model) {
+	public String processFindForm(final Property property, final BindingResult result, final Map<String, Object> model) {
 
-//		Collection<Room> results = this.roomService.findRoomByPropertyId(property.getId());
+		//		Collection<Room> results = this.roomService.findRoomByPropertyId(property.getId());
 
 		Integer i = 1;
 		Collection<Room> results = this.roomService.findRoomByPropertyId(i);
@@ -110,7 +111,7 @@ public class RoomController {
 	// HABITACION---------------------------------------------------------------------------
 
 	@GetMapping("/rooms/{roomId}")
-	public ModelAndView showRoom(@PathVariable("roomId") int roomId) {
+	public ModelAndView showRoom(@PathVariable("roomId") final int roomId) {
 		ModelAndView mav = new ModelAndView("rooms/roomDetails");
 		mav.addObject(this.roomService.findRoomById(roomId));
 		return mav;
