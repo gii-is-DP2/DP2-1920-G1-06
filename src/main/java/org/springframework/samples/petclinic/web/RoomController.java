@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Property;
 import org.springframework.samples.petclinic.model.Room;
@@ -14,12 +15,17 @@ import org.springframework.samples.petclinic.service.RoomService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@RequestMapping("/properties/{propertyId}")
 public class RoomController {
 
 	private static final String	VIEWS_ROOMS_CREATE_OR_UPDATE_FORM	= "rooms/createOrUpdateRoomForm";
@@ -30,28 +36,37 @@ public class RoomController {
 
 
 	@Autowired
-	public RoomController(final RoomService roomService) {
+	public RoomController(final RoomService roomService, final PropertyService propertyService) {
 		this.roomService = roomService;
+		this.propertyService = propertyService;
+	}
+	
+	
+	@ModelAttribute("property")
+	public Property findProperty(@PathVariable("propertyId") int propertyId) {
+		return this.propertyService.findPropertyById(propertyId);
 	}
 
 	// CREACION DE HABITACION
 	// ------------------------------------------------------------------------
 
 	@GetMapping(value = "/rooms/new")
-	public String initCreationForm(final Map<String, Object> model) {
+	public String initCreationForm(Property property, final Map<String, Object> model) {
 		Room room = new Room();
+		property.addRoom(room);
 		model.put("room", room);
 		return RoomController.VIEWS_ROOMS_CREATE_OR_UPDATE_FORM;
 	}
 
 	@PostMapping(value = "/rooms/new")
-	public String processCreationForm(@Valid final Room room, final BindingResult result) {
+	public String processCreationForm(@PathVariable("propertyId") int propertyId, @Valid final Room room, final BindingResult result) {
 		if (result.hasErrors()) {
 			return RoomController.VIEWS_ROOMS_CREATE_OR_UPDATE_FORM;
 		} else {
+			Property property = propertyService.findPropertyById(propertyId);
+			room.setProperty(property);
 			this.roomService.saveRoom(room);
-			return "redirect:/rooms/";
-			//				+ room.property.getId();
+			return "redirect:/properties/{propertyId}/rooms";
 		}
 	}
 
@@ -73,21 +88,11 @@ public class RoomController {
 		} else {
 
 			Room roomD = this.roomService.findRoomById(roomId);
-
-			String roomNumber = room.getRoomNumber();
-			Integer surface = room.getSurface();
-			Double price = room.getPrice();
-			Integer extWindow = room.getExtWindow();
-			Integer tamCloset = room.getTamCloset();
-
-			roomD.setRoomNumber(roomNumber);
-			roomD.setSurface(surface);
-			roomD.setPrice(price);
-			roomD.setExtWindow(extWindow);
-			roomD.setTamCloset(tamCloset);
+			
+			BeanUtils.copyProperties(room, roomD, "id","property");
 
 			this.roomService.saveRoom(roomD);
-			return "redirect:/rooms/{roomId}";
+			return "redirect:/properties/{propertyId}/rooms/{roomId}";
 		}
 	}
 
@@ -95,12 +100,9 @@ public class RoomController {
 	// HABITACIONES--------------------------------------------------------------------------
 
 	@GetMapping(value = "/rooms")
-	public String processFindForm(final Property property, final BindingResult result, final Map<String, Object> model) {
+	public String processFindForm(@PathVariable("propertyId") final int propertyId, final Property property, final BindingResult result, final Map<String, Object> model) {
 
-		//		Collection<Room> results = this.roomService.findRoomByPropertyId(property.getId());
-
-		Integer i = 1;
-		Collection<Room> results = this.roomService.findRoomByPropertyId(i);
+		Collection<Room> results = this.roomService.findRoomByPropertyId(propertyId);
 
 		model.put("selections", results);
 		return "rooms/roomsList";

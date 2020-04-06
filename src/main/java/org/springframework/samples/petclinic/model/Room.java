@@ -5,6 +5,11 @@ import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.Range;
+import org.springframework.format.annotation.NumberFormat;
 
 import lombok.Data;
 
@@ -16,18 +21,23 @@ public class Room extends BaseEntity{
 	// Atributos ----------------------------------------------------
 	
 	@Column(name = "roomNumber")
+	@Length(min = 1,max = 30)
 	private String	roomNumber;
 
 	@Column(name = "surface")
+	@Range(min = 1, max = 50)
 	private Integer	surface;
 
 	@Column(name = "price")
+	@Range(min = 1)
 	private Double	price;
 
 	@Column(name = "extWindow")
+	@Range(min = 0)
 	private Integer	extWindow;
 
 	@Column(name = "tamCloset")
+	@Range(min = 0, max = 20)
 	private Integer	tamCloset;
 	
 	// Relaciones -----------------------------------------------
