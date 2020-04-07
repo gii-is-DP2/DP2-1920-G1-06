@@ -15,7 +15,7 @@
             <th style="width: 200px;">Address</th>
             <th>City</th>
             <th>Details</th>
-            <th>Edit</th>
+            <th>Show</th>
         </tr>
         </thead>
         <tbody>
@@ -43,7 +43,7 @@
                    		<spring:param name="propertyId" value="${property.id}"/>
                     </spring:url>
 
-                    <a href="${fn:escapeXml(propertyUrl)}">Edit property</a>
+                    <a href="${fn:escapeXml(propertyUrl)}">Show property</a>
 
                 </td>
 <!--
