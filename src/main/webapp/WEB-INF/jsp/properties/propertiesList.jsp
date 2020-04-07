@@ -5,7 +5,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
 
-<petclinic:layout pageName="owners">
+<petclinic:layout pageName="properties">
     <h2>Properties</h2>
 
     <table id="propertiesTable" class="table table-striped">
@@ -14,7 +14,8 @@
 
             <th style="width: 200px;">Address</th>
             <th>City</th>
-            <th>Show</th>
+            <th>Details</th>
+            <th>Edit</th>
         </tr>
         </thead>
         <tbody>
@@ -31,12 +32,19 @@
                 </td>
                 <td>
                     <c:out value="${property.city}"/>
+                </td><td>
+                    <spring:url value="/properties/{propertyId}/rooms" var="propertyUrl">
+                   		<spring:param name="propertyId" value="${property.id}"/>
+                    </spring:url>
+                    <a href="${fn:escapeXml(propertyUrl)}">Show rooms</a>
                 </td>
 				<td>
                     <spring:url value="/properties/{propertyId}/show" var="propertyUrl">
                    		<spring:param name="propertyId" value="${property.id}"/>
                     </spring:url>
-                    <a href="${fn:escapeXml(propertyUrl)}">Property</a>
+
+                    <a href="${fn:escapeXml(propertyUrl)}">Edit property</a>
+
                 </td>
 <!--
                 <td> 
@@ -51,9 +59,13 @@
         </c:forEach>
         </tbody>
     </table>
+
     <spring:url value="properties/new" var="addUrl">
         <%-- <spring:param name="ownerId" value="${owner.id}"/> --%>
     </spring:url>
     <a href="${fn:escapeXml(addUrl)}" class="btn btn-default">Add New Property</a>
+  
+   <spring:url value="/" var="propertyUrlBack"></spring:url>
+		<a href="${fn:escapeXml(propertyUrlBack)}" class="btn btn-default">Back to menu</a>
     
 </petclinic:layout>
