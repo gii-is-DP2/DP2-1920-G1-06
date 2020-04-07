@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.model;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -11,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
@@ -39,10 +41,12 @@ public class Property extends BaseEntity {
 
 	@Column(name = "totalRooms")
 	@Range(min = 1, max = 100)
+	@NotNull
 	private Integer totalRooms;
 
 	@Column(name = "surface")
 	@Range(min = 30, max = 1000)
+	@NotNull
 	private Integer surface;
 
 	@Transient
@@ -56,10 +60,26 @@ public class Property extends BaseEntity {
 		return result;
 	}
 
-	// HAY QUE HACERLA !!!!!!!!!!
+	public Owner getOwner() {
+		return owner;
+	}
+
+	public void setOwner(Owner owner) {
+		this.owner = owner;
+	}
+
+	public Set<Room> getRooms() {
+		return rooms;
+	}
+
+	public void setRooms(Set<Room> rooms) {
+		this.rooms = rooms;
+	}
+
 	@Transient
 	public Integer getAvailableRooms() {
-		return totalRooms;
+		//Mejorar con el contrato
+		return rooms.size();
 	}
 
 	// Relaciones -------------------------------------------------------
@@ -119,6 +139,21 @@ public class Property extends BaseEntity {
 
 	public void setSurface(Integer surface) {
 		this.surface = surface;
+	}
+	
+	
+	// Metodos necesarios para la relacion con rooms
+	
+	protected Set<Room> getRoomsInternal() {
+		if (this.rooms == null) {
+			this.rooms = new HashSet<>();
+		}
+		return this.rooms;
+	}
+	
+	public void addRoom(Room room) {
+		getRoomsInternal().add(room);
+		room.setProperty(this);
 	}
 
 }

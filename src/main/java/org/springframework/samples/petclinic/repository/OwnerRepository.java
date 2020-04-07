@@ -21,6 +21,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.BaseEntity;
 import org.springframework.samples.petclinic.model.Owner;
 
+
 /**
  * Repository class for <code>Owner</code> domain objects All method names are compliant
  * with Spring Data naming conventions so this interface can easily be extended for Spring
@@ -59,6 +60,12 @@ public interface OwnerRepository {
 	 * @see BaseEntity#isNew
 	 */
 	void save(Owner owner) throws DataAccessException;
+
+
+	Collection<Property> findMyProperties(int ownerId) throws DataAccessException;
+
+
+	Owner findByUsername(String username);
 
 //	Properties findOwnerProperties(int id) throws DataAccessException;
 

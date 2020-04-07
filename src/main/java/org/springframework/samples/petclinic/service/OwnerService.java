@@ -15,7 +15,10 @@
  */
 package org.springframework.samples.petclinic.service;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -56,7 +59,17 @@ public class OwnerService {
 	public Collection<Owner> findOwnerByLastName(String lastName) throws DataAccessException {
 		return ownerRepository.findByLastName(lastName);
 	}
-
+	
+	@Transactional(readOnly = true)
+	public Owner findOwnerByUsername(String username) {
+		return ownerRepository.findByUsername(username);
+		
+	}
+	
+	@Transactional(readOnly = true)
+	public Collection<Property> findMyProperties(int idOwner) throws DataAccessException {
+		return ownerRepository.findMyProperties(idOwner);
+	}
 
 	@Transactional
 	public void saveOwner(Owner owner) throws DataAccessException {
@@ -64,10 +77,11 @@ public class OwnerService {
 		Integer id;
 		
 		id = ownerRepository.findAll().size()+1;
-		System.out.println("EL ID TENDRÍA QUE SER:" + id);
 		
 		owner.setId(id);
 		//creating owner
+		
+		//owner.setProperties(new HashSet<Property>());
 		ownerRepository.save(owner);		
 		//creating user
 		userService.saveUser(owner.getUser());

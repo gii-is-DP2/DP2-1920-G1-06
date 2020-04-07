@@ -29,6 +29,8 @@
                         <button class="btn btn-default" type="submit">Update Room</button>
                     </c:otherwise>
                 </c:choose>
+                <spring:url value = "/properties/{propertyId}/rooms/{roomId}" var="roomUrlBack"><spring:param name = "propertyId" value = "${property.id}"/><spring:param name = "roomId" value = "${room.id}"/></spring:url>
+				<a href="${fn:escapeXml(roomUrlBack)}" class="btn btn-default">Cancel</a>
             </div>
         </div>
     </form:form>
