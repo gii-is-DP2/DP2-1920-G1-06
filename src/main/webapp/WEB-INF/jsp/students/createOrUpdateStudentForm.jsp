@@ -1,4 +1,3 @@
-
 <%@ page session="false" trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -7,41 +6,31 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags"%>
 
-<petclinic:layout pageName="properties">
+<petclinic:layout pageName="students">
 	<h2>
-		<c:if test="${property['new']}">New </c:if>
-		Property
+		<c:if test="${student['new']}">New </c:if>
+		Student
 	</h2>
-	<form:form modelAttribute="property" class="form-horizontal"
-		id="add-property-form">
+	<form:form modelAttribute="student" class="form-horizontal"
+		id="add-student-form">
 		<div class="form-group has-feedback">
+			<petclinic:inputField label="First Name" name="firstName" />
+			<petclinic:inputField label="Last Name" name="lastName" />
 			<petclinic:inputField label="Address" name="address" />
 			<petclinic:inputField label="City" name="city" />
-			<petclinic:inputField label="Description" name="description" />
-			<petclinic:inputField label="Surface" name="surface" />
-			<petclinic:inputField label="Total Rooms" name="totalRooms" />
-			
-			<div class="form-horizontal">
-				<label  class="col-sm-2 control-label">Type of Properties</label>
-				<div class="col-sm-10">
-					<select name=propertyType class="form-control">
-						<option value=0>House</option>
-						<option value=1>Flat</option>
-					</select>
-				</div>
-			</div>
+			<petclinic:inputField label="Telephone" name="telephone" />
+			<petclinic:inputField label="Username" name="user.username" />
+			<petclinic:inputField label="Password" name="user.password" />
 		</div>
-			
 		<div class="form-group">
 			<div class="col-sm-offset-2 col-sm-10">
 				<c:choose>
-					<c:when test="${property['new']}">
-						<button class="btn btn-default" type="submit">Add
-							Property</button>
+					<c:when test="${student['new']}">
+						<button class="btn btn-default" type="submit">Add Student</button>
 					</c:when>
 					<c:otherwise>
 						<button class="btn btn-default" type="submit">Update
-							Property</button>
+							Student</button>
 					</c:otherwise>
 				</c:choose>
 			</div>

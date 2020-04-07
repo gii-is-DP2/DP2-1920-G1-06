@@ -15,6 +15,8 @@
  */
 package org.springframework.samples.petclinic.model;
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
@@ -22,6 +24,7 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.NotEmpty;
 
 import org.hibernate.validator.constraints.Range;
+import org.springframework.format.annotation.DateTimeFormat;
 
 /**
  * Simple JavaBean domain object representing an person.
@@ -45,12 +48,11 @@ public class Person extends BaseEntity {
 	@NotEmpty
 	protected String dni;
 
-	@Column(name = "birthDate")
-	@NotEmpty
-	protected String birthDate;
+	@Column(name = "birth_date")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	protected LocalDate birthDate;
 
 	@Column(name = "gender")
-	@NotEmpty
 	@Range(max = 1, min = 0)
 	protected Integer gender;
 
@@ -73,6 +75,8 @@ public class Person extends BaseEntity {
 		}
 		return result;
 	}
+	
+	
 
 	// Getters y Setters -----------------------------------------------
 
@@ -84,13 +88,19 @@ public class Person extends BaseEntity {
 		this.dni = dni;
 	}
 
-	public String getBirthDate() {
+	
+
+	public LocalDate getBirthDate() {
 		return birthDate;
 	}
 
-	public void setBirthDate(String birthDate) {
+
+
+	public void setBirthDate(LocalDate birthDate) {
 		this.birthDate = birthDate;
 	}
+
+
 
 	public Integer getGender() {
 		return gender;

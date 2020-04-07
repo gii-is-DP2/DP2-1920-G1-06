@@ -22,4 +22,22 @@ public class Owner extends Person {
 	@JoinColumn(name = "username", referencedColumnName = "username")
 	private User user;
 
+
+	public Set<Property> getProperties() {
+		return properties;
+	}
+
+	public void setProperties(Set<Property> properties) {
+		this.properties = properties;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+
 }

@@ -20,6 +20,8 @@ import java.util.Collection;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.BaseEntity;
 import org.springframework.samples.petclinic.model.Owner;
+import org.springframework.samples.petclinic.model.Properties;
+import org.springframework.samples.petclinic.model.Property;
 
 /**
  * Repository class for <code>Owner</code> domain objects All method names are compliant
@@ -43,6 +45,8 @@ public interface OwnerRepository {
 	 */
 	Collection<Owner> findByLastName(String lastName) throws DataAccessException;
 
+	
+	Collection<Owner> findAll() throws DataAccessException;
 	/**
 	 * Retrieve an <code>Owner</code> from the data store by id.
 	 * @param id the id to search for
@@ -57,5 +61,13 @@ public interface OwnerRepository {
 	 * @see BaseEntity#isNew
 	 */
 	void save(Owner owner) throws DataAccessException;
+
+
+	Collection<Property> findMyProperties(int ownerId) throws DataAccessException;
+
+
+	Owner findByUsername(String username);
+
+//	Properties findOwnerProperties(int id) throws DataAccessException;
 
 }

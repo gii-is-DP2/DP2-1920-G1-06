@@ -28,11 +28,22 @@
 					<span>Home</span>
 				</petclinic:menuItem>
 
+					
+				<sec:authorize access="hasAnyAuthority('owner')">
 				<petclinic:menuItem active="${name eq 'properties'}" url="/properties"
 					title="find properties">
 					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-					<span>Find properties</span>
+					<span>My properties</span>
 				</petclinic:menuItem>
+				</sec:authorize>
+				
+				<sec:authorize access="hasAnyAuthority('student')">
+				<petclinic:menuItem active="${name eq 'properties'}" url="/properties"
+					title="search properties">
+					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+					<span>My properties</span>
+				</petclinic:menuItem>
+				</sec:authorize>
 				
 				<petclinic:menuItem active="${name eq 'owners'}" url="/owners/find"
 					title="find owners">
@@ -40,11 +51,6 @@
 					<span>Find owners</span>
 				</petclinic:menuItem>
 
-				<petclinic:menuItem active="${name eq 'vets'}" url="/vets"
-					title="veterinarians">
-					<span class="glyphicon glyphicon-th-list" aria-hidden="true"></span>
-					<span>Veterinarians</span>
-				</petclinic:menuItem>
 
 				<petclinic:menuItem active="${name eq 'error'}" url="/oups"
 					title="trigger a RuntimeException to see how it is handled">
@@ -60,7 +66,7 @@
 			<ul class="nav navbar-nav navbar-right">
 				<sec:authorize access="!isAuthenticated()">
 					<li><a href="<c:url value="/login" />">Login</a></li>
-					<li><a href="<c:url value="/users/new" />">Register</a></li>
+					<li><a href="<c:url value = "/users/new" />">Register</a></li>
 				</sec:authorize>
 				<sec:authorize access="isAuthenticated()">
 					<li class="dropdown"><a href="#" class="dropdown-toggle"

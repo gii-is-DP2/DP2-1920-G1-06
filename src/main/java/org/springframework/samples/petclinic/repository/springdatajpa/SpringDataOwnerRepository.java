@@ -15,8 +15,14 @@
  */
 package org.springframework.samples.petclinic.repository.springdatajpa;
 
+
+import java.util.Collection;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
+import org.springframework.data.repository.query.Param;
 import org.springframework.samples.petclinic.model.Owner;
+import org.springframework.samples.petclinic.model.Properties;
+import org.springframework.samples.petclinic.model.Property;
 import org.springframework.samples.petclinic.repository.OwnerRepository;
 
 /**
@@ -26,6 +32,27 @@ import org.springframework.samples.petclinic.repository.OwnerRepository;
  * @since 15.1.2013
  */
 public interface SpringDataOwnerRepository extends OwnerRepository, Repository<Owner, Integer> {
+
+
+	@Override
+	@Query("SELECT owner FROM Owner owner  WHERE owner.lastName LIKE :lastName%")
+	public Collection<Owner> findByLastName(@Param("lastName") String lastName);
+	
+	@Override
+	@Query("SELECT owner FROM Owner owner  WHERE owner.user.id LIKE :username%")
+	public Owner findByUsername(@Param("username") String username);
+	
+	@Override
+	@Query("SELECT p FROM Property p  WHERE p.owner.id LIKE :ownerId")
+	public Collection<Property> findMyProperties(@Param("ownerId") int ownerId);
+	
+	@Override
+	@Query("SELECT owner FROM Owner owner")
+	public Collection<Owner> findAll();
+	
+	@Override
+	@Query("SELECT owner FROM Owner owner  WHERE owner.id =:id")
+	public Owner findById(@Param("id") int id);
 
 
 }

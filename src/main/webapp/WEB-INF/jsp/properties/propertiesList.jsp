@@ -39,10 +39,12 @@
                     <a href="${fn:escapeXml(propertyUrl)}">Show rooms</a>
                 </td>
 				<td>
-                    <spring:url value="/properties/{propertyId}/edit" var="propertyUrl">
+                    <spring:url value="/properties/{propertyId}/show" var="propertyUrl">
                    		<spring:param name="propertyId" value="${property.id}"/>
                     </spring:url>
+
                     <a href="${fn:escapeXml(propertyUrl)}">Edit property</a>
+
                 </td>
 <!--
                 <td> 
@@ -57,6 +59,13 @@
         </c:forEach>
         </tbody>
     </table>
-    <spring:url value="/" var="propertyUrlBack"></spring:url>
+
+    <spring:url value="properties/new" var="addUrl">
+        <%-- <spring:param name="ownerId" value="${owner.id}"/> --%>
+    </spring:url>
+    <a href="${fn:escapeXml(addUrl)}" class="btn btn-default">Add New Property</a>
+  
+   <spring:url value="/" var="propertyUrlBack"></spring:url>
 		<a href="${fn:escapeXml(propertyUrlBack)}" class="btn btn-default">Back to menu</a>
+    
 </petclinic:layout>
