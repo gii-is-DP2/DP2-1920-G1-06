@@ -16,4 +16,7 @@ public interface StudentRepository {
 	void save(Student student) throws DataAccessException;
 
 
+	Collection<Student> findAll() throws DataAccessException;
+
+
 }

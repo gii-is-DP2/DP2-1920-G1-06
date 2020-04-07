@@ -24,11 +24,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Owner;
 
-import org.springframework.samples.petclinic.model.Student;
-import org.springframework.samples.petclinic.model.User;
 
-import org.springframework.samples.petclinic.model.Properties;
-import org.springframework.samples.petclinic.model.Property;
+
 import org.springframework.samples.petclinic.repository.OwnerRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,7 +41,6 @@ public class OwnerService {
 	
 	@Autowired
 	private UserService userService;
-	private StudentService studentService;
 	
 	@Autowired
 	private AuthoritiesService authoritiesService;
@@ -88,13 +84,16 @@ public class OwnerService {
 		//owner.setProperties(new HashSet<Property>());
 		ownerRepository.save(owner);		
 		//creating user
-		userService.saveUser(owner.getUser(),owner.getId());
+		userService.saveUser(owner.getUser());
 		
 		//creating authorities
 		authoritiesService.saveAuthorities(owner.getUser().getUsername(), "owner");
 	}
 
-			
+	public Collection<Owner> findAll() {
+		// TODO Auto-generated method stub
+		return ownerRepository.findAll();
+	}		
 
 
 

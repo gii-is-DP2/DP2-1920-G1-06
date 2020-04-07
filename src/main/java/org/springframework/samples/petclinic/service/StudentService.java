@@ -40,9 +40,14 @@ public class StudentService {
 		//creating owner
 		studentRepository.save(student);		
 		//creating user
-		userService.saveUser(student.getUser(),student.getId());
+		userService.saveUser(student.getUser());
 		//creating authorities
 		authoritiesService.saveAuthorities(student.getUser().getUsername(), "student");
+	}
+
+	public Collection<Student> findAll() {
+		// TODO Auto-generated method stub
+		return studentRepository.findAll();
 	}		
 
 }

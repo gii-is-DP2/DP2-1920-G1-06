@@ -1,6 +1,8 @@
 package org.springframework.samples.petclinic.repository;
 
 
+import java.util.Collection;
+
 import javax.validation.Valid;
 
 import org.springframework.dao.DataAccessException;
@@ -11,9 +13,11 @@ public interface UserRepository {
 	
 //	User findById(int id) throws DataAccessException;
 //	
-//	User findByUsername(String username) throws DataAccessException;
+	User findByUsername(String username) throws DataAccessException;
 
 	void save(@Valid User user) throws DataAccessException;
+
+	Collection<User> findAll() throws DataAccessException;
 
 	
 

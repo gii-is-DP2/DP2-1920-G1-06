@@ -9,9 +9,9 @@ import org.springframework.samples.petclinic.repository.UserRepository;
 
 public interface SpringDataUserRepository extends UserRepository , Repository<User, String>{
 	
-//	@Override
-//	@Query("SELECT user FROM User user WHERE owner.lastName LIKE :lastName%")
-//	public User findByUsername(@Param("username") String username);
+	@Override
+	@Query("SELECT user FROM User user WHERE user.username LIKE :username%")
+	public User findByUsername(@Param("username") String username);
 //
 //	@Override
 //	@Query("SELECT user FROM User user WHERE user.id =:id")
