@@ -65,6 +65,9 @@ public interface OwnerRepository {
 
 	Collection<Property> findMyProperties(int ownerId) throws DataAccessException;
 
+
+	Owner findByUsername(String username);
+
 //	Properties findOwnerProperties(int id) throws DataAccessException;
 
 }

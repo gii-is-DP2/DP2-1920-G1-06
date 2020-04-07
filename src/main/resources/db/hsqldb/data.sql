@@ -5,10 +5,15 @@ INSERT INTO authorities VALUES ('admin1','admin');
 INSERT INTO users(username,password,enabled) VALUES ('owner1','0wn3r',TRUE);
 INSERT INTO authorities VALUES ('owner1','owner');
 
+INSERT INTO users(username,password,enabled) VALUES ('owner2','2',TRUE);
+INSERT INTO authorities VALUES ('owner2','owner');
 
-INSERT INTO owners(first_name,last_name,telephone,username,gender,email,dni,birth_date) VALUES ('George', 'Franklin','6085551023', 'owner1',1,'email@email.es','0808129-D','2015-10-06');
+INSERT INTO users(username,password,enabled) VALUES ('owner3','3',TRUE);
+INSERT INTO authorities VALUES ('owner3','owner');
+
+INSERT INTO owners(first_name,last_name,telephone,username,gender,email,dni,birth_date) VALUES ('Georg', 'Franklin','6085551023', 'owner2',1,'email@email.es','0808129-D','2015-10-06');
 INSERT INTO owners(first_name,last_name,telephone,username,gender,email,dni,birth_date) VALUES ('George', 'Franklin','6085551023', 'owner1',0,'email@email.es','0808129-D','2015-10-07');
-
+INSERT INTO owners(first_name,last_name,telephone,username,gender,email,dni,birth_date) VALUES ('Georgina', 'Franklin','6085551023', 'owner3',1,'email@email.es','0808139-D','2015-10-06');
 
 INSERT INTO properties(address,city,description,property_type,surface,total_rooms,owner_id) VALUES ('Base Militar de Rotas', 'Cadiz','Con muchos militares', 0, 90,4,1);
 INSERT INTO properties(address,city,description,property_type,surface,total_rooms,owner_id) VALUES ('Base Militar de Potas', 'Cadiz','Con muchos borrachos', 1, 30,4,1);

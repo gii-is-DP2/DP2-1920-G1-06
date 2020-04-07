@@ -39,6 +39,10 @@ public interface SpringDataOwnerRepository extends OwnerRepository, Repository<O
 	public Collection<Owner> findByLastName(@Param("lastName") String lastName);
 	
 	@Override
+	@Query("SELECT owner FROM Owner owner  WHERE owner.user.id LIKE :username%")
+	public Owner findByUsername(@Param("username") String username);
+	
+	@Override
 	@Query("SELECT p FROM Property p  WHERE p.owner.id LIKE :ownerId")
 	public Collection<Property> findMyProperties(@Param("ownerId") int ownerId);
 	

@@ -10,12 +10,19 @@ import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Properties;
 import org.springframework.samples.petclinic.model.Property;
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.OwnerService;
 import org.springframework.samples.petclinic.service.PropertyService;
+import org.springframework.samples.petclinic.service.UserService;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.ObjectPostProcessor;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
@@ -36,27 +43,39 @@ public class PropertyController {
 	private static final String VIEWS_PROPERTIES_SHOW = "properties/showForm";
 
 	private final PropertyService propertyService;
-	
 	private final OwnerService ownerService;
+	private final UserService userService;
 
 	
 	@Autowired
-	public PropertyController(PropertyService propertyService,OwnerService ownerService) {
+	public PropertyController(PropertyService propertyService,OwnerService ownerService,UserService userService) {
 		this.propertyService = propertyService;
 		this.ownerService = ownerService;
+		this.userService = userService;
 	}
+	
 	
 	@GetMapping(value = {"/properties"})
 	public String showPropertyList(Map<String, Object> model) {
+		String dir = "properties/propertiesList";
 		
 		Properties properties = new Properties();
-		properties.getPropertyList().addAll(this.ownerService.findMyProperties(1));
 		
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		System.out.println(username);
 		
-		model.put("properties", properties); 
-		return "properties/propertiesList";
+		Owner owner = this.ownerService.findOwnerByUsername(username);
+
+		try {
+			Collection<Property> prop = this.ownerService.findMyProperties(owner.getId());
+
+			properties.getPropertyList().addAll(prop);
+
+			model.put("properties", properties);
+		}catch(NullPointerException e ) {
+			
+		}
+
+		return dir;
 	}
 	
 	
@@ -79,19 +98,20 @@ public class PropertyController {
 	}
 	
 	@PostMapping(value = "/properties/new")
-	public String processCreationForm(@RequestParam(name = "propertyType", required = true) String propertyType ,@Valid Property property, BindingResult result) {
+	public String processCreationForm(@RequestParam(name = "propertyType", required = true) String propertyType ,@Valid Property property, BindingResult result) throws Exception {
 
 		if (result.hasErrors()) {
 			return VIEWS_PROPERTIES_CREATE_OR_UPDATE_FORM;
 		}
 		else {
-			 //TODO
+			
 			property.setPropertyType(new Integer(propertyType));
 			
+			String username = SecurityContextHolder.getContext().getAuthentication().getName();
 			
-			Owner owner = this.ownerService.findOwnerById(1);
+			Owner owner = this.ownerService.findOwnerByUsername(username);
+
 			property.setOwner(owner);
-			
 			
 			//creating owner, user and authorities
 			this.propertyService.saveProperty(property);
