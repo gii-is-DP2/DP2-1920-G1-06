@@ -113,7 +113,7 @@ public class PropertyController {
 
 			property.setOwner(owner);
 			
-			//creating owner, user and authorities
+			
 			this.propertyService.saveProperty(property);
 			
 			return "redirect:/properties/" + property.getId() +"/show";
