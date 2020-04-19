@@ -1,35 +1,22 @@
 package org.springframework.samples.petclinic.web;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
-import javax.naming.Binding;
-import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Properties;
 import org.springframework.samples.petclinic.model.Property;
-import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.OwnerService;
 import org.springframework.samples.petclinic.service.PropertyService;
 import org.springframework.samples.petclinic.service.UserService;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.config.annotation.ObjectPostProcessor;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -158,6 +145,32 @@ public class PropertyController {
 			
 			return "redirect:/properties/" + propertyId +"/show";
 		}
+	}
+	
+	
+//	-------------------------- Property find student -----------------------------
+
+	@GetMapping(value = "/properties/find")
+	public String initFindForm(Map<String, Object> model) {
+		model.put("property", new Property());
+		return "properties/findProperties";
+	}
+	
+	@PostMapping(value = "/properties/find")
+	public String processCreationForm(@RequestParam(name = "city", required = true)String location, Map<String, Object> model) throws Exception {
+
+		Properties properties = new Properties();
+		
+		try {
+			Collection<Property> prop = this.propertyService.findPropertyByLocation(location);
+
+			properties.getPropertyList().addAll(prop);
+
+			model.put("properties", properties);
+		}catch(NullPointerException e ) {
+			
+		}
+		return "properties/propertiesList";
 	}
 	
 	@GetMapping(value = { "/properties.xml"})

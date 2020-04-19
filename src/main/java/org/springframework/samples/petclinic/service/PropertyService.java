@@ -45,5 +45,11 @@ public class PropertyService {
 		propertyRepository.delete(property);		
 	}
 	
+	
+	public Collection<Property> findPropertyByLocation(String location) {
+		return propertyRepository.findPropertyByLocation(location);
+	}
+	
+	
 
 }

@@ -4,6 +4,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 
 <petclinic:layout pageName="properties">
     <h2>Properties</h2>
@@ -63,7 +65,11 @@
     <spring:url value="properties/new" var="addUrl">
         <%-- <spring:param name="ownerId" value="${owner.id}"/> --%>
     </spring:url>
-    <a href="${fn:escapeXml(addUrl)}" class="btn btn-default">Add New Property</a>
+    <sec:authorize access="hasAnyAuthority('owner')">
+        <a href="${fn:escapeXml(addUrl)}" class="btn btn-default">Add New Property</a>
+    
+	</sec:authorize>
+    
   
    <spring:url value="/" var="propertyUrlBack"></spring:url>
 		<a href="${fn:escapeXml(propertyUrlBack)}" class="btn btn-default">Back to menu</a>

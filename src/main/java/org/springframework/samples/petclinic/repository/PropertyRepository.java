@@ -15,4 +15,6 @@ public interface PropertyRepository {
 	void save(Property property) throws DataAccessException;
 	
 	void delete(Property property) throws DataAccessException;
+
+	Collection<Property> findPropertyByLocation(String location);
 }

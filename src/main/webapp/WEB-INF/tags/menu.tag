@@ -38,10 +38,10 @@
 				</sec:authorize>
 				
 				<sec:authorize access="hasAnyAuthority('student')">
-				<petclinic:menuItem active="${name eq 'properties'}" url="/properties"
+				<petclinic:menuItem active="${name eq 'properties'}" url="/properties/find"
 					title="search properties">
 					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-					<span>My properties</span>
+					<span>search properties</span>
 				</petclinic:menuItem>
 				</sec:authorize>
 				
