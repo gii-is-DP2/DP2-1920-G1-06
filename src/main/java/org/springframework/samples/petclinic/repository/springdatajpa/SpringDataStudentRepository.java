@@ -5,6 +5,7 @@ import java.util.Collection;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.Repository;
 import org.springframework.data.repository.query.Param;
+import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Student;
 import org.springframework.samples.petclinic.repository.StudentRepository;
 
@@ -17,5 +18,9 @@ public interface SpringDataStudentRepository extends StudentRepository, Reposito
 	@Override
 	@Query("SELECT student FROM Student student  WHERE student.id =:id")
 	public Student findById(@Param("id") int id);
+	
+	@Override
+	@Query("SELECT student FROM Student student  WHERE student.user.id LIKE :username%")
+	public Student findByUsername(@Param("username") String username);
 
 }

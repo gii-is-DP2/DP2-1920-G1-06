@@ -12,46 +12,85 @@ import javax.persistence.Transient;
 import javax.validation.constraints.NotEmpty;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
 
 @Entity
 @Table(name = "rentals")
 
 public class Rental extends BaseEntity {
-	
+
 	// Atributos ---------------------------------------------
 
 	@Column(name = "startDate")
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
-	@NotEmpty
 	private LocalDate startDate;
 
 	@Column(name = "endDate")
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
-	@NotEmpty
 	private LocalDate endDate;
 
 	@Column(name = "priceMonth")
-	@NotEmpty
-	private Integer priceMonth;
+	private Double priceMonth;
+	
+	@Column(name = "isARequest") //ES solicitud (true) O respuesta (False)
+	private Boolean isARequest;
+	
+	@Column(name = "isAccepted")
+	private Boolean isAccepted;
+
+	public Boolean getIsARequest() {
+		return isARequest;
+	}
+
+	public void setIsARequest(Boolean isARequest) {
+		this.isARequest = isARequest;
+	}
+
+	public Boolean getIsAccepted() {
+		return isAccepted;
+	}
+
+	public void setIsAccepted(Boolean isAccepted) {
+		this.isAccepted = isAccepted;
+	}
+
+	public Room getRoom() {
+		return room;
+	}
+
+	public void setRoom(Room room) {
+		this.room = room;
+	}
+
+	public Student getStudent() {
+		return student;
+	}
+
+	public void setStudent(Student student) {
+		this.student = student;
+	}
 
 	@Transient
 	public Integer getTotalPrice() {
-
+		// Si alquilas en diciebre y acabas el contrato en enero el resultado es -11 
+		//TODO
 		Integer months = this.endDate.getMonthValue() - this.startDate.getMonthValue();
 
-		return this.priceMonth * months;
+		return (int) (this.priceMonth * months);
 	}
 
-	//Relaciones ------------------------------------------
-	
+	// Relaciones ------------------------------------------
+
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "room_id")
 	private Room room;
-	
+
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "student_id")
 	private Student student;
 
+	
+	
 	public LocalDate getStartDate() {
 		return startDate;
 	}
@@ -68,11 +107,11 @@ public class Rental extends BaseEntity {
 		this.endDate = endDate;
 	}
 
-	public Integer getPriceMonth() {
+	public Double getPriceMonth() {
 		return priceMonth;
 	}
 
-	public void setPriceMonth(Integer priceMonth) {
+	public void setPriceMonth(Double double1) {
 		this.priceMonth = priceMonth;
 	}
 

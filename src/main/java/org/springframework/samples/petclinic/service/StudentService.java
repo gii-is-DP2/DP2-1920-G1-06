@@ -50,4 +50,7 @@ public class StudentService {
 		return studentRepository.findAll();
 	}		
 
+	public Student findStudentByUsername(String username) {
+		return studentRepository.findByUsername(username);
+	}		
 }

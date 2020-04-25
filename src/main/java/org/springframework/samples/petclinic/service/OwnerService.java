@@ -91,8 +91,7 @@ public class OwnerService {
 	public Collection<Owner> findAll() {
 		// TODO Auto-generated method stub
 		return ownerRepository.findAll();
-	}		
-
+	}
 
 
 //	@Transactional

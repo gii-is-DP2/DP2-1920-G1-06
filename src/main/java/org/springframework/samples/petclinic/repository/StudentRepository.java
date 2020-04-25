@@ -19,4 +19,7 @@ public interface StudentRepository {
 	Collection<Student> findAll() throws DataAccessException;
 
 
+	Student findByUsername(String username);
+
+
 }
