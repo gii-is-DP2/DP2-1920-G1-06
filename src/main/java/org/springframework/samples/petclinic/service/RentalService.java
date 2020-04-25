@@ -39,8 +39,12 @@ public class RentalService {
 		return this.rentalRepository.findAll();
 	}
 
-	public Collection<Rental> findRentalByOwnerId(final Integer ownerId) {
+	public Collection<Rental> findRentalByOwnerId(int ownerId) {
 		return this.rentalRepository.findRentalByOwnerId(ownerId);
+	}
+
+	public Object findRentalById(int rentalId) {
+		return this.rentalRepository.findRentalById(rentalId);
 	}
 
 }

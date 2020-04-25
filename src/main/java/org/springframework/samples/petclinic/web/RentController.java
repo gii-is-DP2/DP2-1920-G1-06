@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/properties/{propertyId}/rooms/{roomId}")
@@ -52,14 +53,19 @@ public class RentController {
 		this.propertyService = propertyService;
 		this.rentalService = rentalService;
 	}
-	@GetMapping(value = "/rental/new")
+	
+	
+	//CREACION DEL ALQUILER EN STUDENT --------------------------------------------------------
+	
+	@GetMapping(value = "/rentals/new")
 	public String initCreationForm(final Map<String, Object> model) {
 		Rental rental = new Rental();
 		model.put("rental", rental);
 		return RentController.VIEWS_RENTAL_CREATE_FORM;
 	}
+	
 
-	@PostMapping(value = "/rental/new")
+	@PostMapping(value = "/rentals/new")
 	public String processCreationForm(@PathVariable("roomId") final int roomId, @PathVariable("propertyId") final int propertyId, @Valid final Rental rental, final BindingResult result) {
 		Room room = this.roomService.findRoomById(roomId);
 
@@ -81,6 +87,8 @@ public class RentController {
 		return "/welcome";
 
 	}
+	
+	//LISTADO DE ALQUILERES ------------------------------------------------------------------
 
 	@GetMapping(value = "/rentals")
 	public String processFindForm(@PathVariable("userId") final int userId, final BindingResult result, final Map<String, Object> model) {
@@ -102,6 +110,15 @@ public class RentController {
 		model.put("selections", results);
 		return "rentals/rentalsList";
 
+	}
+	
+	//MOSTRADO DE ALQUILER -----------------------------------------------------------------
+	
+	@GetMapping("/rentals/{rentalId}")
+	public ModelAndView showRental(@PathVariable("rentalId") final int rentalId) {
+		ModelAndView mav = new ModelAndView("rentals/rentalDetails");
+		mav.addObject(this.rentalService.findRentalById(rentalId));
+		return mav;
 	}
 
 }

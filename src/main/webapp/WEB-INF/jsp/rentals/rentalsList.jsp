@@ -5,17 +5,15 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags"%>
 
-<petclinic:layout pageName="rooms">
+<petclinic:layout pageName="rentals">
 	<h2>Rooms</h2>
 
-	<table id="roomsTable" class="table table-striped">
+	<table id="rentalsTable" class="table table-striped">
 		<thead>
 			<tr>
 				<th style="width: 200px;">Start Date</th>
 				<th style="width: 200px">End Date</th>
 				<th>Complete Address</th>
-				<th>Owner</th>
-				<th>Student</th>
 
 			</tr>
 		</thead>
@@ -31,8 +29,6 @@
 					<td><c:out value="${rental.startDate}" /></td>
 					<td><c:out value="${rental.endDate}" /></td>
 					<td><c:out value="${rental.room.roomNumber}"/>, <c:out value="${rental.room.property.address}" /></td>
-					<td><c:out value="${rental.room.property.owner.lastName}" />, <c:out value="${rental.room.property.owner.firstName}" /></td>
-					<td><c:out value="${rental.student.lastName}" />, <c:out value="${rental.student.firstName}" /></td>
 				</tr>
 			</c:forEach>
 		</tbody>

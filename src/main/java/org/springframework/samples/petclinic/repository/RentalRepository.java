@@ -13,5 +13,8 @@ public interface RentalRepository {
 
 	Collection<Rental> findAll();
 
-	Collection<Rental> findRentalByOwnerId(Integer ownerId);
+	Collection<Rental> findRentalByOwnerId(int ownerId);
+
+	Rental findRentalById(int rentalId);
+
 }
