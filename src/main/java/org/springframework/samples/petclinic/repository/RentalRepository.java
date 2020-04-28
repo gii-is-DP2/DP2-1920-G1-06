@@ -13,4 +13,8 @@ public interface RentalRepository {
 	void save(@Valid Rental rental);
 
 	Collection<Rental> findAll();
+
+	Rental findRentalById(int id);
+	
+	
 }

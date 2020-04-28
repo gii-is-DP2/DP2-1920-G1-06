@@ -111,7 +111,7 @@ public class Rental extends BaseEntity {
 		return priceMonth;
 	}
 
-	public void setPriceMonth(Double double1) {
+	public void setPriceMonth(Double priceMonth) {
 		this.priceMonth = priceMonth;
 	}
 

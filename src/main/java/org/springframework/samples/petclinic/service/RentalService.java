@@ -4,6 +4,7 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Rental;
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.repository.RentalRepository;
@@ -44,6 +45,11 @@ public class RentalService {
 		return rentalRepository.findAll();
 	}
 	
+	
+	@Transactional(readOnly = true)
+	public Rental findRentalById(int id) throws DataAccessException {
+		return rentalRepository.findRentalById(id);
+	}
 	
 }
 

@@ -1,5 +1,6 @@
 package org.springframework.samples.petclinic.web;
 
+import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Map;
 
@@ -21,6 +22,7 @@ import org.springframework.samples.petclinic.service.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -32,7 +34,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/properties/{propertyId}/rooms/{roomId}")
-public class RentController {
+public class RentalController {
 
 	
 		private static final String VIEWS_RENTAL_CREATE_FORM = "rentals/createRentalForm";
@@ -48,7 +50,7 @@ public class RentController {
 		private final PropertyService propertyService;
 
 		@Autowired
-		public RentController(RentalService rentalService,OwnerService ownerService, StudentService studentService, RoomService roomService,PropertyService propertyService) {
+		public RentalController(RentalService rentalService,OwnerService ownerService, StudentService studentService, RoomService roomService,PropertyService propertyService) {
 			this.ownerService = ownerService;
 			this.studentService = studentService;
 			this.roomService = roomService;
@@ -67,22 +69,59 @@ public class RentController {
 			Room room = roomService.findRoomById(roomId);
 			
 			rental.setId(room.getId());
-			System.out.println(room.getPrice().doubleValue());
 			rental.setPriceMonth(room.getPrice().doubleValue());
 			rental.setIsAccepted(false);
 			rental.setIsARequest(true);
 			rental.setRoom(room);
 			
 			String username = SecurityContextHolder.getContext().getAuthentication().getName();
-			System.out.println(username);
 			Student student = this.studentService.findStudentByUsername(username);
-			System.out.println(student);
 			rental.setStudent(student);
 			
 			this.rentalService.saveRental(rental);
 			
 			return "/welcome";
 			
+		}
+		
+		
+		@GetMapping(value = "/rental/{rentalId}/edit")
+		public String initUpdateForm(@PathVariable("propertyId") int propertyId, ModelMap model) {
+			Rental rental = this.rentalService.findRentalById(propertyId);
+			model.put("rental", rental);
+			return "";
+		}
+		
+		@PostMapping(value = "/rental/{rentalId}/edit")
+		public String processUpdateForm(@PathVariable("rentalId") int rentalId,@Valid Rental rental, BindingResult result) {
+			if (result.hasErrors()) {
+				return VIEWS_PROPERTIES_CREATE_OR_UPDATE_FORM;
+			}
+			else {
+				Rental rentalD = this.rentalService.findRentalById(rentalId);
+				
+				LocalDate startDate = rental.getStartDate();
+				LocalDate endDate = rental.getStartDate();
+				Double priceMonth = rental.getPriceMonth();
+				Room r = rental.getRoom();
+				Student s = rental.getStudent();
+
+				rentalD.setStartDate(startDate);
+				rentalD.setEndDate(endDate);
+				rentalD.setPriceMonth(priceMonth);
+				rentalD.setIsARequest(false);
+				rentalD.setRoom(r);
+				rentalD.setStudent(s);
+				
+				//falta lo complicao
+				
+				
+				
+				this.propertyService.saveProperty(propertyD);
+				
+				
+				return "redirect:/properties/" + propertyId +"/show";
+			}
 		}
 
 
