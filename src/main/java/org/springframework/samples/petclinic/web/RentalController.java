@@ -89,13 +89,17 @@ public class RentalController {
 		public String initUpdateForm(@PathVariable("propertyId") int propertyId, ModelMap model) {
 			Rental rental = this.rentalService.findRentalById(propertyId);
 			model.put("rental", rental);
-			return "";
+			
+			//Cambiar la referencia cuando esté el list
+			return "VIEWS_RENTAL_CREATE_FORM";
 		}
 		
 		@PostMapping(value = "/rental/{rentalId}/edit")
 		public String processUpdateForm(@PathVariable("rentalId") int rentalId,@Valid Rental rental, BindingResult result) {
 			if (result.hasErrors()) {
-				return VIEWS_PROPERTIES_CREATE_OR_UPDATE_FORM;
+				//Cambiar la referencia cuando esté el list
+
+				return VIEWS_RENTAL_CREATE_FORM;
 			}
 			else {
 				Rental rentalD = this.rentalService.findRentalById(rentalId);
@@ -117,10 +121,10 @@ public class RentalController {
 				
 				
 				
-				this.propertyService.saveProperty(propertyD);
+//				this.propertyService.saveProperty(propertyD);
 				
 				
-				return "redirect:/properties/" + propertyId +"/show";
+				return "VIEWS_RENTAL_CREATE_FORM";
 			}
 		}
 

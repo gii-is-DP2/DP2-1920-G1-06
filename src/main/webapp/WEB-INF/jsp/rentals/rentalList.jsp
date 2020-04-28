@@ -20,7 +20,7 @@
             <th>Show</th>
         </tr>
         </thead>
-        <tbody><%-- 
+        <tbody>
         <c:forEach items="${properties.propertyList}" var="property">
             <tr>
                <!--  <td>
@@ -58,7 +58,7 @@
 -->
                 
             </tr>
-        </c:forEach> --%>
+        </c:forEach>
         </tbody>
     </table> 
 
