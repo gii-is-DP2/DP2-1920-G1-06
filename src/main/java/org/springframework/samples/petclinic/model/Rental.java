@@ -88,6 +88,10 @@ public class Rental extends BaseEntity {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "student_id")
 	private Student student;
+	
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "owner_id")
+	private Owner owner;
 
 	
 	
@@ -111,7 +115,7 @@ public class Rental extends BaseEntity {
 		return priceMonth;
 	}
 
-	public void setPriceMonth(Double double1) {
+	public void setPriceMonth(Double priceMonth) {
 		this.priceMonth = priceMonth;
 	}
 

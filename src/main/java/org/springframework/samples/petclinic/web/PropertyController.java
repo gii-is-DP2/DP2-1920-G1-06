@@ -44,6 +44,7 @@ public class PropertyController {
 	
 	@GetMapping(value = {"/properties"})
 	public String showPropertyList(Map<String, Object> model) {
+		
 		String dir = "properties/propertiesList";
 		
 		Properties properties = new Properties();

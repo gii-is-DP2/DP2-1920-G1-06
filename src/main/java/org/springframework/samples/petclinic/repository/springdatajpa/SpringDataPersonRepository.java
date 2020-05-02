@@ -17,4 +17,5 @@ public interface SpringDataPersonRepository extends PersonRepository, Repository
 //	@Override
 //	@Query("SELECT person FROM Person person WHERE person.id =:id")
 //	public Person findById(@Param("id") int id);
+	
 }
