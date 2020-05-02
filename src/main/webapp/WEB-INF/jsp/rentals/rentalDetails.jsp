@@ -6,7 +6,7 @@
 
 <petclinic:layout pageName="rentals">
 
-    <h2>Room Information</h2>
+    <h2>Rental Information</h2>
 
 
     <table class="table table-striped">

@@ -45,11 +45,21 @@
 				</petclinic:menuItem>
 				</sec:authorize>
 				
-				<petclinic:menuItem active="${name eq 'owners'}" url="/owners/find"
-					title="find owners">
+				<sec:authorize access="hasAnyAuthority('owner')">
+				<petclinic:menuItem active="${name eq 'rentals'}" url="/rentals"
+					title="rentals">
 					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-					<span>Find owners</span>
+					<span>My rentals</span>
 				</petclinic:menuItem>
+				</sec:authorize>
+				
+				<sec:authorize access="hasAnyAuthority('student')">
+				<petclinic:menuItem active="${name eq 'rentals'}" url="/rentals"
+					title="rental history">
+					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+					<span>Rental History</span>
+				</petclinic:menuItem>
+				</sec:authorize>
 
 
 				<petclinic:menuItem active="${name eq 'error'}" url="/oups"

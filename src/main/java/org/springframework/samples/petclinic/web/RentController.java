@@ -87,38 +87,5 @@ public class RentController {
 		return "/welcome";
 
 	}
-	
-	//LISTADO DE ALQUILERES ------------------------------------------------------------------
-
-	@GetMapping(value = "/rentals")
-	public String processFindForm(@PathVariable("userId") final int userId, final BindingResult result, final Map<String, Object> model) {
-
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		Owner owner = this.ownerService.findOwnerByUsername(username);
-		List<Owner> filtro = new ArrayList<>();
-		filtro.add(owner);
-		System.out.println(filtro);
-		//		if (filtro.isEmpty()) {
-		//
-		//		} else {
-		//
-		//		}
-		Collection<Rental> results = this.rentalService.findRentalByOwnerId(userId);
-
-		results.stream().filter(x -> x.getEndDate().isAfter(LocalDate.now()));
-
-		model.put("selections", results);
-		return "rentals/rentalsList";
-
-	}
-	
-	//MOSTRADO DE ALQUILER -----------------------------------------------------------------
-	
-	@GetMapping("/rentals/{rentalId}")
-	public ModelAndView showRental(@PathVariable("rentalId") final int rentalId) {
-		ModelAndView mav = new ModelAndView("rentals/rentalDetails");
-		mav.addObject(this.rentalService.findRentalById(rentalId));
-		return mav;
-	}
 
 }

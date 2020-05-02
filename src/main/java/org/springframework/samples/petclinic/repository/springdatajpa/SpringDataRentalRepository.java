@@ -12,8 +12,12 @@ import org.springframework.samples.petclinic.repository.RentalRepository;
 public interface SpringDataRentalRepository extends RentalRepository, Repository<Rental, Integer> {
 
 	@Override
-	@Query("SELECT r FROM Rental r WHERE r.room.property.owner.id =:id")
-	Collection<Rental> findRentalByOwnerId(@Param("id") int ownerId);
+	@Query("SELECT r FROM Rental r WHERE r.owner.user.username =:username")
+	Collection<Rental> findRentalByOwnerUsername(@Param("username") String username);
+	
+	@Override
+	@Query("SELECT r FROM Rental r WHERE r.student.user.username =:username")
+	Collection<Rental> findRentalByStudentUsername(@Param("username") String username);
 	
 	@Override
 	@Query("SELECT r FROM Rental r WHERE r.id =:id")
