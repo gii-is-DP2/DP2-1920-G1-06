@@ -39,15 +39,15 @@ public class RentalService {
 		return this.rentalRepository.findAll();
 	}
 
-	public Collection<Rental> findRentalByOwnerUsername(String username) {
+	public Collection<Rental> findRentalByOwnerUsername(final String username) {
 		return this.rentalRepository.findRentalByOwnerUsername(username);
 	}
-	
-	public Collection<Rental> findRentalByStudentUsername(String username) {
+
+	public Collection<Rental> findRentalByStudentUsername(final String username) {
 		return this.rentalRepository.findRentalByStudentUsername(username);
 	}
 
-	public Object findRentalById(int rentalId) {
+	public Rental findRentalById(final int rentalId) {
 		return this.rentalRepository.findRentalById(rentalId);
 	}
 

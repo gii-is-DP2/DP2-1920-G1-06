@@ -1,3 +1,4 @@
+
 package org.springframework.samples.petclinic.model;
 
 import java.time.LocalDate;
@@ -9,113 +10,114 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotEmpty;
 
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.NumberFormat;
+
+import lombok.Data;
 
 @Entity
 @Table(name = "rentals")
-
+@Data
 public class Rental extends BaseEntity {
 
 	// Atributos ---------------------------------------------
 
 	@Column(name = "startDate")
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
-	private LocalDate startDate;
+	private LocalDate	startDate;
 
 	@Column(name = "endDate")
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
-	private LocalDate endDate;
+	private LocalDate	endDate;
 
 	@Column(name = "priceMonth")
-	private Double priceMonth;
-	
+	private Double		priceMonth;
+
 	@Column(name = "isARequest") //ES solicitud (true) O respuesta (False)
-	private Boolean isARequest;
-	
+	private Boolean		isARequest;
+
 	@Column(name = "isAccepted")
-	private Boolean isAccepted;
+	private Boolean		isAccepted;
+
 
 	public Boolean getIsARequest() {
-		return isARequest;
+		return this.isARequest;
 	}
 
-	public void setIsARequest(Boolean isARequest) {
+	public void setIsARequest(final Boolean isARequest) {
 		this.isARequest = isARequest;
 	}
 
 	public Boolean getIsAccepted() {
-		return isAccepted;
+		return this.isAccepted;
 	}
 
-	public void setIsAccepted(Boolean isAccepted) {
+	public void setIsAccepted(final Boolean isAccepted) {
 		this.isAccepted = isAccepted;
 	}
 
 	public Room getRoom() {
-		return room;
+		return this.room;
 	}
 
-	public void setRoom(Room room) {
+	public void setRoom(final Room room) {
 		this.room = room;
 	}
 
 	public Student getStudent() {
-		return student;
+		return this.student;
 	}
 
-	public void setStudent(Student student) {
+	public void setStudent(final Student student) {
 		this.student = student;
 	}
 
 	@Transient
 	public Integer getTotalPrice() {
-		// Si alquilas en diciebre y acabas el contrato en enero el resultado es -11 
+		// Si alquilas en diciebre y acabas el contrato en enero el resultado es -11
 		//TODO
 		Integer months = this.endDate.getMonthValue() - this.startDate.getMonthValue();
 
 		return (int) (this.priceMonth * months);
 	}
 
+
 	// Relaciones ------------------------------------------
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "room_id")
-	private Room room;
+	private Room	room;
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "student_id")
-	private Student student;
-	
+	private Student	student;
+
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "owner_id")
-	private Owner owner;
+	private Owner	owner;
 
-	
-	
+
 	public LocalDate getStartDate() {
-		return startDate;
+		return this.startDate;
 	}
 
-	public void setStartDate(LocalDate startDate) {
+	public void setStartDate(final LocalDate startDate) {
 		this.startDate = startDate;
 	}
 
 	public LocalDate getEndDate() {
-		return endDate;
+		return this.endDate;
 	}
 
-	public void setEndDate(LocalDate endDate) {
+	public void setEndDate(final LocalDate endDate) {
 		this.endDate = endDate;
 	}
 
 	public Double getPriceMonth() {
-		return priceMonth;
+		return this.priceMonth;
 	}
 
-	public void setPriceMonth(Double priceMonth) {
+	public void setPriceMonth(final Double priceMonth) {
 		this.priceMonth = priceMonth;
 	}
 
