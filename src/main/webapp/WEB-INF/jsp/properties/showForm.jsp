@@ -47,6 +47,8 @@
 	
 	<a  href="/properties" class="btn btn-default">Go Back</a>
 	
+	<a href="${fn:escapeXml(propertyUrl)}" class="btn btn-default">Show rentals</a>
+	
 
 	<%-- </jsp:body> --%>
 

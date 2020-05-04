@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Rental;
 import org.springframework.samples.petclinic.repository.RentalRepository;
 import org.springframework.stereotype.Service;
@@ -42,7 +43,7 @@ public class RentalService {
 	public Collection<Rental> findRentalByOwnerUsername(String username) {
 		return this.rentalRepository.findRentalByOwnerUsername(username);
 	}
-	
+
 	public Collection<Rental> findRentalByStudentUsername(String username) {
 		return this.rentalRepository.findRentalByStudentUsername(username);
 	}
@@ -50,5 +51,6 @@ public class RentalService {
 	public Object findRentalById(int rentalId) {
 		return this.rentalRepository.findRentalById(rentalId);
 	}
+
 
 }

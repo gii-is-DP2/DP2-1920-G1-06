@@ -19,6 +19,4 @@ public interface RentalRepository {
 
 	Rental findRentalById(int rentalId);
 
-
-
 }
