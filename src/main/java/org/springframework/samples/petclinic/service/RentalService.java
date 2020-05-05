@@ -48,7 +48,7 @@ public class RentalService {
 		return this.rentalRepository.findRentalByStudentUsername(username);
 	}
 
-	public Object findRentalById(int rentalId) {
+	public Rental findRentalById(int rentalId) {
 		return this.rentalRepository.findRentalById(rentalId);
 	}
 

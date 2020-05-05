@@ -39,6 +39,8 @@ import org.springframework.web.servlet.ModelAndView;
 public class RentController {
 
 	private static final String		VIEWS_RENTAL_CREATE_FORM	= "rentals/createRentalForm";
+	
+	private static final String		VIEWS_RENTAL_UPDATE_FORM	= "rentals/createRentalForm";
 
 	private final OwnerService		ownerService;
 
@@ -71,6 +73,8 @@ public class RentController {
 		public String processCreationForm(@PathVariable("roomId") final int roomId,@PathVariable("propertyId") final int propertyId,@Valid final Rental rental, final BindingResult result) {
 			Room room = roomService.findRoomById(roomId);
 			
+			Owner ow = room.getProperty().getOwner();
+			rental.setOwner(ow);
 			rental.setId(room.getId());
 			rental.setPriceMonth(room.getPrice().doubleValue());
 			rental.setIsAccepted(false);
@@ -94,7 +98,7 @@ public class RentController {
 			model.put("rental", rental);
 			
 			//Cambiar la referencia cuando esté el list
-			return "VIEWS_RENTAL_CREATE_FORM";
+			return "VIEWS_RENTAL_UPDATE_FORM";
 		}
 		
 		@PostMapping(value = "/rental/{rentalId}/edit")
@@ -112,14 +116,15 @@ public class RentController {
 				Double priceMonth = rental.getPriceMonth();
 				Room r = rental.getRoom();
 				Student s = rental.getStudent();
-
+				Owner ow = r.getProperty().getOwner();
+				System.out.println(ow.getId());
 				rentalD.setStartDate(startDate);
 				rentalD.setEndDate(endDate);
 				rentalD.setPriceMonth(priceMonth);
 				rentalD.setIsARequest(false);
 				rentalD.setRoom(r);
 				rentalD.setStudent(s);
-				
+				rentalD.setOwner(ow);
 				//falta lo complicao
 				
 				
@@ -132,6 +137,6 @@ public class RentController {
 		}
 
 
-	}
-
 }
+
+

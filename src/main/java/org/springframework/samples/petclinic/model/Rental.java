@@ -21,6 +21,14 @@ public class Rental extends BaseEntity {
 
 	// Atributos ---------------------------------------------
 
+	public Owner getOwner() {
+		return owner;
+	}
+
+	public void setOwner(Owner owner) {
+		this.owner = owner;
+	}
+
 	@Column(name = "startDate")
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate startDate;

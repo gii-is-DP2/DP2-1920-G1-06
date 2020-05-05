@@ -25,9 +25,4 @@ public interface SpringDataRentalRepository extends RentalRepository, Repository
 	@Query("SELECT r FROM Rental r WHERE r.id =:id")
 	Rental findRentalById(@Param("id") int rentalId);
 	
-
-	@Override
-	@Query("SELECT rental FROM Rental rental  WHERE rental.id =:id")
-	public Rental findRentalById(@Param("id") int id);
-	
 }
