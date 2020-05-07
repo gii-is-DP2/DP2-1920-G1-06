@@ -11,6 +11,7 @@ import org.springframework.samples.petclinic.model.Property;
 import org.springframework.samples.petclinic.model.Rental;
 import org.springframework.samples.petclinic.model.Room;
 import org.springframework.samples.petclinic.service.RentalService;
+import org.springframework.samples.petclinic.service.StudentService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,12 +23,16 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class RentalHistoryController {
 
+	
 	private final RentalService		rentalService;
+	
+	private final StudentService    studentService;
 
 	@Autowired
-	public RentalHistoryController(final RentalService rentalService) {
+	public RentalHistoryController(final RentalService rentalService, final StudentService studentService) {
 
 		this.rentalService = rentalService;
+		this.studentService = studentService;
 	}
 	
 	
@@ -55,7 +60,12 @@ public class RentalHistoryController {
 		return "welcome";
 	}
 	
-	
+	@GetMapping(value = "/request/{studentId}/profile")
+	public ModelAndView studentProfile(@PathVariable("studentId") final int studentId) {
+		ModelAndView mav = new ModelAndView("rentals/studentProfile");
+		mav.addObject(this.studentService.findStudentById(studentId));
+		return mav;
+	}
 	
 	
 	
