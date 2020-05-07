@@ -30,7 +30,6 @@ public class RentalHistoryController {
 
 	@Autowired
 	public RentalHistoryController(final RentalService rentalService, final StudentService studentService) {
-
 		this.rentalService = rentalService;
 		this.studentService = studentService;
 	}
@@ -39,7 +38,7 @@ public class RentalHistoryController {
 	
 	
 	
-	
+	// ACEPTAR PETICIÓN
 	@GetMapping(value = "/rentals/{rentalId}/accept")
 	public String acceptRental(@PathVariable("rentalId") final int rentalId, final Model model) {
 		
@@ -54,7 +53,7 @@ public class RentalHistoryController {
 	}
 	
 	
-	
+	// RECHAZAR PETICIÓN
 	@GetMapping(value = "/rentals/{rentalId}/reject")
 	public String rejectRental(@PathVariable("rentalId") final int rentalId,final Map<String, Object> model) {
 		
@@ -68,29 +67,14 @@ public class RentalHistoryController {
 		return "welcome";
 	}
 	
+	//VISTA PERFIL ESTUDIANTE
 	@GetMapping(value = "/request/{studentId}/profile")
 	public ModelAndView studentProfile(@PathVariable("studentId") final int studentId) {
 		ModelAndView mav = new ModelAndView("rentals/studentProfile");
 		mav.addObject(this.studentService.findStudentById(studentId));
 		return mav;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 	//LISTADO DE PETICIONES
 	
 	@GetMapping(value = "/request")
@@ -103,7 +87,7 @@ public class RentalHistoryController {
 			
 			Collection<Rental> results = this.rentalService.findRentalByOwnerUsername(username);
 
-			results = results.stream().filter(x -> x.getEndDate().isAfter(LocalDate.now())).filter(x->!x.getIsARequest()).collect(Collectors.toList());
+			results = results.stream().filter(x -> x.getEndDate().isAfter(LocalDate.now())).filter(x->x.getIsARequest()).collect(Collectors.toList());
 			
 			model.put("selections", results);
 			
