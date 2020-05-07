@@ -32,6 +32,26 @@
         </tr>
     </table>
 
+
+    	<spring:url value="{roomId}/edit" var="editUrl">
+        	
+    	</spring:url>
+    	
+    <spring:url value = "{studentId}/profile" var ="profile">
+    	<spring:param name="studentId" value="${rental.student.id}"/>
+    </spring:url>
+    <a href="${fn:escapeXml(profile)}" class="btn btn-default">Student Profile</a>	
+
+	<spring:url value = "{rentalId}/accept" var = "accept">
+		<spring:param name="rentalId" value="${rental.id}"/>
+	</spring:url>
+	<a href="${fn:escapeXml(accept)}" class="btn btn-default">Accept</a>
+	
+	<spring:url value = "{rentalId}/reject" var = "reject">
+		<spring:param name="rentalId" value="${rental.id}"/>
+	</spring:url>
+	<a href="${fn:escapeXml(reject)}" class="btn btn-default">Reject</a> 
+	
 	<spring:url value = "/rentals" var="rentalUrlBack"></spring:url>
 	<a href="${fn:escapeXml(rentalUrlBack)}" class="btn btn-default">Back to rentals</a>
 </petclinic:layout>

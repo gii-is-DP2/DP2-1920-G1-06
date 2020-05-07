@@ -45,7 +45,7 @@
 		<spring:url value = "{roomId}/rental/new" var="add">
 			<spring:param name="roomId" value="${room.id}"/>
 		</spring:url>
-		<a href="${fn:escapeXml(add)}" class="btn btn-default">Send a Request</a>
+		<a href="${fn:escapeXml(add)}" class="btn btn-default">Create a Request</a>
 	</sec:authorize>
 
 

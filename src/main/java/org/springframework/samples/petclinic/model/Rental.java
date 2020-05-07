@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.FutureOrPresent;
 import javax.validation.constraints.NotEmpty;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -21,11 +23,21 @@ public class Rental extends BaseEntity {
 
 	// Atributos ---------------------------------------------
 
+	public Owner getOwner() {
+		return owner;
+	}
+
+	public void setOwner(Owner owner) {
+		this.owner = owner;
+	}
+
 	@Column(name = "startDate")
+	//@FutureOrPresent
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate startDate;
 
 	@Column(name = "endDate")
+	//@Future
 	@DateTimeFormat(pattern = "yyyy/MM/dd")
 	private LocalDate endDate;
 
