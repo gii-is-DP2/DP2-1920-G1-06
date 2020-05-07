@@ -37,6 +37,10 @@
         	
     	</spring:url>
     	
+    <spring:url value = "{studentId}/profile" var ="profile">
+    	<spring:param name="studentId" value="${rental.student.id}"/>
+    </spring:url>
+    <a href="${fn:escapeXml(profile)}" class="btn btn-default">Student Profile</a>	
 
 	<spring:url value = "{rentalId}/accept" var = "accept">
 		<spring:param name="rentalId" value="${rental.id}"/>
