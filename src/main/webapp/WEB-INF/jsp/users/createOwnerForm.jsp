@@ -29,19 +29,23 @@
             <petclinic:inputField label="Last Name" name="lastName"/>
             <petclinic:inputField label="DNI" name="dni"/>
             
-            Birth Date:
-            <form:input type="date" path ="birthDate" pattern="yyyy-MM-dd" name = "birthDate"/>
-            
-            
-            <div class="form-horizontal">
-                <label  class="col-sm-2 control-label">Gender:</label>
+        <div class="form-group has-feedback">
+            <label class="col-sm-2 control-label">Birthday</label>
+             <div class="col-sm-10">
+            	<form:input  type="date" class="form-control" path="birthDate" pattern="yyyy-MM-dd" name="birthDate" />
+         	 </div>
+        </div> 
+ 
+        <div class="form-group has-feedback">
+                 <label class="col-sm-2 control-label">Gender</label>
                 <div class="col-sm-10">
-                    <select name=gender class="form-control">
+                    <select name=propertyType class="form-control">
                         <option value=0>Male</option>
                         <option value=1>Female</option>
                     </select>
-                </div>
-            </div>
+            	 </div> 
+         </div>
+         
             <petclinic:inputField label="Email" name="email"/>
             <petclinic:inputField label="Telephone" name="telephone"/>
             <petclinic:inputField label="Username" name="user.username"/>
