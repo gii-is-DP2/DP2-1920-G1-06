@@ -79,6 +79,8 @@ public class PropertyControllerTests {
 		property.setSurface(45);
 		property.setTotalRooms(3);
 		
+		property.setOwner(null);
+		
 		given(this.propertyService.findPropertyById(TEST_PROPERTY_ID)).willReturn(property);
 
 	}

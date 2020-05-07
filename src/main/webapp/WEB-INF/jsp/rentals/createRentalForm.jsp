@@ -12,11 +12,21 @@
     <h2>
         <c:if test="${rental['new']}">New </c:if> Rental
     </h2>
-		
+	
+	<%-- <jsp:attribute name="customScript">
+        <script>
+            $(function () {
+                $("#date").datepicker({dateFormat: 'yyyy-MM-dd'});
+            });
+        </script>
+    </jsp:attribute> --%>
+    
+   <%--  <jsp:body> --%>
+	
     <form:form modelAttribute="rental" class="form-horizontal" id="add-room-form">
         <div class="form-group has-feedback">
-            <petclinic:inputField label="Start Date" name="startDate"/>
-            <petclinic:inputField label="End Date" name="endDate"/>
+            <petclinic:inputField  label="Start Date" name="startDate"/>
+            <petclinic:inputField  label="End Date" name="endDate"/>
         </div>
         <div class="form-group">
             <div class="col-sm-offset-2 col-sm-10">
@@ -25,11 +35,12 @@
                 </spring:url>
      			<a href="${fn:escapeXml(action)}" class="btn btn-default">"Send"</a> --%>
             
-				<button class="btn btn-default" type="submit">Add Room</button>
+				<button class="btn btn-default" type="submit">Send a Request</button>
                 
                
 				<a href="${fn:escapeXml(roomUrlBack)}" class="btn btn-default">Cancel</a>
             </div>
         </div>
     </form:form>
+    <%-- </jsp:body> --%>
 </petclinic:layout>

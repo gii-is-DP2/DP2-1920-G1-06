@@ -11,6 +11,8 @@
 		<c:if test="${student['new']}">New </c:if>
 		Student
 	</h2>
+	
+    
 	<form:form modelAttribute="student" class="form-horizontal"
 		id="add-student-form">
 		<div class="form-group has-feedback">
@@ -36,4 +38,5 @@
 			</div>
 		</div>
 	</form:form>
+	
 </petclinic:layout>

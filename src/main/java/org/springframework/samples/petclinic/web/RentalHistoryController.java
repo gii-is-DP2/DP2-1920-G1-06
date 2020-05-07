@@ -35,23 +35,31 @@ public class RentalHistoryController {
 	
 	
 	
-	@GetMapping(value = "/request/{rentalId}/accept")
+	@GetMapping(value = "/rentals/{rentalId}/accept")
 	public String acceptRental(@PathVariable("rentalId") final int rentalId, final Model model) {
+		
 		Rental rental = this.rentalService.findRentalById(rentalId);
+		
 		rental.setIsAccepted(true);
 		rental.setIsARequest(false);
-		model.addAttribute(rental);
+		
+		this.rentalService.saveRental(rental);
+		
 		return "welcome";
 	}
 	
 	
 	
-	@GetMapping(value = "/request/{rentalId}/reject")
-	public String rejectRental(@PathVariable("rentalId") final int rentalId, final Model model) {
+	@GetMapping(value = "/rentals/{rentalId}/reject")
+	public String rejectRental(@PathVariable("rentalId") final int rentalId,final Map<String, Object> model) {
+		
 		Rental rental = this.rentalService.findRentalById(rentalId);
+		
 		rental.setIsAccepted(false);
 		rental.setIsARequest(false);
-		model.addAttribute(rental);
+
+		this.rentalService.saveRental(rental);
+		
 		return "welcome";
 	}
 	
@@ -85,7 +93,7 @@ public class RentalHistoryController {
 			
 			Collection<Rental> results = this.rentalService.findRentalByOwnerUsername(username);
 
-			results = results.stream().filter(x -> x.getEndDate().isAfter(LocalDate.now())).filter(x->!x.getIsAccepted()).collect(Collectors.toList());
+			results = results.stream().filter(x -> x.getEndDate().isAfter(LocalDate.now())).filter(x->!x.getIsARequest()).collect(Collectors.toList());
 			
 			model.put("selections", results);
 			
