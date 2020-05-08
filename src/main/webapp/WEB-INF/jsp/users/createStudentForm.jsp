@@ -42,7 +42,7 @@
             <div class="form-group has-feedback">
                  <label class="col-sm-2 control-label">Gender</label>
                 <div class="col-sm-10">
-                    <select name=propertyType class="form-control">
+                    <select name=gender class="form-control">
                         <option value=0>Male</option>
                         <option value=1>Female</option>
                     </select>

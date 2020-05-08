@@ -72,11 +72,7 @@ public class OwnerService {
 	@Transactional
 	public void saveOwner(Owner owner) throws DataAccessException {
 		
-		Integer id;
 		
-		id = ownerRepository.findAll().size()+1;
-		
-		owner.setId(id);
 		//creating owner
 		
 		//owner.setProperties(new HashSet<Property>());
