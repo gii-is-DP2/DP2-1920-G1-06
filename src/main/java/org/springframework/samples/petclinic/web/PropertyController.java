@@ -154,7 +154,7 @@ public class PropertyController {
 	@GetMapping(value = "/properties/find")
 	public String initFindForm(Map<String, Object> model) {
 		model.put("property", new Property());
-		return "properties/findProperties";
+		return "properties/findPropertiesStudent";
 	}
 	
 	@PostMapping(value = "/properties/find")

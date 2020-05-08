@@ -36,7 +36,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/properties/{propertyId}/rooms/{roomId}")
-public class RentController {
+public class RentalController {
 
 	private static final String		VIEWS_RENTAL_CREATE_FORM	= "rentals/createRentalForm";
 	
@@ -54,7 +54,7 @@ public class RentController {
 
 
 	@Autowired
-	public RentController(final RentalService rentalService, final OwnerService ownerService, final StudentService studentService, final RoomService roomService, final PropertyService propertyService) {
+	public RentalController(final RentalService rentalService, final OwnerService ownerService, final StudentService studentService, final RoomService roomService, final PropertyService propertyService) {
 		this.ownerService = ownerService;
 		this.studentService = studentService;
 		this.roomService = roomService;

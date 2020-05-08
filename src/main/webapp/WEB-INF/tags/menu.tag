@@ -38,7 +38,7 @@
 				</sec:authorize>
 				
 				<sec:authorize access="hasAnyAuthority('student')">
-				<petclinic:menuItem active="${name eq 'properties'}" url="/properties/find"
+				<petclinic:menuItem active="${name eq 'propertiesStudent'}" url="/properties/find"
 					title="search properties">
 					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
 					<span>search properties</span>
@@ -55,11 +55,12 @@
 				
 				<sec:authorize access="hasAnyAuthority('owner')">
 				<petclinic:menuItem active="${name eq 'request'}" url="/request"
-					title="my request">
+					title="request">
 					<span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-					<span>My Request</span>
+					<span>request</span>
 				</petclinic:menuItem>
 				</sec:authorize>
+		
 				
 				<sec:authorize access="hasAnyAuthority('student')">
 				<petclinic:menuItem active="${name eq 'rentals'}" url="/rentals"

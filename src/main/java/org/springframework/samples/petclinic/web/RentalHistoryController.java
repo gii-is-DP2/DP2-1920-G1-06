@@ -98,7 +98,7 @@ public class RentalHistoryController {
 			model.put("selections", results.stream().filter(x->x.getIsAccepted()).collect(Collectors.toList()));
 		}
 
-		return "rentals/rentalsList";
+		return "rentals/requestList";
 
 	}
 	
