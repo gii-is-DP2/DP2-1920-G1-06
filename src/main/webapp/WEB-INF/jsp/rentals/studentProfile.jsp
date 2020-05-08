@@ -13,13 +13,20 @@
 			<tr>
 				<th>First Name</th>
 				<th>Last Name</th>
+				<th>Birth Date</th>
+				<th>Email</th>
 				<th>Telephone</th>
+				<th>DNI</th>
+				
 			</tr>
 		</thead>
 		<tr>
 			<td><c:out value="${student.firstName}" /></td>
 			<td><c:out value="${student.lastName}" /></td>
+			<td><c:out value="${student.birthDate}" /></td>
+			<td><c:out value="${student.email}" /></td>
 			<td><c:out value="${student.telephone}" /></td>
+			<td><c:out value="${student.dni}" /></td>
 		</tr>
 	</table>
 	

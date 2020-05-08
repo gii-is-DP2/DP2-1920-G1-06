@@ -5,6 +5,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="sec"
+	uri="http://www.springframework.org/security/tags"%>
 
 <petclinic:layout pageName="owners">
 
@@ -15,7 +17,8 @@
             });
         </script>
     </jsp:attribute>
-     <jsp:body>
+    
+    <jsp:body>
     
     <h2>
         <c:if test="${owner['new']}">New </c:if> Owner

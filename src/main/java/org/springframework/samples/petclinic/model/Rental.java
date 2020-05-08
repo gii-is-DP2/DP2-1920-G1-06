@@ -33,12 +33,12 @@ public class Rental extends BaseEntity {
 
 	@Column(name = "startDate")
 	//@FutureOrPresent
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate startDate;
 
 	@Column(name = "endDate")
 	//@Future
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate endDate;
 
 	@Column(name = "priceMonth")
