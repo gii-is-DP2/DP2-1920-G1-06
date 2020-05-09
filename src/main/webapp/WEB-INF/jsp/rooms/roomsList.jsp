@@ -45,7 +45,7 @@
 		<a href="${fn:escapeXml(roomUrlNew)}" class="btn btn-default">Add room</a>
 	</sec:authorize>
 	
-	<spring:url value = "/properties" var="roomUrlBack"></spring:url>
-	<a href="${fn:escapeXml(roomUrlBack)}" class="btn btn-default">Back to properties</a>
+	<spring:url value = "/properties/{propertyId}/show" var="roomUrlBack"><spring:param name = "propertyId" value = "${property.id}"/></spring:url>
+	<a href="${fn:escapeXml(roomUrlBack)}" class="btn btn-default">Back to property</a>
 	
 </petclinic:layout>

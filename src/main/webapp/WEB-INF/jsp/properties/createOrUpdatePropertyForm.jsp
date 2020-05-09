@@ -38,14 +38,16 @@
 					<c:when test="${property['new']}">
 						<button class="btn btn-default" type="submit">Add
 							Property</button>
+				<spring:url value = "/properties" var="roomUrlBack"><spring:param name = "propertyId" value = "${property.id}"/><spring:param name = "roomId" value = "${room.id}"/></spring:url>
+				<a href="${fn:escapeXml(roomUrlBack)}" class="btn btn-default">Cancel</a>
 					</c:when>
 					<c:otherwise>
 						<button class="btn btn-default" type="submit">Update
 							Property</button>
+						<spring:url value = "/properties/{propertyId}/show" var="roomUrlBack"><spring:param name = "propertyId" value = "${property.id}"/><spring:param name = "roomId" value = "${room.id}"/></spring:url>
+					<a href="${fn:escapeXml(roomUrlBack)}" class="btn btn-default">Cancel</a>
 					</c:otherwise>
 				</c:choose>
-				<spring:url value = "/properties" var="roomUrlBack"><spring:param name = "propertyId" value = "${property.id}"/><spring:param name = "roomId" value = "${room.id}"/></spring:url>
-				<a href="${fn:escapeXml(roomUrlBack)}" class="btn btn-default">Cancel</a>
 			</div>
 		</div>
 	</form:form>

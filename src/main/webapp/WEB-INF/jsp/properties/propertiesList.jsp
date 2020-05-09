@@ -16,7 +16,6 @@
 
             <th style="width: 200px;">Address</th>
             <th>City</th>
-            <th>Details</th>
             <th>Show</th>
         </tr>
         </thead>
@@ -34,11 +33,6 @@
                 </td>
                 <td>
                     <c:out value="${property.city}"/>
-                </td><td>
-                    <spring:url value="/properties/{propertyId}/rooms" var="propertyUrl">
-                   		<spring:param name="propertyId" value="${property.id}"/>
-                    </spring:url>
-                    <a href="${fn:escapeXml(propertyUrl)}">Show rooms</a>
                 </td>
 				<td>
                     <spring:url value="/properties/{propertyId}/show" var="propertyUrl">

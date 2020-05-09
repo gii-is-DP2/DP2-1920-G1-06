@@ -59,8 +59,8 @@
      			<a href="${fn:escapeXml(action)}" class="btn btn-default">"Send"</a> --%>
             
 				<button class="btn btn-default" type="submit">Send a Request</button>
-                
-               
+				
+				<spring:url value = "/properties/find" var="roomUrlBack"></spring:url>
 				<a href="${fn:escapeXml(roomUrlBack)}" class="btn btn-default">Cancel</a>
             </div>
         </div>

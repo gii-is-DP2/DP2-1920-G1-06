@@ -4,6 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib prefix="petclinic" tagdir="/WEB-INF/tags"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
 
 
 <petclinic:layout pageName="property">
@@ -39,16 +40,20 @@
 			<td><c:out value="${property.totalRooms}" /></td>
 		</tr>
 	</table>
-
-	<spring:url value="/properties/{propertyId}/edit" var="propertyUrl">
+	<sec:authorize access="hasAnyAuthority('owner')">
+	<spring:url value="/properties/{propertyId}/edit" var="editUrl">
 		<spring:param name="propertyId" value="${property.id}" />
 	</spring:url>
-	<a href="${fn:escapeXml(propertyUrl)}" class="btn btn-default">Edit Property</a>
+	<a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Edit Property</a>
+	</sec:authorize>
 	
-	<a  href="/properties" class="btn btn-default">Go Back</a>
+    <spring:url value="/properties/{propertyId}/rooms" var="propertyUrl">
+   		<spring:param name="propertyId" value="${property.id}"/>
+    </spring:url>
+    <a href="${fn:escapeXml(propertyUrl)}" class="btn btn-default">Show rooms</a>
 	
-	<a href="${fn:escapeXml(propertyUrl)}" class="btn btn-default">Show rentals</a>
-	
+	<a  href="/properties/find" class="btn btn-default">Back to properties</a>
+
 
 	<%-- </jsp:body> --%>
 
