@@ -2,7 +2,7 @@
 INSERT INTO users(username,password,enabled) VALUES ('admin1','v',TRUE);
 INSERT INTO authorities VALUES ('admin1','admin');
 -- One owner user, named owner1 with passwor 0wn3r
-INSERT INTO users(username,password,enabled) VALUES ('owner1','0wn3r',TRUE);
+INSERT INTO users(username,password,enabled) VALUES ('owner1','1',TRUE);
 INSERT INTO authorities VALUES ('owner1','owner');
 
 INSERT INTO users(username,password,enabled) VALUES ('owner2','2',TRUE);

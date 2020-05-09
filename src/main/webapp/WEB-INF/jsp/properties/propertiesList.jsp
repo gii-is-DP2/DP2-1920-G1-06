@@ -56,7 +56,7 @@
         </tbody>
     </table>
 
-    <spring:url value="properties/new" var="addUrl">
+    <spring:url value="/properties/new" var="addUrl">
         <%-- <spring:param name="ownerId" value="${owner.id}"/> --%>
     </spring:url>
     <sec:authorize access="hasAnyAuthority('owner')">

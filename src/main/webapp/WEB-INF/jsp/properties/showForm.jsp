@@ -40,11 +40,13 @@
 			<td><c:out value="${property.totalRooms}" /></td>
 		</tr>
 	</table>
+	
+	
 	<sec:authorize access="hasAnyAuthority('owner')">
-	<spring:url value="/properties/{propertyId}/edit" var="editUrl">
-		<spring:param name="propertyId" value="${property.id}" />
-	</spring:url>
-	<a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Edit Property</a>
+		<spring:url value="/properties/{propertyId}/edit" var="editUrl">
+			<spring:param name="propertyId" value="${property.id}" />
+		</spring:url>
+		<a href="${fn:escapeXml(editUrl)}" class="btn btn-default">Edit Property</a>
 	</sec:authorize>
 	
     <spring:url value="/properties/{propertyId}/rooms" var="propertyUrl">
@@ -52,7 +54,15 @@
     </spring:url>
     <a href="${fn:escapeXml(propertyUrl)}" class="btn btn-default">Show rooms</a>
 	
-	<a  href="/properties/find" class="btn btn-default">Back to properties</a>
+	<sec:authorize access="hasAnyAuthority('owner')">
+		<spring:url value="/properties" var="backUrl"></spring:url>
+		<a href="${fn:escapeXml(backUrl)}" class="btn btn-default">Back to my properties</a>
+	</sec:authorize>
+	
+	<sec:authorize access="hasAnyAuthority('student')">
+		<spring:url value="/properties/find" var="backUrl"></spring:url>
+		<a href="${fn:escapeXml(backUrl)}" class="btn btn-default">Back to find properties</a>
+	</sec:authorize>
 
 
 	<%-- </jsp:body> --%>

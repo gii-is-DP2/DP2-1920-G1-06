@@ -39,8 +39,6 @@ import org.springframework.web.servlet.ModelAndView;
 public class RentalController {
 
 	private static final String		VIEWS_RENTAL_CREATE_FORM	= "rentals/createRentalForm";
-	
-	private static final String		VIEWS_RENTAL_UPDATE_FORM	= "rentals/createRentalForm";
 
 	private final OwnerService		ownerService;
 

@@ -36,16 +36,15 @@
 			<div class="col-sm-offset-2 col-sm-10">
 				<c:choose>
 					<c:when test="${property['new']}">
-						<button class="btn btn-default" type="submit">Add
-							Property</button>
-				<spring:url value = "/properties" var="roomUrlBack"><spring:param name = "propertyId" value = "${property.id}"/><spring:param name = "roomId" value = "${room.id}"/></spring:url>
-				<a href="${fn:escapeXml(roomUrlBack)}" class="btn btn-default">Cancel</a>
+						<button class="btn btn-default" type="submit">Add Property</button>
+						
+						<spring:url value = "/properties" var="propertyUrlBack"><spring:param name = "propertyId" value = "${property.id}"/></spring:url>
+						<a href="${fn:escapeXml(propertyUrlBack)}" class="btn btn-default">Cancel</a>
 					</c:when>
 					<c:otherwise>
-						<button class="btn btn-default" type="submit">Update
-							Property</button>
-						<spring:url value = "/properties/{propertyId}/show" var="roomUrlBack"><spring:param name = "propertyId" value = "${property.id}"/><spring:param name = "roomId" value = "${room.id}"/></spring:url>
-					<a href="${fn:escapeXml(roomUrlBack)}" class="btn btn-default">Cancel</a>
+						<button class="btn btn-default" type="submit">Update Property</button>
+						<spring:url value = "/properties/{propertyId}/show" var="propertyUrlBack"><spring:param name = "propertyId" value = "${property.id}"/></spring:url>
+						<a href="${fn:escapeXml(propertyUrlBack)}" class="btn btn-default">Cancel</a>
 					</c:otherwise>
 				</c:choose>
 			</div>
