@@ -92,6 +92,8 @@ public class RoomControllerTests {
 			.param("extWindow", "0").param("tamCloset", "4")).andExpect(MockMvcResultMatchers.status().is3xxRedirection()).andExpect(MockMvcResultMatchers.view().name("redirect:/rooms/{roomId}"));
 	}
 
+	@WithMockUser(value = "spring")
+	@Test
 	void testProcessUpdateRoomFormHasErrors() throws Exception {
 		this.mockMvc
 			.perform(MockMvcRequestBuilders.post("/room/{roomId}/edit", RoomControllerTests.TEST_ROOM_ID).with(SecurityMockMvcRequestPostProcessors.csrf()).param("roomNumber", "4").param("surface", "Hola").param("price", "asd2").param("extWindow", "asd")
