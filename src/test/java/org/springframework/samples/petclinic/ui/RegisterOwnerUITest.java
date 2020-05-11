@@ -24,8 +24,9 @@ public class RegisterOwnerUITest {
 
   @BeforeEach
   public void setUp() throws Exception {
-	String pathToGeckoDriver = "C:\\Users\\enriq\\OneDrive\\Escritorio";
-	System.setProperty("webdriver.chrome.driver", pathToGeckoDriver + "\\chromedriver.exe");
+	String root = System.getProperty("webdriver.chrome.driver");
+	System.out.println(root);
+	System.setProperty("webdriver.chrome.driver", root);
     driver = new ChromeDriver();
     baseUrl = "https://www.google.com/";
     driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
