@@ -20,17 +20,21 @@ import java.time.LocalDate;
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
-import javax.validation.constraints.Digits;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
+
+import lombok.Data;
 
 /**
  * Simple JavaBean domain object representing an person.
  *
  * @author Ken Krebs
  */
+
 @MappedSuperclass
 public class Person extends BaseEntity {
 
@@ -45,7 +49,7 @@ public class Person extends BaseEntity {
 	protected String lastName;
 
 	@Column(name = "dni")
-	@NotEmpty
+	@Pattern(regexp = "(\\d{8})([A-Z]{1})")
 	protected String dni;
 
 	@Column(name = "birth_date")
@@ -57,12 +61,11 @@ public class Person extends BaseEntity {
 	protected Integer gender;
 
 	@Column(name = "email")
-	@NotEmpty
+	@Email
 	protected String email;
 
 	@Column(name = "telephone")
-	@NotEmpty
-	@Digits(fraction = 0, integer = 10)
+	@Pattern(regexp = "^([0-9]{9})$")
 	private String telephone;
 
 	@Transient

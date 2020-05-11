@@ -1,6 +1,7 @@
 package org.springframework.samples.petclinic.web;
 
 import static org.mockito.BDDMockito.given;
+
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -11,11 +12,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
+import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.UserService;
+import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+
+@WebMvcTest(controllers=UserController.class,
+excludeFilters = @ComponentScan.Filter(type = FilterType.ASSIGNABLE_TYPE, classes = WebSecurityConfigurer.class),
+excludeAutoConfiguration= SecurityConfiguration.class)
 
 public class UserControllerTests {
 	
@@ -46,19 +56,9 @@ public class UserControllerTests {
 	@WithMockUser(value = "spring")
     @Test
     void testInitCreationForm() throws Exception {
-		mockMvc.perform(get("/users/new")).andExpect(status().isOk()).andExpect(model().attributeExists("user"))
-			.andExpect(view().name("users/register"));
+		mockMvc.perform(get("/users/new")).andExpect(status().is3xxRedirection());
 }
 	
-	void testInitCreationOwnerForm() throws Exception {
-		mockMvc.perform(get("/users/new/owner")).andExpect(status().isOk()).andExpect(model().attributeExists("user"))
-			.andExpect(view().name("users/createOwnerForm"));
-}
-	
-	void testInitCreationStudentForm() throws Exception {
-		mockMvc.perform(get("/users/new/student")).andExpect(status().isOk()).andExpect(model().attributeExists("user"))
-			.andExpect(view().name("users/createStudentForm"));
-}
 	
 	@WithMockUser(value = "spring")
     @Test

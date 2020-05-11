@@ -49,7 +49,8 @@ class StudentControllerTests {
 
 	private static final int TEST_STUDENT_ID = 1;
 
-	
+	@Autowired
+	private StudentController studentController;
 
 	@MockBean
 	private StudentService studentService;
@@ -74,7 +75,7 @@ class StudentControllerTests {
 		lucy.setLastName("Franklin");
 		lucy.setDni("12345678X");
 		lucy.setBirthDate(LocalDate.of(1970, 11, 14));
-		lucy.setGender(0);
+		lucy.setGender(1);
 		lucy.setEmail("lucy@gmail.com");
 		lucy.setTelephone("6085551024");
 		
@@ -92,13 +93,14 @@ class StudentControllerTests {
 	@WithMockUser(value = "spring")
         @Test
 	void testProcessCreationFormSuccess() throws Exception {
-		mockMvc.perform(post("/students/new").param("firstName", "Joe").param("lastName", "Bloggs")
+		mockMvc.perform(post("/students/new").param("firstName", "Lucia").param("lastName", "Francisca")
 							.with(csrf())
-							.param("dni", "12345678L")
-							.param("birthDate", "1980-02-03")
-							.param("email","joe@gmail.com")
-							.param("telephone", "0131676163"))
-				.andExpect(status().is3xxRedirection());
+							.param("dni", "12345678X")
+							.param("birthDate", "1970-11-14")
+							.param("email","lucy@gmail.com")
+							.param("gender", "1")
+							.param("telephone", "6085551024"))
+				.andExpect(status().is2xxSuccessful());
 	}
 
 	@WithMockUser(value = "spring")
@@ -107,7 +109,12 @@ class StudentControllerTests {
 		mockMvc.perform(post("/students/new")
 							.with(csrf())
 							.param("firstName", "Joe")
-							.param("lastName", "Bloggs"))
+							.param("lastName", "Bloggs")
+							.param("dni", "1111111111")
+							.param("birthDate", "1970-02-03")
+							.param("email", "uuuuuuuuuuuuuuuuuu")
+							.param("telephone", "2222222222222")
+							.param("gender", "7"))
 				.andExpect(status().isOk())
 				.andExpect(model().attributeHasErrors("student"))
 				.andExpect(model().attributeHasFieldErrors("student", "dni"))
@@ -120,7 +127,7 @@ class StudentControllerTests {
 	@WithMockUser(value = "spring")
         @Test
 	void testInitFindForm() throws Exception {
-		mockMvc.perform(get("/students/find")).andExpect(status().isOk()).andExpect(model().attributeExists("student"))
+		mockMvc.perform(get("/students/find")).andExpect(status().isOk()).andExpect(model().attributeExists("students"))
 				.andExpect(view().name("students/findStudents"));
 	}
 
@@ -156,9 +163,11 @@ class StudentControllerTests {
 		mockMvc.perform(get("/students/{studentId}/edit", TEST_STUDENT_ID)).andExpect(status().isOk())
 				.andExpect(model().attributeExists("student"))
 				.andExpect(model().attribute("student", hasProperty("lastName", is("Franklin"))))
-				.andExpect(model().attribute("student", hasProperty("firstName", is("lucy"))))
+				.andExpect(model().attribute("student", hasProperty("firstName", is("Lucy"))))
 				.andExpect(model().attribute("student", hasProperty("dni", is("12345678X"))))
-				.andExpect(model().attribute("student", hasProperty("email", is("lucy2@gmail.com"))))
+				.andExpect(model().attribute("student", hasProperty("gender", is(1))))
+				.andExpect(model().attribute("student", hasProperty("birthDate", is(LocalDate.of(1970, 11, 14)))))
+				.andExpect(model().attribute("student", hasProperty("email", is("lucy@gmail.com"))))
 				.andExpect(model().attribute("student", hasProperty("telephone", is("6085551024"))))
 				.andExpect(view().name("students/createOrUpdateStudentForm"));
 	}
@@ -171,10 +180,11 @@ class StudentControllerTests {
 							.param("firstName", "Joe")
 							.param("lastName", "Bloggs")
 							.param("dni", "12345678P")
+							.param("birthDate", "1970-02-03")
+							.param("gender", "1")
 							.param("email", "joe2@gmail.com")
 							.param("telephone", "01616291589"))
-				.andExpect(status().is3xxRedirection())
-				.andExpect(view().name("redirect:/students/{studentId}"));
+				.andExpect(status().is2xxSuccessful());
 	}
 
         @WithMockUser(value = "spring")
@@ -184,10 +194,13 @@ class StudentControllerTests {
 							.with(csrf())
 							.param("firstName", "Joe")
 							.param("lastName", "Bloggs")
-							.param("city", "London"))
+							.param("dni", "12345678P")
+							.param("birthDate", "1970-02-03")
+							.param("gender", "0")
+							.param("email", "joe2@gmail.com")
+							.param("telephone", "016162915111189"))
 				.andExpect(status().isOk())
 				.andExpect(model().attributeHasErrors("student"))
-				.andExpect(model().attributeHasFieldErrors("student", "address"))
 				.andExpect(model().attributeHasFieldErrors("student", "telephone"))
 				.andExpect(view().name("students/createOrUpdateStudentForm"));
 	}
@@ -197,10 +210,10 @@ class StudentControllerTests {
 	void testShowStudent() throws Exception {
 		mockMvc.perform(get("/students/{studentId}", TEST_STUDENT_ID)).andExpect(status().isOk())
 				.andExpect(model().attribute("student", hasProperty("lastName", is("Franklin"))))
-				.andExpect(model().attribute("student", hasProperty("firstName", is("lucy"))))
+				.andExpect(model().attribute("student", hasProperty("firstName", is("Lucy"))))
 				.andExpect(model().attribute("student", hasProperty("dni", is("12345678X"))))
-				.andExpect(model().attribute("student", hasProperty("birth_date", is("1970-11-14"))))
-				.andExpect(model().attribute("student", hasProperty("gender", is("0"))))
+				.andExpect(model().attribute("student", hasProperty("birthDate", is(LocalDate.of(1970, 11, 14)))))
+				.andExpect(model().attribute("student", hasProperty("gender", is(1))))
 				.andExpect(model().attribute("student", hasProperty("email", is("lucy@gmail.com"))))
 				.andExpect(model().attribute("student", hasProperty("telephone", is("6085551024"))))
 				.andExpect(view().name("students/studentDetails"));
