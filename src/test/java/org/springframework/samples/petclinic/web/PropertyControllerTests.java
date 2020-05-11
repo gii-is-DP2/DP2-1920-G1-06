@@ -64,6 +64,12 @@ public class PropertyControllerTests {
 	@MockBean
 	private PropertyService propertyService;
 	
+	@MockBean
+	private OwnerService ownerService;
+	
+	@MockBean
+	private UserService userService;
+	
 	@Autowired
 	private MockMvc mockMvc;
 	
@@ -131,7 +137,7 @@ public class PropertyControllerTests {
 	@WithMockUser(value = "spring")
     @Test
     void testInitPropertiesList() throws Exception {
-		mockMvc.perform(get("/properties")).andExpect(status().isOk()).andExpect(model().attributeExists("properties"))
+		mockMvc.perform(get("/properties")).andExpect(status().isOk()).andExpect(model().attributeExists("property"))
 			.andExpect(view().name("properties/propertiesList"));
 	}
 	

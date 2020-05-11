@@ -72,20 +72,7 @@ public class PropertyServiceTests {
 		
 	}
 	
-	@Test
-	void shouldDeleteAProperty() {
-		Collection<Property> propertiesBeforeDelete = this.propertyService.findAll();
-		Integer sizeOfPropertiesBeforeDelete = propertiesBeforeDelete.size();
-		
-		Property property = this.propertyService.findPropertyById(TEST_PROPERTY_ID);
-		this.propertyService.deleteProperty(property);
-		
-		Collection<Property> propertiesAfterDelete =  this.propertyService.findAll();
-		Integer sizeOfPropertiesAfterDelete = propertiesAfterDelete.size();
-		
-		assertThat(sizeOfPropertiesAfterDelete).isEqualTo(sizeOfPropertiesBeforeDelete-1);
 
-	}
 //	@Test
 //	@Transactional
 //	public void shouldInsertPropertyIntoDatabaseAndGenerateId() {
