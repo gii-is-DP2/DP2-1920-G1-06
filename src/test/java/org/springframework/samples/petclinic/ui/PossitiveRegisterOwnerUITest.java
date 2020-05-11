@@ -16,7 +16,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class PossitiveCreatePropertyUITest {
+public class PossitiveRegisterOwnerUITest {
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
@@ -24,27 +24,40 @@ public class PossitiveCreatePropertyUITest {
 
   @BeforeEach
   public void setUp() throws Exception {
-    String pathToGeckoDriver = "C:\\Users\\enriq\\OneDrive\\Escritorio";
-    System.setProperty("webdriver.chrome.driver", pathToGeckoDriver + "\\chromedriver.exe");
+	String root = System.getProperty("webdriver.chrome.driver");
+	System.out.println(root);
+	System.setProperty("webdriver.chrome.driver", root);
     driver = new ChromeDriver();
     baseUrl = "https://www.google.com/";
     driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
   }
-  
+
   @Test
-  public void testPossitiveCreatePropertyUI() throws Exception {
+  public void testRegisterOwnerUI() throws Exception {
     driver.get("http://localhost:8090/");
-    driver.findElement(By.xpath("//a[contains(@href,'/login')]")).click();
-    driver.findElement(By.id("username")).click();
-    driver.findElement(By.id("username")).clear();
-    driver.findElement(By.id("username")).sendKeys("owner1");
-    driver.findElement(By.id("password")).clear();
-    driver.findElement(By.id("password")).sendKeys("1");
+    driver.findElement(By.xpath("//a[contains(@href, '/users/new')]")).click();
+    driver.findElement(By.xpath("//a[contains(@href, '/users/new/owner')]")).click();
+    driver.findElement(By.id("firstName")).click();
+    driver.findElement(By.id("firstName")).clear();
+    driver.findElement(By.id("firstName")).sendKeys("Pedro");
+    driver.findElement(By.id("lastName")).clear();
+    driver.findElement(By.id("lastName")).sendKeys("Garcia");
+    driver.findElement(By.id("dni")).clear();
+    driver.findElement(By.id("dni")).sendKeys("77898789P");
+    driver.findElement(By.id("birthDate")).clear();
+    driver.findElement(By.id("birthDate")).sendKeys("1995-02-10");
+    driver.findElement(By.name("gender")).click();
+    driver.findElement(By.name("gender")).click();
+    driver.findElement(By.id("email")).click();
+    driver.findElement(By.id("email")).clear();
+    driver.findElement(By.id("email")).sendKeys("pedrogarcia@gmail.com");
+    driver.findElement(By.id("telephone")).clear();
+    driver.findElement(By.id("telephone")).sendKeys("888999555");
+    driver.findElement(By.id("user.username")).clear();
+    driver.findElement(By.id("user.username")).sendKeys("pedro2");
+    driver.findElement(By.id("user.password")).clear();
+    driver.findElement(By.id("user.password")).sendKeys("2");
     driver.findElement(By.xpath("//button[@type='submit']")).click();
-    driver.findElement(By.xpath("//a[contains(@href, '/properties')]")).click();
-    driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[4]/a/span[2]")).click();
-    driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[3]/a/span[2]")).click();
-    driver.findElement(By.xpath("(//a[contains(@href, '/')])[2]")).click();
   }
 
   @AfterEach
@@ -88,5 +101,4 @@ public class PossitiveCreatePropertyUITest {
       acceptNextAlert = true;
     }
   }
-
 }

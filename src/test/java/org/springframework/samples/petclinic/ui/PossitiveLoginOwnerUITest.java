@@ -1,6 +1,5 @@
 package org.springframework.samples.petclinic.ui;
 
-
 import static org.junit.Assert.fail;
 
 import java.util.concurrent.TimeUnit;
@@ -16,7 +15,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class PossitiveCreatePropertyUITest {
+public class PossitiveLoginOwnerUITest {
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
@@ -32,19 +31,14 @@ public class PossitiveCreatePropertyUITest {
   }
   
   @Test
-  public void testPossitiveCreatePropertyUI() throws Exception {
+  public void testLoginOwnerUI() throws Exception {
     driver.get("http://localhost:8090/");
-    driver.findElement(By.xpath("//a[contains(@href,'/login')]")).click();
-    driver.findElement(By.id("username")).click();
+    driver.findElement(By.xpath("//a[contains(text(),'Login')]")).click();
     driver.findElement(By.id("username")).clear();
     driver.findElement(By.id("username")).sendKeys("owner1");
     driver.findElement(By.id("password")).clear();
     driver.findElement(By.id("password")).sendKeys("1");
     driver.findElement(By.xpath("//button[@type='submit']")).click();
-    driver.findElement(By.xpath("//a[contains(@href, '/properties')]")).click();
-    driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[4]/a/span[2]")).click();
-    driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[3]/a/span[2]")).click();
-    driver.findElement(By.xpath("(//a[contains(@href, '/')])[2]")).click();
   }
 
   @AfterEach
@@ -88,5 +82,4 @@ public class PossitiveCreatePropertyUITest {
       acceptNextAlert = true;
     }
   }
-
 }
