@@ -101,8 +101,10 @@ class OwnerControllerTests {
 	@WithMockUser(value = "spring")
         @Test
 	void testInitCreationForm() throws Exception {
-		mockMvc.perform(get("/owners/new")).andExpect(status().isOk()).andExpect(model().attributeExists("owner"))
-				.andExpect(view().name("owners/createOrUpdateOwnerForm"));
+		mockMvc.perform(get("/owners/new"))
+		.andExpect(status().isOk())
+		.andExpect(model().attributeExists("owner"))
+		.andExpect(view().name("owners/createOrUpdateOwnerForm"));
 	}
 
 	@WithMockUser(value = "spring")
@@ -115,7 +117,7 @@ class OwnerControllerTests {
 							.param("gender", "0")
 							.param("email","joe@gmail.com")
 							.param("telephone", "0131676163"))
-				.andExpect(status().is3xxRedirection());
+				.andExpect(status().is2xxSuccessful());
 	}
 
 	@WithMockUser(value = "spring")

@@ -53,7 +53,7 @@ public class RoomController {
 	@GetMapping(value = "/rooms/new")
 	public String initCreationForm(Property property, final Map<String, Object> model) {
 		Room room = new Room();
-		property.addRoom(room);
+		roomService.assignRoom(property, room);
 		model.put("room", room);
 		return VIEWS_ROOMS_CREATE_OR_UPDATE_FORM;
 	}

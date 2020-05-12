@@ -94,7 +94,9 @@ public class PropertyControllerTests {
 	@WithMockUser(value = "spring")
     @Test
     void testInitCreationForm() throws Exception {
-		mockMvc.perform(get("/properties/new")).andExpect(status().isOk()).andExpect(model().attributeExists("property"))
+		mockMvc.perform(get("/properties/new"))
+		.andExpect(status().isOk())
+		.andExpect(model().attributeExists("property"))
 			.andExpect(view().name("properties/createOrUpdatePropertyForm"));
 }
 
@@ -172,7 +174,7 @@ public class PropertyControllerTests {
 	
     @WithMockUser(value = "spring")
 	@Test
-	void testProcessUpdateOwnerFormHasErrors() throws Exception {
+	void testProcessUpdatePropertyFormHasErrors() throws Exception {
 		mockMvc.perform(post("/properties/{propertyId}/edit", TEST_PROPERTY_ID)
 							.with(csrf())
 						.param("address", "Calle de las palmeras,con más de 50 caracteres,"

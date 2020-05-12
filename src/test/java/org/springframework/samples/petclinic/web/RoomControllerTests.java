@@ -11,6 +11,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
+import java.time.LocalDate;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,8 +21,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.FilterType;
 import org.springframework.samples.petclinic.configuration.SecurityConfiguration;
+import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.Property;
 import org.springframework.samples.petclinic.model.Room;
+import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.service.OwnerService;
 import org.springframework.samples.petclinic.service.PropertyService;
 import org.springframework.samples.petclinic.service.RoomService;
@@ -39,6 +43,9 @@ public class RoomControllerTests {
 	private static final int	TEST_ROOM_ID	= 1;
 	
 	private static final int TEST_PROPERTY_ID = 1;
+	
+	private static final int TEST_OWNER_ID = 1;
+
 
 	@Autowired
 	private RoomController		roomController;
@@ -55,6 +62,10 @@ public class RoomControllerTests {
 	@MockBean
 	private UserService userService;
 	
+	private User georgeUser;
+	
+	private Owner george;
+	
 	private Room room;
 	
 	private Property property;
@@ -66,9 +77,35 @@ public class RoomControllerTests {
 	@BeforeEach
 	void setup() {
 		
-		Property property = new Property();
+		georgeUser = new User();
+		georgeUser.setEnabled(true);
+		georgeUser.setUsername("georgeUser");
+		georgeUser.setPassword("georgePassword");
+		
+		george = new Owner();
+		george.setId(TEST_OWNER_ID);
+		george.setFirstName("George");
+		george.setLastName("Franklin");
+		george.setDni("12345678N");
+		george.setBirthDate(LocalDate.of(1970, 11, 14));
+		george.setGender(0);
+		george.setEmail("george@gmail.com");
+		george.setTelephone("608555023");
+		george.setUser(georgeUser);
+		
+		property = new Property();
 		property.setId(TEST_PROPERTY_ID);
+		property.setAddress("Direccion");
+		property.setCity("Ciudad");
+		property.setDescription("Descripcion");
+		property.setPropertyType(0);
+		property.setSurface(45);
+		property.setTotalRooms(3);
+		
+		property.setOwner(george);
 
+		
+		
 		room = new Room();
 		room.setId(RoomControllerTests.TEST_ROOM_ID);
 		room.setRoomNumber("3");
@@ -78,6 +115,7 @@ public class RoomControllerTests {
 		room.setTamCloset(4);
 		
 		room.setProperty(property);
+		
 
 
 		given(this.roomService.findRoomById(TEST_ROOM_ID)).willReturn(room);
@@ -109,7 +147,7 @@ public class RoomControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testProcessCreationFormHasErrors() throws Exception {
-		this.mockMvc.perform(MockMvcRequestBuilders.post("/rooms/new").with(csrf())
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/properties/{propertyId}/rooms/new",TEST_PROPERTY_ID).with(csrf())
 				.param("roomNumber", "4")
 				.param("surface", "Hola")
 				.param("price", "asd2")
@@ -128,7 +166,7 @@ public class RoomControllerTests {
     @WithMockUser(value = "spring")
 	@Test
 	void testInitUpdateRoomForm() throws Exception {
-		mockMvc.perform(get("/rooms/{roomId}/edit", TEST_ROOM_ID)).andExpect(status().isOk())
+		mockMvc.perform(get("/properties/{propertyId}/rooms/{roomId}/edit",TEST_PROPERTY_ID, TEST_ROOM_ID)).andExpect(status().isOk())
 				.andExpect(model().attributeExists("room"))
 				.andExpect(model().attribute("room", hasProperty("roomNumber", is("3"))))
 				.andExpect(model().attribute("room", hasProperty("surface", is(2000))))
@@ -141,26 +179,25 @@ public class RoomControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testProcessUpdateRoomFormSuccess() throws Exception {
-		this.mockMvc.perform(post("properties/{propertyId}/rooms/{roomId}/edit",TEST_PROPERTY_ID, TEST_ROOM_ID).with(csrf())
+		this.mockMvc.perform(post("/properties/{propertyId}/rooms/{roomId}/edit",TEST_PROPERTY_ID, TEST_ROOM_ID).with(csrf())
 				.param("roomNumber", "3")
 				.param("surface", "2000")
-				.param("price", "3.0")
+				.param("price", "4.0")
 			.param("extWindow", "0")
 			.param("tamCloset", "4"))
-			.andExpect(status().is3xxRedirection())
-			.andExpect(view().name("redirect:properties/" + TEST_PROPERTY_ID +"/rooms/"+TEST_ROOM_ID));
+			.andExpect(status().is2xxSuccessful());
 	}
 
 	@WithMockUser(value = "spring")
 	@Test
 	void testProcessUpdateRoomFormHasErrors() throws Exception {
 		this.mockMvc
-			.perform(post("/room/{roomId}/edit",TEST_ROOM_ID).with(csrf())
-					.param("roomNumber", "4")
-					.param("surface", "Hola")
-					.param("price", "asd2")
-					.param("extWindow", "asd")
-				.param("tamCloset", "asdg"))
+			.perform(post("/properties/{propertyId}/rooms/{roomId}/edit",TEST_PROPERTY_ID,TEST_ROOM_ID).with(csrf())
+					.param("roomNumber", "3")
+					.param("surface", "-1")
+					.param("price", "-1.")
+					.param("extWindow", "-1")
+				.param("tamCloset", "-1"))
 			.andExpect(status().isOk())
 			.andExpect(model().attributeHasErrors("room"))
 			.andExpect(model().attributeHasFieldErrors("room", "surface"))
