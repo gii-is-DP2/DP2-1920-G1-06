@@ -46,8 +46,6 @@ public class OwnerControllerE2ETest {
 
 	@Autowired
 	private MockMvc mockMvc;
-	
-
 
 	@WithMockUser(username = "owner1", authorities = {"owner"})
 	@Test
