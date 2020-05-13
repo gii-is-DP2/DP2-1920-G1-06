@@ -155,8 +155,8 @@ public class RentalControllerTests {
 	@Test
 	void testProcessCreationFormSuccess() throws Exception {
 		mockMvc.perform(post("/properties/{propertyId}/rooms/{roomId}/rental/new", TEST_PROPERTY_ID, TEST_ROOM_ID).with(csrf())
-				.param("startDate", "2020-03-10")
-				.param("endDate","2020-03-15")
+				.param("startDate", "2020-10-10")
+				.param("endDate","2020-10-15")
 				.param("priceMonth", "50")
 				.param("isAccepted", "false")
 				.param("isARequest", "true"))
@@ -167,8 +167,8 @@ public class RentalControllerTests {
 	@Test
 	void testProcessCreationFormHasErrors() throws Exception {
 		mockMvc.perform(post("/properties/{propertyId}/rooms/{roomId}/rental/new", TEST_PROPERTY_ID, TEST_ROOM_ID).with(csrf())
-				.param("startDate", "2020-03-10")
-				.param("endDate","2020-03-15")
+				.param("startDate", "1970-10-10")
+				.param("endDate","1970-10-15")
 				.param("priceMonth", "50")
 				.param("isAccepted", "false")
 				.param("isARequest", "true"))

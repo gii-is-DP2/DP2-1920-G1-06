@@ -22,6 +22,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Transient;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Range;
@@ -53,6 +54,7 @@ public class Person extends BaseEntity {
 	protected String dni;
 
 	@Column(name = "birth_date")
+	@Past()
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	protected LocalDate birthDate;
 

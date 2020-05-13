@@ -209,12 +209,13 @@ class OwnerControllerTests {
 							.param("firstName", "Joe")
 							.param("lastName", "Bloggs")
 							.param("dni", "12345678P")
-							.param("birthDate","1980-02-08")
+							.param("birthDate","2024-02-08")
 							.param("gender", "5" )
 							.param("email", "joe2@gmail.com")
 							.param("telephone","0161629159"))
 				.andExpect(status().isOk())
 				.andExpect(model().attributeHasErrors("owner"))
+				.andExpect(model().attributeHasFieldErrors("owner", "birthDate"))
 				.andExpect(model().attributeHasFieldErrors("owner", "gender"))
 				.andExpect(view().name("owners/createOrUpdateOwnerForm"));
 	}
