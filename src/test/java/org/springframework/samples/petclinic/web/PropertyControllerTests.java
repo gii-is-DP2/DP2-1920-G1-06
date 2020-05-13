@@ -139,8 +139,9 @@ public class PropertyControllerTests {
 	@WithMockUser(value = "spring")
     @Test
     void testInitPropertiesList() throws Exception {
-		mockMvc.perform(get("/properties")).andExpect(status().isOk()).andExpect(model().attributeExists("property"))
-			.andExpect(view().name("properties/propertiesList"));
+		mockMvc.perform(get("/properties"))
+		.andExpect(status().isOk())
+		.andExpect(view().name("properties/propertiesList"));
 	}
 	
 	@WithMockUser(value = "spring")
