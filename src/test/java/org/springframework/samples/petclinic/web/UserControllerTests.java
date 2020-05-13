@@ -119,10 +119,16 @@ public class UserControllerTests {
 	@WithMockUser(value = "spring")
 	@Test
 	void testProcessOwnerCreationFormSuccess() throws Exception {
-		mockMvc.perform(post("/users/new/owner").param("firstName", "George").param("lastName", "Franklin").with(csrf())
-				.param("dni", "12345678N").param("birthDate", "1970-11-14").param("gender", "0")
-				.param("email", "george@gmail.com").param("telephone", "608555023"))
-				.andExpect(status().is2xxSuccessful());
+		mockMvc.perform(post("/users/new/owner")
+				.param("firstName", "George")
+				.param("lastName", "Franklin")
+				.with(csrf())
+				.param("dni", "12345678N")
+				.param("birthDate", "1970-11-14")
+				.param("gender", "0")
+				.param("email", "george@gmail.com")
+				.param("telephone", "608555023"))
+				.andExpect(status().is3xxRedirection());
 	}
 
 	@WithMockUser(value = "spring")
