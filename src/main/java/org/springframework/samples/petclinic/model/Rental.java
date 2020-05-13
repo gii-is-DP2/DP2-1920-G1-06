@@ -9,6 +9,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.FutureOrPresent;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -30,12 +32,12 @@ public class Rental extends BaseEntity {
 	}
 
 	@Column(name = "startDate")
-	//@FutureOrPresent
+	@FutureOrPresent
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate startDate;
 
 	@Column(name = "endDate")
-	//@Future
+	@Future
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private LocalDate endDate;
 
