@@ -1,10 +1,7 @@
 package org.springframework.samples.petclinic.service;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 
-
-import java.security.Provider.Service;
 import java.time.LocalDate;
 import java.util.Collection;
 
@@ -13,35 +10,51 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.petclinic.model.Owner;
+import org.springframework.samples.petclinic.model.User;
+import org.springframework.stereotype.Service;
+import org.springframework.samples.petclinic.model.Authorities;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
 
-class OwnerServiceTests {     
-@Autowired
+public class OwnerServiceTests {
+	
+	@Autowired
 	protected OwnerService ownerService;
-
-	private static final int TEST_OWNER_ID = 1;
- 
+	
+	@Autowired
+	protected UserService userService;
+	
+	
 	@Test
-	void shouldSaveAOwner() {
-		Collection<Owner> ownersBeforeAdd = this.ownerService.findAll();
-		Integer sizeOfOwnersBeforeAdd = ownersBeforeAdd.size();
+	@Transactional
+	public void shouldSaveOwner() {
+		Collection<Owner> owners = this.ownerService.findAll();
+		int ownersBeforeAdding = owners.size();
 		
 		Owner owner = new Owner();
-		owner.setId(TEST_OWNER_ID);
-		owner.setFirstName("Lucy");
-		owner.setLastName("Franklin");
-		owner.setDni("12345678X");
-		owner.setBirthDate(LocalDate.of(1970, 11, 14));
-		owner.setGender(0);
-		owner.setEmail("lucy@gmail.com");
-		owner.setTelephone("6085551024");
+		owner.setFirstName("Maria");
+		owner.setLastName("Sanchez");
+		owner.setDni("30261112C");
+		owner.setBirthDate(LocalDate.of(1980, 4, 12));
+		owner.setGender(1);
+		owner.setEmail("mari2@gmail.com");
+		owner.setTelephone("600222888");
+		
+		User user = new User();
+		user.setUsername("mari");
+		user.setPassword("marip");
+		user.setEnabled(true);
+		owner.setUser(user);
+		
 		
 		this.ownerService.saveOwner(owner);
+		assertThat(owner.getId().longValue()).isNotEqualTo(0);
 		
-		Collection<Owner> ownersAfterAdd =  this.ownerService.findAll();
-		Integer sizeOfOwnersAfterAdd = ownersAfterAdd.size();
-		
-		assertThat(sizeOfOwnersAfterAdd).isEqualTo(sizeOfOwnersBeforeAdd+1);
+		owners = this.ownerService.findAll();
+		assertThat(owners.size()).isEqualTo(ownersBeforeAdding + 1);
 	}
+
 }
