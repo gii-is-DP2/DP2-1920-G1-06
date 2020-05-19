@@ -61,10 +61,6 @@ public class RentalController {
 		this.rentalService = rentalService;
 	}
 
-	@ModelAttribute("rental")
-	public Rental findRental(@PathVariable("rentalId") int rentalId) {
-		return this.rentalService.findRentalById(rentalId);
-	}
 
 	@GetMapping(value = "/rental/new")
 	public String initCreationForm(Map<String, Object> model) {
@@ -78,6 +74,9 @@ public class RentalController {
 	public String processCreationForm(@PathVariable("roomId") final int roomId,
 			@PathVariable("propertyId") final int propertyId, @Valid final Rental rental, final BindingResult result) {
 		
+		if (result.hasErrors()) {
+			return VIEWS_RENTAL_CREATE_FORM;
+		} else {
 		Room room = roomService.findRoomById(roomId);
 
 		Owner ow = room.getProperty().getOwner();
@@ -95,7 +94,7 @@ public class RentalController {
 		this.rentalService.saveRental(rental);
 
 		return "/welcome";
-
+		}
 	}
 
 	@GetMapping(value = "/rental/{rentalId}/edit")
