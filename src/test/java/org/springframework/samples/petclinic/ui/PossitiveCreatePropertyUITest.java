@@ -5,6 +5,9 @@ import static org.junit.Assert.fail;
 
 import java.util.concurrent.TimeUnit;
 
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -34,17 +37,38 @@ public class PossitiveCreatePropertyUITest {
   @Test
   public void testPossitiveCreatePropertyUI() throws Exception {
     driver.get("http://localhost:8090/");
-    driver.findElement(By.xpath("//a[contains(@href,'/login')]")).click();
+    driver.findElement(By.xpath("//a[contains(@href, '/login')]")).click();
     driver.findElement(By.id("username")).click();
     driver.findElement(By.id("username")).clear();
+    try {
+        Thread.sleep(500);
+    } catch (InterruptedException e) {
+    }
     driver.findElement(By.id("username")).sendKeys("owner1");
     driver.findElement(By.id("password")).clear();
+    try {
+        Thread.sleep(500);
+    } catch (InterruptedException e) {
+    }
     driver.findElement(By.id("password")).sendKeys("1");
     driver.findElement(By.xpath("//button[@type='submit']")).click();
-    driver.findElement(By.xpath("//a[contains(@href, '/properties')]")).click();
-    driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[4]/a/span[2]")).click();
-    driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[3]/a/span[2]")).click();
-    driver.findElement(By.xpath("(//a[contains(@href, '/')])[2]")).click();
+    driver.findElement(By.xpath("//div[@id='main-navbar']/ul/li[2]/a/span[2]")).click();
+    driver.findElement(By.xpath("//a[contains(@href, '/properties/new')]")).click();
+    driver.findElement(By.id("address")).click();
+    driver.findElement(By.id("address")).clear();
+    driver.findElement(By.id("address")).sendKeys("Calle larga");
+    driver.findElement(By.id("city")).clear();
+    driver.findElement(By.id("city")).sendKeys("Sevilla");
+    driver.findElement(By.id("description")).clear();
+    driver.findElement(By.id("description")).sendKeys("Casa luminosa con parada de bus cercana");
+    driver.findElement(By.id("surface")).clear();
+    driver.findElement(By.id("surface")).sendKeys("80");
+    driver.findElement(By.id("totalRooms")).clear();
+    driver.findElement(By.id("totalRooms")).sendKeys("3");
+    driver.findElement(By.name("propertyType")).click();
+    new Select(driver.findElement(By.name("propertyType"))).selectByVisibleText("Flat");
+    driver.findElement(By.name("propertyType")).click();
+    driver.findElement(By.xpath("//button[@type='submit']")).click();
   }
 
   @AfterEach
