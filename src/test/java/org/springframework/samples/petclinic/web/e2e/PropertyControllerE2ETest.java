@@ -34,53 +34,53 @@ public class PropertyControllerE2ETest {
 	@Autowired
 	private MockMvc mockMvc;
 
-
-	@WithMockUser(username = "owner1", authorities = {
-		"owner"
-	})
+	@WithMockUser(username = "owner1", authorities = { "owner" })
 	@Test
 	void testInitCreationForm() throws Exception {
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/properties/new")).andExpect(MockMvcResultMatchers.status().isOk()).andExpect(MockMvcResultMatchers.model().attributeExists("property"))
-			.andExpect(MockMvcResultMatchers.view().name("properties/createOrUpdatePropertyForm"));
-	}
-	@WithMockUser(username = "owner1", authorities = {"owner"})
-	@Test
-	void testProcessCreationFormSuccess() throws Exception {
-		this.mockMvc.perform(MockMvcRequestBuilders.post("/properties/new").with(SecurityMockMvcRequestPostProcessors.csrf())
-				.param("address", "Calle de las palmeras")
-				.param("city", "London")
-				.param("description", "Calle de las palmeras")
-				.param("propertyType", "0")
-				.param("surface","45")
-				.param("totalRooms", "4"))
-				.andExpect(MockMvcResultMatchers.status().is3xxRedirection());
-	}
-	
-	@WithMockUser(username = "owner1", authorities = {"owner"})
-	@Test
-	void testInitUpdatePropertyForm() throws Exception {
-		this.mockMvc.perform(MockMvcRequestBuilders.get("/properties/{propertyId}/edit", 1)).andExpect(MockMvcResultMatchers.status().isOk())
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/properties/new"))
+				.andExpect(MockMvcResultMatchers.status().isOk())
 				.andExpect(MockMvcResultMatchers.model().attributeExists("property"))
-				.andExpect(MockMvcResultMatchers.model().attribute("property", Matchers.hasProperty("address", Matchers.is("Base Militar de Rotas"))))
-				.andExpect(MockMvcResultMatchers.model().attribute("property", Matchers.hasProperty("city", Matchers.is("Cadiz"))))
-				.andExpect(MockMvcResultMatchers.model().attribute("property", Matchers.hasProperty("description", Matchers.is("Con muchos militares"))))
-				.andExpect(MockMvcResultMatchers.model().attribute("property", Matchers.hasProperty("propertyType", Matchers.is(0))))
-				.andExpect(MockMvcResultMatchers.model().attribute("property", Matchers.hasProperty("surface", Matchers.is(90))))
-				.andExpect(MockMvcResultMatchers.model().attribute("property", Matchers.hasProperty("totalRooms", Matchers.is(4))))
 				.andExpect(MockMvcResultMatchers.view().name("properties/createOrUpdatePropertyForm"));
 	}
-	@WithMockUser(username = "owner1", authorities = {"owner"})
+
+	@WithMockUser(username = "owner1", authorities = { "owner" })
+	@Test
+	void testProcessCreationFormSuccess() throws Exception {
+		this.mockMvc
+				.perform(MockMvcRequestBuilders.post("/properties/new")
+						.with(SecurityMockMvcRequestPostProcessors.csrf()).param("address", "Calle de las palmeras")
+						.param("city", "London").param("description", "Calle de las palmeras")
+						.param("propertyType", "0").param("surface", "45").param("totalRooms", "4"))
+				.andExpect(MockMvcResultMatchers.status().is3xxRedirection());
+	}
+
+	@WithMockUser(username = "owner1", authorities = { "owner" })
+	@Test
+	void testInitUpdatePropertyForm() throws Exception {
+		this.mockMvc.perform(MockMvcRequestBuilders.get("/properties/{propertyId}/edit", 1))
+				.andExpect(MockMvcResultMatchers.status().isOk())
+				.andExpect(MockMvcResultMatchers.model().attributeExists("property"))
+				.andExpect(MockMvcResultMatchers.model().attribute("property",
+						Matchers.hasProperty("address", Matchers.is("Base Militar de Rotas"))))
+				.andExpect(MockMvcResultMatchers.model().attribute("property",
+						Matchers.hasProperty("city", Matchers.is("Cadiz"))))
+				.andExpect(MockMvcResultMatchers.model().attribute("property",
+						Matchers.hasProperty("description", Matchers.is("Con muchos militares"))))
+				.andExpect(MockMvcResultMatchers.model().attribute("property",
+						Matchers.hasProperty("propertyType", Matchers.is(0))))
+				.andExpect(MockMvcResultMatchers.model().attribute("property",
+						Matchers.hasProperty("surface", Matchers.is(90))))
+				.andExpect(MockMvcResultMatchers.model().attribute("property",
+						Matchers.hasProperty("totalRooms", Matchers.is(4))))
+				.andExpect(MockMvcResultMatchers.view().name("properties/createOrUpdatePropertyForm"));
+	}
+
+	@WithMockUser(username = "owner1", authorities = { "owner" })
 	@Test
 	void testProcessUpdatePropertyFormSuccess() throws Exception {
-		mockMvc.perform(post("/properties/{propertyId}/edit", 1)
-							.with(csrf())
-							.param("address", "Calle de las palmeras")
-							.param("city", "London")
-							.param("description", "Calle de las palmeras")
-							.param("propertyType", "0")
-							.param("surface","45")
-							.param("totalRooms", "4"))
-				.andExpect(status().is3xxRedirection())
-				.andExpect(view().name("redirect:/properties/"+1+"/show"));
-}
+		mockMvc.perform(post("/properties/{propertyId}/edit", 1).with(csrf()).param("address", "Calle de las palmeras")
+				.param("city", "London").param("description", "Calle de las palmeras").param("propertyType", "0")
+				.param("surface", "45").param("totalRooms", "4")).andExpect(status().is3xxRedirection())
+				.andExpect(view().name("redirect:/properties/" + 1 + "/show"));
+	}
 }

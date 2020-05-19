@@ -58,7 +58,7 @@ public class RoomControllerE2ETest {
 	@WithMockUser(username="owner1",authorities= {"owner"})
 	@Test
 	void testProcessCreationFormHasErrors() throws Exception {
-		this.mockMvc.perform(MockMvcRequestBuilders.post("/properties/{propertyId}/rooms/new, TEST_PROPERTY_ID")
+		this.mockMvc.perform(MockMvcRequestBuilders.post("/properties/{propertyId}/rooms/new", TEST_PROPERTY_ID)
 				.with(SecurityMockMvcRequestPostProcessors.csrf())
 				.param("roomNumber", "4")
 				.param("surface", "Hola")
@@ -89,21 +89,19 @@ public class RoomControllerE2ETest {
 				.param("extWindow", "0")
 				.param("tamCloset", "4"))
 				.andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
-//				.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
-//				.andExpect(MockMvcResultMatchers.view().name("redirect:/rooms/{roomId}"));
 	}
 
 	@WithMockUser(username="owner1",authorities= {"owner"})
 	@Test
 	void testProcessUpdateRoomFormHasErrors() throws Exception {
 		this.mockMvc
-			.perform(MockMvcRequestBuilders.post("/properties/{propertyId}/room/{roomId}/edit", TEST_PROPERTY_ID , TEST_ROOM_ID)
+			.perform(MockMvcRequestBuilders.post("/properties/{propertyId}/rooms/{roomId}/edit", TEST_PROPERTY_ID , TEST_ROOM_ID)
 					.with(SecurityMockMvcRequestPostProcessors.csrf())
 					.param("roomNumber", "4")
-					.param("surface", "Hola")
-					.param("price", "asd2")
-					.param("extWindow", "asd")
-					.param("tamCloset", "asdg"))
+					.param("surface", "-1")
+					.param("price", "-1.")
+					.param("extWindow", "-1")
+					.param("tamCloset", "-1"))
 					.andExpect(MockMvcResultMatchers.status().isOk())
 					.andExpect(MockMvcResultMatchers.model().attributeHasErrors("room"))
 					.andExpect(MockMvcResultMatchers.model().attributeHasFieldErrors("room", "surface"))
