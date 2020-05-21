@@ -11,21 +11,17 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.support.ui.Select;
-import org.springframework.samples.petclinic.util.Sleep;
 
-public class PossitiveEditRoomOwnerUITest {
+public class NegativeCreateRentalStudentUITest {
 	
-	// Default
+	//Default
 	private WebDriver driver;
 	private String baseUrl;
 	private StringBuffer verificationErrors = new StringBuffer();
 
 	// Params
-	private final String username = "owner1";
-	private final String pass = "1";
-	private final Double price = 200.0;
-	private final Integer tamCloset = 20;
+	private final String username = "pedro2";
+	private final String pass = "2";
 
 	@BeforeEach
 	public void setUp() throws Exception {
@@ -36,25 +32,25 @@ public class PossitiveEditRoomOwnerUITest {
 	}
 
 	@Test
-	public void testEditPropertyUITest() throws Exception {
+	public void testRegisterOwnerUI() throws Exception {
 		driver.get("http://localhost:8090/");
 
+		registerOwnerUI();
+
 		loginAsOwner();
-
-		editARoom();
-
-		assertElements();
 
 	}
 
 	public void loginAsOwner() throws Exception {
-
-		Sleep.sleep(500);
-
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+		}
 		driver.findElement(By.xpath("//a[contains(@href, '/login')]")).click();
-
-		Sleep.sleep(500);
-
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+		}
 		driver.findElement(By.id("username")).click();
 		driver.findElement(By.id("username")).clear();
 		driver.findElement(By.id("username")).sendKeys(username);
@@ -62,38 +58,42 @@ public class PossitiveEditRoomOwnerUITest {
 		driver.findElement(By.id("password")).clear();
 		driver.findElement(By.id("password")).sendKeys(pass);
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
-
-		Sleep.sleep(500);
-
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+		}
 		assertEquals(username.toUpperCase(),
 				driver.findElement(By.xpath("//div[@id='main-navbar']/ul[2]/li/a/strong")).getText());
 
 	}
 
-	public void editARoom() throws Exception {
+	public void registerOwnerUI() throws Exception {
 
-		driver.findElement(By.xpath("//a[contains(@href, '/properties')]")).click();
-		driver.findElement(By.xpath("//a[contains(@href, '/properties/1/show')]")).click();
-		driver.findElement(By.xpath("//a[contains(@href, '/properties/1/rooms')]")).click();
-		driver.findElement(By.xpath("//a[contains(@href, '/properties/1/rooms/1')]")).click();
-		driver.findElement(By.xpath("//a[contains(@href, '1/edit')]")).click();
-		driver.findElement(By.id("price")).click();
-		driver.findElement(By.id("price")).clear();
-		driver.findElement(By.id("price")).sendKeys(price.toString());
-		driver.findElement(By.id("TamCloset")).click();
-		driver.findElement(By.id("TamCloset")).clear();
-		driver.findElement(By.id("TamCloset")).sendKeys(tamCloset.toString());
+		driver.findElement(By.xpath("//a[contains(@href, '/users/new')]")).click();
+		driver.findElement(By.xpath("//a[contains(@href, '/users/new/owner')]")).click();
+		driver.findElement(By.id("firstName")).click();
+		driver.findElement(By.id("firstName")).clear();
+		driver.findElement(By.id("firstName")).sendKeys("Pedro");
+		driver.findElement(By.id("lastName")).clear();
+		driver.findElement(By.id("lastName")).sendKeys("Garcia");
+		driver.findElement(By.id("dni")).clear();
+		driver.findElement(By.id("dni")).sendKeys("77898789P");
+		driver.findElement(By.id("birthDate")).clear();
+		driver.findElement(By.id("birthDate")).sendKeys("02-10-1995");
+		driver.findElement(By.name("gender")).click();
+		driver.findElement(By.name("gender")).click();
+		driver.findElement(By.id("email")).click();
+		driver.findElement(By.id("email")).clear();
+		driver.findElement(By.id("email")).sendKeys("pedrogarcia@gmail.com");
+		driver.findElement(By.id("telephone")).clear();
+		driver.findElement(By.id("telephone")).sendKeys("888999555");
+		driver.findElement(By.id("user.username")).clear();
+		driver.findElement(By.id("user.username")).sendKeys(username);
+		driver.findElement(By.id("user.password")).clear();
+		driver.findElement(By.id("user.password")).sendKeys(pass);
 		driver.findElement(By.xpath("//button[@type='submit']")).click();
 
-	}
-
-	public void assertElements() throws Exception {
-
-		Sleep.sleep(500);
-
-		assertEquals(price.toString(), driver.findElement(By.xpath("//tr[3]/td")).getText());
-
-		assertEquals(tamCloset.toString(), driver.findElement(By.xpath("//tr[5]/td")).getText());
+		assertEquals("Welcome", driver.findElement(By.xpath("//h2")).getText());
 	}
 
 	@AfterEach
