@@ -49,7 +49,6 @@ public class Person extends BaseEntity {
 	protected String dni;
 
 	@Column(name = "birth_date")
-	@NotEmpty
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	protected LocalDate birthDate;
 
