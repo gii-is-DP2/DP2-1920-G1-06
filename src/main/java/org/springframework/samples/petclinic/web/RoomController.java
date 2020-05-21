@@ -53,15 +53,15 @@ public class RoomController {
 	@GetMapping(value = "/rooms/new")
 	public String initCreationForm(Property property, final Map<String, Object> model) {
 		Room room = new Room();
-		property.addRoom(room);
+		roomService.assignRoom(property, room);
 		model.put("room", room);
-		return RoomController.VIEWS_ROOMS_CREATE_OR_UPDATE_FORM;
+		return VIEWS_ROOMS_CREATE_OR_UPDATE_FORM;
 	}
 
 	@PostMapping(value = "/rooms/new")
 	public String processCreationForm(@PathVariable("propertyId") int propertyId, @Valid final Room room, final BindingResult result) {
 		if (result.hasErrors()) {
-			return RoomController.VIEWS_ROOMS_CREATE_OR_UPDATE_FORM;
+			return VIEWS_ROOMS_CREATE_OR_UPDATE_FORM;
 		} else {
 			Property property = propertyService.findPropertyById(propertyId);
 			room.setProperty(property);

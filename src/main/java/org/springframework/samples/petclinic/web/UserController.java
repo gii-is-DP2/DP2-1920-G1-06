@@ -78,7 +78,7 @@ public class UserController {
 	}
 
 	@PostMapping(value = "/users/new/owner")
-	public String processCreationForm(@Valid Owner owner, BindingResult result) {
+	public String processOwnerCreationForm(@Valid Owner owner, BindingResult result) {
 		if (result.hasErrors()) {
 			return VIEWS_OWNER_CREATE_FORM;
 		}
@@ -97,7 +97,7 @@ public class UserController {
 	}
 
 	@PostMapping(value = "/users/new/student")
-	public String processCreationForm(@Valid Student student, BindingResult result) {
+	public String processStudentCreationForm(@Valid Student student, BindingResult result) {
 		if (result.hasErrors()) {
 			return VIEWS_STUDENT_CREATE_FORM;
 		}

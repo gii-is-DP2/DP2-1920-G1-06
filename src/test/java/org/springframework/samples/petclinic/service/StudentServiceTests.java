@@ -1,5 +1,7 @@
 package org.springframework.samples.petclinic.service;
 
+
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.time.LocalDate;
@@ -10,47 +12,51 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.petclinic.model.Student;
+import org.springframework.samples.petclinic.model.User;
 import org.springframework.stereotype.Service;
+import org.springframework.samples.petclinic.model.Authorities;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
 
 public class StudentServiceTests {
-
+	
 	@Autowired
 	protected StudentService studentService;
-
-	private static final int TEST_STUDENT_ID = 1;
- 
 	
+	@Autowired
+	protected UserService userService;
 	
-//	@Test
-//	void shouldFindAStudentWithCorrectId() {
-//		Student student = this.studentService.findStudentById(id);
-//		
-//		assertThat(user.getUsername()).isEqualTo("user1");
-//		assertThat(user.getPassword()).isEqualTo("pass");
-//	}
 	
 	@Test
-	void shouldSaveAStudent() {
-		Collection<Student> studentsBeforeAdd = this.studentService.findAll();
-		Integer sizeOfStudentsBeforeAdd = studentsBeforeAdd.size();
+	@Transactional
+	public void shouldSaveStudent() {
+		Collection<Student> students = this.studentService.findAll();
+		int studentsBeforeAdding = students.size();
 		
 		Student student = new Student();
-		student.setId(TEST_STUDENT_ID);
-		student.setFirstName("Lucy");
-		student.setLastName("Franklin");
-		student.setDni("12345678X");
-		student.setBirthDate(LocalDate.of(1970, 11, 14));
-		student.setGender(0);
-		student.setEmail("lucy@gmail.com");
-		student.setTelephone("6085551024");
+		student.setFirstName("Carla");
+		student.setLastName("Franflin");
+		student.setDni("30263112C");
+		student.setBirthDate(LocalDate.of(1985, 4, 12));
+		student.setGender(1);
+		student.setEmail("mari2@gmail.com");
+		student.setTelephone("600122888");
+		
+		User user = new User();
+		user.setUsername("mari2");
+		user.setPassword("marip2");
+		user.setEnabled(true);
+		student.setUser(user);
+		
 		
 		this.studentService.saveStudent(student);
+		assertThat(student.getId().longValue()).isNotEqualTo(0);
 		
-		Collection<Student> studentsAfterAdd =  this.studentService.findAll();
-		Integer sizeOfStudentsAfterAdd = studentsAfterAdd.size();
-		
-		assertThat(sizeOfStudentsAfterAdd).isEqualTo(sizeOfStudentsBeforeAdd+1);
+		students = this.studentService.findAll();
+		assertThat(students.size()).isEqualTo(studentsBeforeAdding + 1);
 	}
+
 }

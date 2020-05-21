@@ -15,7 +15,6 @@
  */
 package org.springframework.samples.petclinic.service;
 
-
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,28 +41,23 @@ public class UserService {
 		this.userRepository = userRepository;
 	}
 
-@Transactional
-public void saveUser(User user) throws DataAccessException {
-		
+	@Transactional
+	public void saveUser(User user) throws DataAccessException {
+
 //	if(userRepository.findByUsername(user.getUsername()).getUsername().isEmpty()) {
-	
-	
+
 		user.setEnabled(true);
 		userRepository.save(user);
-		
-	
-		
 
 	}
-	
-public User findByUsername(String username) {
-		
+
+	public User findByUsername(String username) {
+
 		return userRepository.findByUsername(username);
 	}
 
-public Collection<User> findAll() {
-	return userRepository.findAll();
-}
-	
-	
+	public Collection<User> findAll() {
+		return userRepository.findAll();
+	}
+
 }

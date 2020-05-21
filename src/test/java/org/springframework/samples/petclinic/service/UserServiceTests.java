@@ -18,14 +18,14 @@ public class UserServiceTests {
 	@Autowired
 	protected UserService userService;
 
-	
+	private final static  String username = "owner1";
 	
 	@Test
 	void shouldFindAUserWithCorrectUsername() {
-		User user = this.userService.findByUsername("user1");
+		User user = this.userService.findByUsername(username);
 		
-		assertThat(user.getUsername()).isEqualTo("user1");
-		assertThat(user.getPassword()).isEqualTo("pass");
+		assertThat(user.getUsername()).isEqualTo("owner1");
+		assertThat(user.getPassword()).isEqualTo("1");
 	}
 	
 	@Test
