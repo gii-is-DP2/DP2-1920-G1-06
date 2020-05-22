@@ -9,12 +9,18 @@ import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.samples.petclinic.util.Sleep;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class PossitiveCreateRentalStudentUITest {
 	
 	//Default
@@ -28,6 +34,9 @@ public class PossitiveCreateRentalStudentUITest {
 	private final String pass = "1";
 	private Integer numOfRequest;
 
+	@LocalServerPort
+	private int port;
+	
 	@BeforeEach
 	public void setUp() throws Exception {
 		System.setProperty("webdriver.chrome.driver", System.getenv("webdriver.chrome.driver"));
@@ -38,7 +47,7 @@ public class PossitiveCreateRentalStudentUITest {
 
 	@Test
 	public void testRegisterOwnerUI() throws Exception {
-		driver.get("http://localhost:8090/");
+		driver.get("http://localhost:"+port);
 
 		loginAsOwner();
 		
@@ -94,6 +103,7 @@ public class PossitiveCreateRentalStudentUITest {
 		Sleep.sleep(500);
 		driver.findElement(By.xpath("//div[@id='main-navbar']/ul[2]/li/a/strong")).click();
 	    driver.findElement(By.xpath("//a[contains(@href, '/logout')]")).click();
+	    Sleep.sleep(500);
 	    driver.findElement(By.xpath("//button[@type='submit']")).click();
 	}
 	
