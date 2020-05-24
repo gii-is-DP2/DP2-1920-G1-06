@@ -68,7 +68,7 @@ public class RentalHistoryController {
 	}
 	
 	//VISTA PERFIL ESTUDIANTE
-	@GetMapping(value = "/request/{studentId}/profile")
+	@GetMapping(value = "/rentals/{studentId}/profile")
 	public ModelAndView studentProfile(@PathVariable("studentId") final int studentId) {
 		ModelAndView mav = new ModelAndView("rentals/studentProfile");
 		mav.addObject(this.studentService.findStudentById(studentId));
