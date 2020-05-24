@@ -12,12 +12,15 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.samples.petclinic.model.Owner;
 import org.springframework.samples.petclinic.model.User;
 import org.springframework.stereotype.Service;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.samples.petclinic.model.Authorities;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @DataJpaTest(includeFilters = @ComponentScan.Filter(Service.class))
+@AutoConfigureTestDatabase(replace=Replace.NONE)
 
 public class OwnerServiceTests {
 	
