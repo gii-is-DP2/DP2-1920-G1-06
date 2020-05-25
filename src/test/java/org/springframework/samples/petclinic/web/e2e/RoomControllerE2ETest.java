@@ -51,8 +51,6 @@ public class RoomControllerE2ETest {
 				.param("extWindow", "0")
 				.param("tamCloset", "4"))
 				.andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
-//				.andExpect(MockMvcResultMatchers.status().is3xxRedirection())
-//				.andExpect(MockMvcResultMatchers.view().name("redirect:/properties/{propertyId}/rooms"));
 	}
 	
 	@WithMockUser(username="owner1",authorities= {"owner"})

@@ -45,7 +45,6 @@ public class UserController {
 	private static final String VIEWS_OWNER_CREATE_FORM = "users/createOwnerForm";
 	private static final String VIEWS_STUDENT_CREATE_FORM = "users/createStudentForm";
 
-	
 	private final UserService userService;
 	private final OwnerService ownerService;
 	private final StudentService studentService;
@@ -53,22 +52,21 @@ public class UserController {
 	@Autowired
 	public UserController(OwnerService ownerService, StudentService studentService, UserService userService) {
 		this.ownerService = ownerService;
-		this.studentService =studentService;
-		this.userService=userService;
+		this.studentService = studentService;
+		this.userService = userService;
 	}
 
 	@InitBinder
 	public void setAllowedFields(WebDataBinder dataBinder) {
 		dataBinder.setDisallowedFields("id");
 	}
-	
-	@GetMapping(value ="/users/new")
-	public String getUserType(Map<String, Object> model) {
-		
-	    return "users/register";
-		
-	}
 
+	@GetMapping(value = "/users/new")
+	public String getUserType(Map<String, Object> model) {
+
+		return "users/register";
+
+	}
 
 	@GetMapping(value = "/users/new/owner")
 	public String initOwnerCreationForm(Map<String, Object> model) {
@@ -81,14 +79,13 @@ public class UserController {
 	public String processCreationForm(@Valid Owner owner, BindingResult result) {
 		if (result.hasErrors()) {
 			return VIEWS_OWNER_CREATE_FORM;
-		}
-		else {
-			//creating owner, user, and authority
+		} else {
+			// creating owner, user, and authority
 			this.ownerService.saveOwner(owner);
-		return "redirect:/";
+			return "redirect:/";
 		}
 	}
-	
+
 	@GetMapping(value = "/users/new/student")
 	public String initStudentCreationForm(Map<String, Object> model) {
 		Student student = new Student();
@@ -100,12 +97,10 @@ public class UserController {
 	public String processCreationForm(@Valid Student student, BindingResult result) {
 		if (result.hasErrors()) {
 			return VIEWS_STUDENT_CREATE_FORM;
-		}
-		else {
-			//creating owner, user, and authority
+		} else {
+			// creating owner, user, and authority
 			this.studentService.saveStudent(student);
-			
-		
+
 			return "redirect:/";
 		}
 	}

@@ -1,12 +1,11 @@
 package org.springframework.samples.petclinic.web.e2e;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,21 +55,20 @@ public class RentalControllerE2ETest {
 			.andExpect(status().is2xxSuccessful());
 	}
 	
-//	@WithMockUser(username = "student1", authorities = { "student" })
-//	@Test
-//	void testProcessCreationFormHasErrors() throws Exception {
-//		mockMvc.perform(post("/properties/{propertyId}/rooms/{roomId}/rental/new", TEST_PROPERTY_ID, TEST_ROOM_ID).with(csrf())
-//			.param("startDate", "1970-10-10")
-//			.param("endDate","1970-10-15")
-//			.param("priceMonth", "50")
-//			.param("isAccepted", "false")
-//			.param("isARequest", "true"))
-//			.andExpect(status().isOk())
-//			.andExpect(model().attributeHasErrors("rental"))
-//			.andExpect(model().attributeHasFieldErrors("rental", "startDate"))
-//			.andExpect(model().attributeHasFieldErrors("rental", "endDate"))
-//			.andExpect(view().name("rentals/createRentalForm"));
-//	}
+	@WithMockUser(username = "student1", authorities = { "student" })
+	@Test
+	void testProcessCreationFormHasErrors() throws Exception {
+		mockMvc.perform(post("/properties/{propertyId}/rooms/{roomId}/rental/new", TEST_PROPERTY_ID, TEST_ROOM_ID).with(csrf())
+			.param("startDate", "2020-10-10")
+			.param("endDate","2020-10-15")
+			.param("priceMonth", "hola")
+			.param("isAccepted", "false")
+			.param("isARequest", "true"))
+			.andExpect(status().isOk())
+			.andExpect(model().attributeHasErrors("rental"))
+			.andExpect(model().attributeHasFieldErrors("rental", "priceMonth"))
+			.andExpect(view().name("rentals/createRentalForm"));
+	}
 
 
 
@@ -84,6 +82,22 @@ public class RentalControllerE2ETest {
 				.param("isAccepted", "true")
 				.param("isARequest", "false"))
 				.andExpect(status().is2xxSuccessful());
+	}
+	
+	@WithMockUser(username = "owner1", authorities = { "owner" })
+	@Test
+	void testProcessUpdatePropertyFormHasErrors() throws Exception {
+		mockMvc.perform(post("/properties/{propertyId}/rooms/{roomId}/rental/{rentalId}/edit", TEST_PROPERTY_ID, TEST_ROOM_ID, TEST_RENTAL_ID).with(csrf())
+			.param("startDate", "2020-10-10")
+			.param("endDate","2020-10-15")
+			.param("priceMonth", "50")
+			.param("isAccepted", "hola")
+			.param("isARequest", "buenas"))
+			.andExpect(status().isOk())
+			.andExpect(model().attributeHasErrors("rental"))
+			.andExpect(model().attributeHasFieldErrors("rental", "isAccepted"))
+			.andExpect(model().attributeHasFieldErrors("rental", "isARequest"))
+			.andExpect(view().name("rentals/createRentalForm"));
 	}
 	
 	

@@ -60,14 +60,16 @@ public class UserControllerE2ETest {
 	void testProcessOwnerCreationFormHasErrors() throws Exception {
 		mockMvc.perform(post("/users/new/owner").with(csrf())
 				.param("firstName", "George")
-				.param("lastName", "Franklin")
+				.param("lastName", "Franklin").with(csrf())
 				.param("dni", "12345678N")
 				.param("birthDate", "1970-11-14")
 				.param("gender", "14")
 				.param("email", "george@gmail.com")
-				.param("telephone", "608555023"))
+				.param("telephone", "hola")
+				.param("gender", "hola"))
 				.andExpect(status().isOk())
 				.andExpect(model().attributeHasErrors("owner"))
+				.andExpect(model().attributeHasFieldErrors("owner", "telephone"))
 				.andExpect(model().attributeHasFieldErrors("owner", "gender"))
 				.andExpect(view().name("users/createOwnerForm"));
 	}
@@ -87,7 +89,7 @@ public class UserControllerE2ETest {
 	@WithMockUser(username = "student1", authorities = { "student" })
 	@Test
 	void testProcessStudentCreationFormSuccess() throws Exception {
-		mockMvc.perform(MockMvcRequestBuilders.post("/users/new/student").with(SecurityMockMvcRequestPostProcessors.csrf())
+		mockMvc.perform(MockMvcRequestBuilders.post("/users/new/student").with(csrf())
 				.param("firstName", "Lucy")
 				.param("lastName", "Franklin").with(csrf())
 				.param("dni", "12345678X")
@@ -103,14 +105,14 @@ public class UserControllerE2ETest {
 	void testProcessStudentCreationFormHasErrors() throws Exception {
 		mockMvc.perform(post("/users/new/student").with(csrf())
 				.param("firstName", "Lucy")
-				.param("lastName", "Franklin")
+				.param("lastName", "Franklin").with(csrf())
 				.param("dni", "1111111111")
 				.param("birthDate", "1970-11-14")
 				.param("email", "uuuuuuuuuuuuuuuuuu")
-				.param("telephone", "2222222222222").param("gender", "7")).andExpect(status().isOk())
+				.param("telephone", "hola")
+				.param("gender", "hola"))
+				.andExpect(status().isOk())
 				.andExpect(model().attributeHasErrors("student"))
-				.andExpect(model().attributeHasFieldErrors("student", "dni"))
-				.andExpect(model().attributeHasFieldErrors("student", "email"))
 				.andExpect(model().attributeHasFieldErrors("student", "telephone"))
 				.andExpect(model().attributeHasFieldErrors("student", "gender"))			
 				.andExpect(view().name("users/createStudentForm"));
