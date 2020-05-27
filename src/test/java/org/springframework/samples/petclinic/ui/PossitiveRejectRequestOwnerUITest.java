@@ -68,8 +68,9 @@ public class PossitiveRejectRequestOwnerUITest {
 	    Sleep.sleep(500);
 	    numOfRequest = countRequest();
 	    
-	    driver.findElement(By.xpath("//table[@id='rentalsTable']/tbody/tr/td[4]/a")).click();
-	    driver.findElement(By.xpath("//a[contains(@href, '1/reject')]")).click();
+	    driver.findElement(By.xpath("//a[contains(@href, 'rentals/2')]")).click();
+	    Sleep.sleep(500);
+	    driver.findElement(By.xpath("//a[contains(@href, '2/reject')]")).click();
 	    driver.findElement(By.xpath("//a[contains(@href, '/request')]")).click();
 	    
 	    Sleep.sleep(500);
