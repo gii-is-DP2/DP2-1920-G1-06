@@ -8,11 +8,17 @@ import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.samples.petclinic.util.Sleep;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class PossitiveRegisterOwnerUITest {
 	
 	//Default
@@ -24,6 +30,9 @@ public class PossitiveRegisterOwnerUITest {
 	private final String username = "owner999";
 	private final String pass = "9";
 
+	@LocalServerPort
+	private int port;
+	
 	@BeforeEach
 	public void setUp() throws Exception {
 		System.setProperty("webdriver.chrome.driver", System.getenv("webdriver.chrome.driver"));
@@ -34,7 +43,7 @@ public class PossitiveRegisterOwnerUITest {
 
 	@Test
 	public void testRegisterOwnerUI() throws Exception {
-		driver.get("http://localhost:8090/");
+		driver.get("http://localhost:"+port);
 
 		registerOwnerUI();
 

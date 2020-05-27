@@ -6,15 +6,22 @@ import static org.junit.jupiter.api.Assertions.fail;
 
 import java.util.concurrent.TimeUnit;
 
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.samples.petclinic.util.Sleep;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.ui.Select;
 
+
+@ExtendWith(SpringExtension.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class PossitiveEditPropertyUITest {
 	
 		//Default
@@ -28,6 +35,9 @@ public class PossitiveEditPropertyUITest {
 		private final String description = "Modificacion";
 		private final String propertyType = "FLAT";
 		
+		@LocalServerPort
+		private int port;
+		
 
 		@BeforeEach
 		public void setUp() throws Exception {
@@ -39,7 +49,7 @@ public class PossitiveEditPropertyUITest {
 
 		@Test
 		public void testEditPropertyUITest() throws Exception {
-			driver.get("http://localhost:8090/");
+			driver.get("http://localhost:"+port);
 			
 			loginAsOwner();
 			
