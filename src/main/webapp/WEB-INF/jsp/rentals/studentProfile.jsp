@@ -17,6 +17,8 @@
 				<th>Email</th>
 				<th>Telephone</th>
 				<th>DNI</th>
+				<th>Username</th>
+				
 				
 			</tr>
 		</thead>
@@ -27,6 +29,8 @@
 			<td><c:out value="${student.email}" /></td>
 			<td><c:out value="${student.telephone}" /></td>
 			<td><c:out value="${student.dni}" /></td>
+			<td><c:out value="${student.user.username}" /></td>
+			
 		</tr>
 	</table>
 	
