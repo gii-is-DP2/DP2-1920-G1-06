@@ -42,10 +42,10 @@ public class PossitiveRegisterStudentUITest {
 	}
 
 	@Test
-	public void testRegisterOwnerUI() throws Exception {
+	public void testRegisterStudentUI() throws Exception {
 		driver.get("http://localhost:"+port);
 
-		registerOwnerUI();
+		registerStudentUI();
 
 		loginAsStudent();
 
@@ -68,7 +68,7 @@ public class PossitiveRegisterStudentUITest {
 
 	}
 
-	public void registerOwnerUI() throws Exception {
+	public void registerStudentUI() throws Exception {
 
 		driver.findElement(By.xpath("//a[contains(@href, '/users/new')]")).click();
 		driver.findElement(By.xpath("//a[contains(@href, '/users/new/student')]")).click();
