@@ -15,10 +15,7 @@
  */
 package org.springframework.samples.petclinic.service;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -34,19 +31,18 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class OwnerService {
 
-	private OwnerRepository ownerRepository;	
-	
-	
+	private OwnerRepository ownerRepository;
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private AuthoritiesService authoritiesService;
 
 	@Autowired
 	public OwnerService(OwnerRepository ownerRepository) {
 		this.ownerRepository = ownerRepository;
-	}	
+	}
 
 	@Transactional(readOnly = true)
 	public Owner findOwnerById(int id) throws DataAccessException {
@@ -57,13 +53,13 @@ public class OwnerService {
 	public Collection<Owner> findOwnerByLastName(String lastName) throws DataAccessException {
 		return ownerRepository.findByLastName(lastName);
 	}
-	
+
 	@Transactional(readOnly = true)
 	public Owner findOwnerByUsername(String username) {
 		return ownerRepository.findByUsername(username);
-		
+
 	}
-	
+
 	@Transactional(readOnly = true)
 	public Collection<Property> findMyProperties(int idOwner) throws DataAccessException {
 		return ownerRepository.findMyProperties(idOwner);
@@ -71,33 +67,15 @@ public class OwnerService {
 
 	@Transactional
 	public void saveOwner(Owner owner) throws DataAccessException {
-		
-		
-		//creating owner
-		
-		//owner.setProperties(new HashSet<Property>());
-		ownerRepository.save(owner);		
-		//creating user
+
+		ownerRepository.save(owner);
 		userService.saveUser(owner.getUser());
-		
-		//creating authorities
+
 		authoritiesService.saveAuthorities(owner.getUser().getUsername(), "owner");
 	}
 
 	public Collection<Owner> findAll() {
-		// TODO Auto-generated method stub
 		return ownerRepository.findAll();
 	}
-
-
-//	@Transactional
-//	public void saveOwner(Owner owner) throws DataAccessException {
-//		//creating owner
-//		ownerRepository.save(owner);		
-//		//creating user
-//		userService.saveUser(owner.getUser());
-//		//creating authorities
-//		authoritiesService.saveAuthorities(owner.getUser().getUsername(), "owner");
-//	}		
 
 }

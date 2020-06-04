@@ -68,6 +68,5 @@ public interface OwnerRepository {
 
 	Owner findByUsername(String username);
 
-//	Properties findOwnerProperties(int id) throws DataAccessException;
 
 }

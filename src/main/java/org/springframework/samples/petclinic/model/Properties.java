@@ -9,14 +9,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement
 public class Properties {
 
-	private List<Property> properties;
+	private List<Property> listOfproperties;
 
 	@XmlElement
 	public List<Property> getPropertyList() {
-		if (properties == null) {
-			properties = new ArrayList<>();
+		if (listOfproperties == null) {
+			listOfproperties = new ArrayList<>();
 		}
-		return properties;
+		return listOfproperties;
 	}
 
 	

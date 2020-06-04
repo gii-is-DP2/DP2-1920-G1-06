@@ -12,44 +12,35 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class PropertyService {
 
-	
-	private PropertyRepository propertyRepository;	
-	
+	private PropertyRepository propertyRepository;
+
 	@Autowired
 	public PropertyService(PropertyRepository propertyRepository) {
 		this.propertyRepository = propertyRepository;
-	}	
-	
+	}
+
 	@Transactional(readOnly = true)
 	public Collection<Property> findAll() throws DataAccessException {
 		return propertyRepository.findAll();
 	}
 
 	public Property findPropertyById(int propertyId) {
-		
+
 		return propertyRepository.findPropertyById(propertyId);
 	}
-	
+
 	@Transactional
 	public void saveProperty(Property property) throws DataAccessException {
-		propertyRepository.save(property);		
+		propertyRepository.save(property);
 	}
-	
-//	@Transactional
-//	public void removeProperty(Property property) throws DataAccessException {
-//		propertyRepository.remove(property);		
-//	}
-	
+
 	@Transactional
 	public void deleteProperty(Property property) throws DataAccessException {
-		propertyRepository.delete(property);		
+		propertyRepository.delete(property);
 	}
-	
-	
+
 	public Collection<Property> findPropertyByLocation(String location) {
 		return propertyRepository.findPropertyByLocation(location);
 	}
-	
-	
 
 }

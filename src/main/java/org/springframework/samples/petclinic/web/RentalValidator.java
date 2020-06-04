@@ -14,11 +14,9 @@ import org.springframework.validation.Validator;
 public class RentalValidator implements Validator{
 
 	private final RentalService rentalService;
-	private final String EMPTY = "Empty";
-	private final String DESCRIPTION = "description";
-	private final String NO_VALID_DATE = "NoValidInitDate";
-	private final String INIT_DATE  = "initDate";
-	private final String END_DATE  = "endDate";
+	private static final String NO_VALID_DATE = "NoValidInitDate";
+	private static final String INIT_DATE  = "initDate";
+	private static final String END_DATE  = "endDate";
 		
 	@Autowired
 	public RentalValidator(RentalService rentalService) {
@@ -43,15 +41,15 @@ public class RentalValidator implements Validator{
 	private void notCollapsedDates(LocalDate nuevaFechaPrimera,LocalDate nuevaFechaSegunda,Errors errors){
 		
 		if (nuevaFechaPrimera.isAfter(nuevaFechaSegunda)) {
-			errors.rejectValue(this.INIT_DATE, this.NO_VALID_DATE,
+			errors.rejectValue(INIT_DATE, NO_VALID_DATE,
 					"La fecha de llegada no puede ser después que la de salida");
 		}
 		if (nuevaFechaPrimera.isBefore(LocalDate.now())) {
-			errors.rejectValue(this.INIT_DATE, this.NO_VALID_DATE,
+			errors.rejectValue(INIT_DATE, NO_VALID_DATE,
 					"La fecha de llegada no puede ser una fecha en pasado");
 		}
 		if (nuevaFechaSegunda.isBefore(LocalDate.now())) {
-			errors.rejectValue(this.END_DATE, this.NO_VALID_DATE, 
+			errors.rejectValue(END_DATE, NO_VALID_DATE, 
 					"La fecha de salida no puede ser una fecha en pasado");
 		}
 	}

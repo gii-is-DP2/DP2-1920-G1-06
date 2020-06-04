@@ -47,4 +47,4 @@ INSERT INTO rooms(ext_window,tam_closet,price,room_number,surface,property_id) V
 
 
 INSERT INTO rentals(start_date,end_date,price_month,isarequest,is_accepted,room_id,student_id,owner_id) VALUES ('2020-06-01', '2020-06-10', 20.0, true, false, 1, 1, 1);
-INSERT INTO rentals(start_date,end_date,price_month,isarequest,is_accepted,room_id,student_id,owner_id) VALUES ('2020-06-01', '2020-06-10', 290.0, true, false, 1, 1, 1);
+INSERT INTO rentals(start_date,end_date,price_month,isarequest,is_accepted,room_id,student_id,owner_id) VALUES ('2020-06-01', '2020-06-10', 20.0, true, false, 1, 1, 1);

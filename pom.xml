@@ -12,7 +12,7 @@
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>2.2.4.RELEASE</version>
 	</parent>
-	<name>petclinic</name>
+	<name>Dynasty8</name>
 
 	<properties>
 
@@ -36,6 +36,11 @@
 
 		<jacoco.version>0.8.5</jacoco.version>
 		<spring-format.version>0.0.19</spring-format.version>
+		
+		<!-- SONAR CLOUD -->
+		<sonar.projectKey>gii-is-DP2_DP2-1920-G1-06</sonar.projectKey>
+  		<sonar.organization>gii-is-dp2</sonar.organization>
+  		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 
 	</properties>
 
