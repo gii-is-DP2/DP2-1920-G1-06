@@ -1,10 +1,7 @@
 
 package org.springframework.samples.petclinic.web.e2e;
 
-import static org.hamcrest.Matchers.hasProperty;
-import static org.hamcrest.Matchers.is;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -53,6 +50,24 @@ public class PropertyControllerE2ETest {
 						.param("propertyType", "0").param("surface", "45").param("totalRooms", "4"))
 				.andExpect(MockMvcResultMatchers.status().is3xxRedirection());
 	}
+	
+	
+	@WithMockUser(username = "owner1", authorities = { "owner" })
+	@Test
+	void testProcessCreationFormHasErrors() throws Exception {
+		this.mockMvc
+				.perform(MockMvcRequestBuilders.post("/properties/new")
+						.with(SecurityMockMvcRequestPostProcessors.csrf())
+						.param("address", "Calle de las palmeras")
+						.param("city", "London")
+						.param("description", "Calle de las palmeras")
+						.param("propertyType", "0"))
+						.andExpect(MockMvcResultMatchers.status().isOk())
+						.andExpect(model().attributeHasErrors("property"))
+						.andExpect(model().attributeHasFieldErrors("property", "surface"))
+						.andExpect(model().attributeHasFieldErrors("property", "totalRooms"))
+						.andExpect(view().name("properties/createOrUpdatePropertyForm"));
+	}
 
 	@WithMockUser(username = "owner1", authorities = { "owner" })
 	@Test
@@ -82,5 +97,22 @@ public class PropertyControllerE2ETest {
 				.param("city", "London").param("description", "Calle de las palmeras").param("propertyType", "0")
 				.param("surface", "45").param("totalRooms", "4")).andExpect(status().is3xxRedirection())
 				.andExpect(view().name("redirect:/properties/" + 1 + "/show"));
+	}
+	
+	@WithMockUser(username = "owner1", authorities = { "owner" })
+	@Test
+	void testProcessUpdatePropertyFormHasErrors() throws Exception {
+		this.mockMvc
+				.perform(MockMvcRequestBuilders.post("/properties/{propertyId}/edit", 1)
+						.with(SecurityMockMvcRequestPostProcessors.csrf())
+						.param("address", "Calle de las palmeras")
+						.param("city", "London")
+						.param("description", "Calle de las palmeras")
+						.param("propertyType", "0"))
+						.andExpect(MockMvcResultMatchers.status().isOk())
+						.andExpect(model().attributeHasErrors("property"))
+						.andExpect(model().attributeHasFieldErrors("property", "surface"))
+						.andExpect(model().attributeHasFieldErrors("property", "totalRooms"))
+						.andExpect(view().name("properties/createOrUpdatePropertyForm"));
 	}
 }
