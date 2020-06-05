@@ -27,11 +27,14 @@ public class RentalService {
 		this.rentalRepository = rentalRepository;
 	}
 
-	@Transactional
+
 	public void saveRental(final Rental rental) throws DataAccessException {
-
-		this.rentalRepository.save(rental);
-
+		try {
+			this.rentalRepository.save(rental);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	public Collection<Rental> findAll() {

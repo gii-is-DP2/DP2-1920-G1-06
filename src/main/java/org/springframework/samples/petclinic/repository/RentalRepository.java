@@ -5,11 +5,12 @@ import java.util.Collection;
 
 import javax.validation.Valid;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Rental;
 
 public interface RentalRepository {
 
-	void save(@Valid Rental rental);
+	void save(Rental rental) throws DataAccessException;
 
 	Collection<Rental> findAll();
 
