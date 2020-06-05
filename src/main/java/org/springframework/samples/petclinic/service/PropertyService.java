@@ -3,6 +3,8 @@ package org.springframework.samples.petclinic.service;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Property;
 import org.springframework.samples.petclinic.repository.PropertyRepository;
@@ -30,6 +32,7 @@ public class PropertyService {
 	}
 
 	@Transactional
+	@CacheEvict(cacheNames="propertyByLocation", allEntries=true)
 	public void saveProperty(Property property) throws DataAccessException {
 		propertyRepository.save(property);
 	}
@@ -38,7 +41,13 @@ public class PropertyService {
 	public void deleteProperty(Property property) throws DataAccessException {
 		propertyRepository.delete(property);
 	}
+<<<<<<< Updated upstream
 
+=======
+	
+	@Transactional
+	@Cacheable("propertyByLocation")
+>>>>>>> Stashed changes
 	public Collection<Property> findPropertyByLocation(String location) {
 		return propertyRepository.findPropertyByLocation(location);
 	}

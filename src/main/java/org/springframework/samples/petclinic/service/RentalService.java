@@ -4,6 +4,8 @@ package org.springframework.samples.petclinic.service;
 import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.dao.DataAccessException;
 import org.springframework.samples.petclinic.model.Rental;
 import org.springframework.samples.petclinic.repository.RentalRepository;
@@ -28,6 +30,7 @@ public class RentalService {
 	}
 
 	@Transactional
+	@CacheEvict(cacheNames="rentalByOwnerUsername", allEntries=true)
 	public void saveRental(final Rental rental) throws DataAccessException {
 
 		this.rentalRepository.save(rental);
@@ -38,6 +41,7 @@ public class RentalService {
 		return this.rentalRepository.findAll();
 	}
 
+	@Cacheable("rentalByOwnerUsername")
 	public Collection<Rental> findRentalByOwnerUsername(String username) {
 		return this.rentalRepository.findRentalByOwnerUsername(username);
 	}

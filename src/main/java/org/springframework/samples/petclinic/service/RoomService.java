@@ -5,6 +5,8 @@ import java.util.Collection;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.samples.petclinic.model.Property;
 import org.springframework.samples.petclinic.model.Room;
 import org.springframework.samples.petclinic.repository.RoomRepository;
@@ -20,6 +22,7 @@ public class RoomService {
 		this.roomRepository = roomRepository;
 	}
 
+	@CacheEvict(cacheNames="roomByPropertyId", allEntries=true)
 	public void saveRoom(@Valid Room room) {
 
 		roomRepository.save(room);
@@ -30,6 +33,7 @@ public class RoomService {
 		return roomRepository.findRoomById(roomId);
 	}
 
+	@Cacheable("roomByPropertyId")
 	public Collection<Room> findRoomByPropertyId(Integer id) {
 
 		return roomRepository.findRoomByPropertyId(id);
