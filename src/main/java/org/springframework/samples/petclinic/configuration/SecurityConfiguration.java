@@ -31,9 +31,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	DataSource dataSource;
 
 
-	private static final String admin = "admin";
-	private static final String owner = "owner";
-	private static final String student = "student";
+	private static final String ADMIN = "admin";
+	private static final String OWNER = "owner";
+	private static final String STUDENT = "student";
 	
 	@Override
 
@@ -42,13 +42,13 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/resources/**","/webjars/**","/h2-console/**").permitAll()
 				.antMatchers(HttpMethod.GET, "/","/oups").permitAll()
 				.antMatchers("/users/new/**").permitAll()
-				.antMatchers("/admin/**").hasAnyAuthority(admin)
-				.antMatchers("/properties").hasAnyAuthority(owner)
-				.antMatchers("/properties/**").hasAnyAuthority(owner,admin,student)
-				.antMatchers("/request/**").hasAnyAuthority(owner,admin)
-				.antMatchers("/owners/**").hasAnyAuthority(owner,admin)
-				.antMatchers("/students/**").hasAnyAuthority(student,admin)
-				.antMatchers("/rentals/**").hasAnyAuthority(owner,student)
+				.antMatchers("/admin/**").hasAnyAuthority(ADMIN)
+				.antMatchers("/properties").hasAnyAuthority(OWNER)
+				.antMatchers("/properties/**").hasAnyAuthority(OWNER,ADMIN,STUDENT)
+				.antMatchers("/request/**").hasAnyAuthority(OWNER,ADMIN)
+				.antMatchers("/owners/**").hasAnyAuthority(OWNER,ADMIN)
+				.antMatchers("/students/**").hasAnyAuthority(STUDENT,ADMIN)
+				.antMatchers("/rentals/**").hasAnyAuthority(OWNER,STUDENT)
 				.antMatchers("/vets/**").authenticated()
 				.anyRequest().denyAll()
 				.and()

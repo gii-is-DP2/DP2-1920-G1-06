@@ -25,9 +25,6 @@ import org.springframework.samples.petclinic.repository.OwnerRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * Mostly used ESTO ESTA REMAL MI PANA HAGALO
- */
 @Service
 public class OwnerService {
 
@@ -47,11 +44,6 @@ public class OwnerService {
 	@Transactional(readOnly = true)
 	public Owner findOwnerById(int id) throws DataAccessException {
 		return ownerRepository.findById(id);
-	}
-
-	@Transactional(readOnly = true)
-	public Collection<Owner> findOwnerByLastName(String lastName) throws DataAccessException {
-		return ownerRepository.findByLastName(lastName);
 	}
 
 	@Transactional(readOnly = true)
