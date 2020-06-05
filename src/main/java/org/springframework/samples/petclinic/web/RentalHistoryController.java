@@ -44,7 +44,7 @@ public class RentalHistoryController {
 
 		this.rentalService.saveRental(rental);
 
-		return "welcome";
+		return "rentals/rentalsList";
 	}
 
 	@GetMapping(value = "/rentals/{rentalId}/reject")
@@ -57,7 +57,7 @@ public class RentalHistoryController {
 
 		this.rentalService.saveRental(rental);
 
-		return "welcome";
+		return "rentals/rentalsList";
 	}
 
 	@GetMapping(value = "/rentals/{studentId}/profile")
@@ -85,10 +85,7 @@ public class RentalHistoryController {
 		} else if (SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
 				.map(x -> x.toString()).anyMatch(x -> x.equals("student"))) {
 
-			Stream<Rental> results = rentals.stream();
-			results = filtroEsAceptado(results);
-
-			model.put("selections", results.collect(Collectors.toList()));
+			return "welcome";
 		}
 
 		return "rentals/requestList";
@@ -148,7 +145,7 @@ public class RentalHistoryController {
 	// Metodos auxiliares
 
 	private Stream<Rental> filtroEsAceptado(Stream<Rental> str) {
-		Stream<Rental> result = str.filter(x -> x.getEndDate().isAfter(LocalDate.now()));
+		Stream<Rental> result = str.filter(x -> x.getIsAccepted());
 		return result;
 	}
 
