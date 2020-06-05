@@ -5,9 +5,12 @@ import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Property;
 import org.springframework.samples.petclinic.model.Rental;
+import org.springframework.samples.petclinic.model.Room;
 import org.springframework.samples.petclinic.service.RentalService;
 import org.springframework.samples.petclinic.service.StudentService;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,9 +28,6 @@ public class RentalHistoryController {
 	private final RentalService		rentalService;
 	
 	private final StudentService    studentService;
-	
-	private static final String SELECTIONS = "selections";
-
 
 	@Autowired
 	public RentalHistoryController(final RentalService rentalService, final StudentService studentService) {
@@ -82,26 +82,31 @@ public class RentalHistoryController {
 	public String processFindRequestForm(final Rental rental, final BindingResult result, final Map<String, Object> model) {
 		
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		
+		Collection<Rental> rentals = this.rentalService.findRentalByOwnerUsername(username);
 
 		if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().map(x->x.toString()).anyMatch(x->x.equals("owner"))) {
+					
 			
-			Collection<Rental> results = this.rentalService.findRentalByOwnerUsername(username);
-
-			results = results.stream().filter(x -> x.getEndDate().isAfter(LocalDate.now())).filter(x->x.getIsARequest()).collect(Collectors.toList());
+			Stream<Rental> results = rentals.stream();
+			results = filtroFechaFinDespuesDeAhora(results);
+			results = filtroEsPeticion(results);		
+			model.put("selections", results.collect(Collectors.toList()));
 			
-			model.put(SELECTIONS, results);
+			
 			
 		}else if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().map(x->x.toString()).anyMatch(x->x.equals("student"))) {
 			
-			Collection<Rental> results = this.rentalService.findRentalByStudentUsername(username);
+			Stream<Rental> results = rentals.stream();
+			results = filtroEsAceptado(results);		
 			
-			model.put(SELECTIONS, results.stream().filter(x->x.getIsAccepted()).collect(Collectors.toList()));
+			model.put("selections", results.collect(Collectors.toList()));
 		}
 
 		return "rentals/requestList";
 
 	}
+	
+	
 	
 	//MOSTRADO DE ALQUILER -----------------------------------------------------------------
 	
@@ -120,21 +125,23 @@ public class RentalHistoryController {
 	public String processFindForm(final Rental rental, final BindingResult result, final Map<String, Object> model) {
 		
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		
+		Collection<Rental> rentals = this.rentalService.findRentalByOwnerUsername(username);
 
 		if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().map(x->x.toString()).anyMatch(x->x.equals("owner"))) {
 			
-			Collection<Rental> results = this.rentalService.findRentalByOwnerUsername(username);
-
-			results = results.stream().filter(x -> x.getEndDate().isAfter(LocalDate.now())).filter(x->x.getIsAccepted()).collect(Collectors.toList());
 			
-			model.put(SELECTIONS, results);
+			Stream<Rental> results = rentals.stream();
+			results = filtroFechaFinDespuesDeAhora(results);
+			results = filtroEsAceptado(results);		
+			model.put("selections", results.collect(Collectors.toList()));
+
 			
 		}else if(SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().map(x->x.toString()).anyMatch(x->x.equals("student"))) {
 			
-			Collection<Rental> results = this.rentalService.findRentalByStudentUsername(username);
-			
-			model.put(SELECTIONS, results.stream().filter(x->x.getIsAccepted()).collect(Collectors.toList()));
+			Stream<Rental> results = rentals.stream();
+			results = filtroEsAceptado(results);		
+			model.put("selections", results.collect(Collectors.toList()));			
+	
 		}
 
 		return "rentals/rentalsList";
@@ -150,4 +157,35 @@ public class RentalHistoryController {
 		return mav;
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	//Metodos auxiliares
+	
+	
+	private Stream<Rental> filtroEsAceptado(Stream<Rental> str) {
+		Stream<Rental>	result = str.filter(x -> x.getEndDate().isAfter(LocalDate.now()));
+		return result;
+	}
+	private Stream<Rental> filtroFechaFinDespuesDeAhora(Stream<Rental> str) {
+		Stream<Rental>	result = str.filter(x -> x.getEndDate().isAfter(LocalDate.now()));
+		return result;
+	}
+	private Stream<Rental> filtroEsPeticion(Stream<Rental> results) {	 
+		Stream<Rental>	result = results.filter(x->x.getIsARequest());
+		return result;
+	}
 }
