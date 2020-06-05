@@ -15,7 +15,6 @@ import java.time.LocalDate;
 
 // OTRO EJEMPLITO DE TEST USALO SABIAMENTE
 
-import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -111,22 +110,6 @@ class OwnerControllerTests {
 				.andExpect(model().attributeHasErrors("owner"))
 				.andExpect(model().attributeHasFieldErrors("owner", "gender"))
 				.andExpect(view().name("owners/createOrUpdateOwnerForm"));
-	}
-
-	@WithMockUser(value = "spring")
-	@Test
-	void testInitFindForm() throws Exception {
-		mockMvc.perform(get("/owners/find")).andExpect(status().isOk()).andExpect(model().attributeExists("owner"))
-				.andExpect(view().name("owners/findOwners"));
-	}
-
-	@WithMockUser(value = "spring")
-	@Test
-	void testProcessFindFormNoOwnersFound() throws Exception {
-		mockMvc.perform(get("/owners").param("lastName", "Unknown Surname")).andExpect(status().isOk())
-				.andExpect(model().attributeHasFieldErrors("owner", "lastName"))
-				.andExpect(model().attributeHasFieldErrorCode("owner", "lastName", "notFound"))
-				.andExpect(view().name("owners/findOwners"));
 	}
 
 	@WithMockUser(value = "spring")
