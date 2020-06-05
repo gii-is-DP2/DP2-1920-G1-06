@@ -41,13 +41,10 @@ public class PropertyService {
 	public void deleteProperty(Property property) throws DataAccessException {
 		propertyRepository.delete(property);
 	}
-<<<<<<< Updated upstream
 
-=======
-	
+
 	@Transactional
 	@Cacheable("propertyByLocation")
->>>>>>> Stashed changes
 	public Collection<Property> findPropertyByLocation(String location) {
 		return propertyRepository.findPropertyByLocation(location);
 	}
