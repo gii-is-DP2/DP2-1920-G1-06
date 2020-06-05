@@ -21,10 +21,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.samples.petclinic.model.Owner;
-import org.springframework.samples.petclinic.model.Properties;
 import org.springframework.samples.petclinic.model.Student;
-import org.springframework.samples.petclinic.model.User;
-import org.springframework.samples.petclinic.service.AuthoritiesService;
 import org.springframework.samples.petclinic.service.OwnerService;
 import org.springframework.samples.petclinic.service.StudentService;
 import org.springframework.samples.petclinic.service.UserService;
@@ -46,7 +43,6 @@ public class UserController {
 	private static final String VIEWS_STUDENT_CREATE_FORM = "users/createStudentForm";
 
 	
-	private final UserService userService;
 	private final OwnerService ownerService;
 	private final StudentService studentService;
 
@@ -54,7 +50,6 @@ public class UserController {
 	public UserController(OwnerService ownerService, StudentService studentService, UserService userService) {
 		this.ownerService = ownerService;
 		this.studentService =studentService;
-		this.userService=userService;
 	}
 
 	@InitBinder

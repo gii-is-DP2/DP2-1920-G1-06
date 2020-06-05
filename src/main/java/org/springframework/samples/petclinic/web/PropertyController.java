@@ -28,17 +28,16 @@ public class PropertyController {
 
 	private static final String VIEWS_PROPERTIES_CREATE_OR_UPDATE_FORM = "properties/createOrUpdatePropertyForm";
 	private static final String VIEWS_PROPERTIES_SHOW = "properties/showForm";
+	private static final String PROPERTY = "property";
 
 	private final PropertyService propertyService;
 	private final OwnerService ownerService;
-	private final UserService userService;
 
 	
 	@Autowired
 	public PropertyController(PropertyService propertyService,OwnerService ownerService,UserService userService) {
 		this.propertyService = propertyService;
 		this.ownerService = ownerService;
-		this.userService = userService;
 	}
 	
 	
@@ -70,7 +69,7 @@ public class PropertyController {
 	@GetMapping(value = "/properties/{propertyId}/show")
 	public String initShowForm(@PathVariable("propertyId") int propertyId, ModelMap model) {
 		Property property = this.propertyService.findPropertyById(propertyId);
-		model.put("property", property);
+		model.put(PROPERTY, property);
 		return VIEWS_PROPERTIES_SHOW;
 	}
 	
@@ -81,7 +80,7 @@ public class PropertyController {
 	public String initCreateForm(ModelMap model) {
 		Property property = new Property();
 
-		model.put("property", property);
+		model.put(PROPERTY, property);
 		return VIEWS_PROPERTIES_CREATE_OR_UPDATE_FORM;
 	}
 	
@@ -114,7 +113,7 @@ public class PropertyController {
 	@GetMapping(value = "/properties/{propertyId}/edit")
 	public String initUpdateForm(@PathVariable("propertyId") int propertyId, ModelMap model) {
 		Property property = this.propertyService.findPropertyById(propertyId);
-		model.put("property", property);
+		model.put(PROPERTY, property);
 		return VIEWS_PROPERTIES_CREATE_OR_UPDATE_FORM;
 	}
 	
@@ -153,7 +152,7 @@ public class PropertyController {
 
 	@GetMapping(value = "/properties/find")
 	public String initFindForm(Map<String, Object> model) {
-		model.put("property", new Property());
+		model.put(PROPERTY, new Property());
 		return "properties/findPropertiesStudent";
 	}
 	

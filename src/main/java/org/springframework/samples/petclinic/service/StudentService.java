@@ -11,19 +11,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class StudentService {
-	
-	private StudentRepository studentRepository;	
-	
+
+	private StudentRepository studentRepository;
+
 	@Autowired
 	private UserService userService;
-	
+
 	@Autowired
 	private AuthoritiesService authoritiesService;
 
 	@Autowired
 	public StudentService(StudentRepository studentRepository) {
 		this.studentRepository = studentRepository;
-	}	
+	}
 
 	@Transactional(readOnly = true)
 	public Student findStudentById(int id) throws DataAccessException {
@@ -37,20 +37,16 @@ public class StudentService {
 
 	@Transactional
 	public void saveStudent(Student student) throws DataAccessException {
-		//creating owner
-		studentRepository.save(student);		
-		//creating user
+		studentRepository.save(student);
 		userService.saveUser(student.getUser());
-		//creating authorities
 		authoritiesService.saveAuthorities(student.getUser().getUsername(), "student");
 	}
 
 	public Collection<Student> findAll() {
-		// TODO Auto-generated method stub
 		return studentRepository.findAll();
-	}		
+	}
 
 	public Student findStudentByUsername(String username) {
 		return studentRepository.findByUsername(username);
-	}		
+	}
 }

@@ -24,14 +24,7 @@ public class User{
 	
 	boolean enabled;
 	
-//	@OneToOne(cascade = CascadeType.ALL)
-//	@JoinColumn(name = "student_id")
-//	private Student student;
-//	
-//	@OneToOne(cascade = CascadeType.ALL)
-//	@JoinColumn(name = "owner_id")
-//	private Owner owner;
-	
+
 	
 	
 }

@@ -23,7 +23,6 @@ import org.springframework.samples.petclinic.model.User;
 import org.springframework.samples.petclinic.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 
 /**
  * Mostly used as a facade for all Petclinic controllers Also a placeholder
@@ -43,8 +42,6 @@ public class UserService {
 
 	@Transactional
 	public void saveUser(User user) throws DataAccessException {
-
-//	if(userRepository.findByUsername(user.getUsername()).getUsername().isEmpty()) {
 
 		user.setEnabled(true);
 		userRepository.save(user);

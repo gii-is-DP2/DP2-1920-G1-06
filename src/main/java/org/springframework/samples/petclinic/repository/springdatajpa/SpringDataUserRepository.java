@@ -12,10 +12,5 @@ public interface SpringDataUserRepository extends UserRepository , Repository<Us
 	@Override
 	@Query("SELECT user FROM User user WHERE user.username LIKE :username%")
 	public User findByUsername(@Param("username") String username);
-//
-//	@Override
-//	@Query("SELECT user FROM User user WHERE user.id =:id")
-//	public User findById(@Param("id") int id);
 
-	
 }
